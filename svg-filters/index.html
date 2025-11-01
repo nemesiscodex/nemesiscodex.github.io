@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        
+
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author" content="">
+<meta name="author" content="Julio Reyes">
 <meta name="description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a basic page." />
-<meta name="keywords" content=", svg, html, css" />
+<meta name="keywords" content="backend, frontend, software engineering, software design, developer, tips, tricks, ai, java, typescript, react, html, css, svg, svg, html, css" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
 <link rel="canonical" href="https://blog.nemesiscodex.org/svg-filters/" />
@@ -39,6 +41,118 @@
 
 
 
+
+
+
+
+  
+  
+
+
+
+  
+    
+    
+      
+    
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.nemesiscodex.org/svg-filters/" />
+<meta property="og:title" content="SVG Filters :: Nemesiscodex&#39;s Blog" />
+<meta property="og:description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a …" />
+<meta property="og:site_name" content="Nemesiscodex&#39;s Blog" />
+
+<meta property="og:image" content="https://blog.nemesiscodex.org/images/pic.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+
+
+  
+  <meta property="article:published_time" content="2025-11-01T15:57:27-03:00" />
+  
+  
+  <meta property="article:modified_time" content="2025-11-01T15:57:27-03:00" />
+  
+  
+  <meta property="article:author" content="Julio Reyes" />
+  
+  
+  <meta property="article:tag" content="svg" />
+  
+  <meta property="article:tag" content="html" />
+  
+  <meta property="article:tag" content="css" />
+  
+  
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="SVG Filters :: Nemesiscodex&#39;s Blog" />
+<meta name="twitter:description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a …" />
+
+<meta name="twitter:image" content="https://blog.nemesiscodex.org/images/pic.jpg" />
+
+
+
+
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+<link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+
+
+
+  
+  
+  
+  
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "\"SVG Filters\"",
+    "description": "\"This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a basic page.\"",
+    "datePublished": "\"2025-11-01T15:57:27-03:00\"",
+    "dateModified": "\"2025-11-01T15:57:27-03:00\"",
+    "author": {
+      "@type": "Person",
+      "name": "\"Julio Reyes\"",
+      "identifier": "nemesiscodex"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "\"Julio Reyes\""
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "\"https://blog.nemesiscodex.org/svg-filters/\""
+    },
+    "url": "\"https://blog.nemesiscodex.org/svg-filters/\"",
+    "keywords": "\"svg, html, css\""
+  }
+  </script>
+
+
+
+
+
   <meta itemprop="name" content="SVG Filters">
   <meta itemprop="description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a basic page.">
   <meta itemprop="datePublished" content="2025-11-01T15:57:27-03:00">
@@ -56,16 +170,23 @@
 
 
 
-    <meta property="article:published_time" content="2025-11-01 15:57:27 -0300 -03" />
 
 
-
-
-
-
-
-
-
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-J750Q0BHT0"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-J750Q0BHT0');
+        }
+      </script>
 
 
 
@@ -97,13 +218,6 @@
         <span class="header__right">
                 <nav class="menu">
     <ul class="menu__inner"><li><a href="/posts">Posts</a></li>
-        <ul class="submenu">
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">en</a>
-                <div class="dropdown-content">
-                </div>
-            </li>
-        </ul>
     </ul>
 </nav>
 
@@ -148,7 +262,7 @@
       
 
       <div class="post-content">
-        <video autoplay muted loop  width="100%">
+        <video fetchpriority="high" autoplay muted loop  width="100%">
     <source src="/svg-filters/video/svg-filter.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
