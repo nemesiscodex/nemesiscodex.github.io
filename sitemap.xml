@@ -2,20 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.nemesiscodex.org/a-new-blog-is-coming-soon/</loc>
-    <lastmod>2025-11-01T14:25:42-03:00</lastmod>
+    <loc>https://blog.nemesiscodex.org/tags/css/</loc>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
   </url><url>
-    <loc>https://blog.nemesiscodex.org/tags/blog/</loc>
-    <lastmod>2025-11-01T14:25:42-03:00</lastmod>
+    <loc>https://blog.nemesiscodex.org/tags/html/</loc>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
   </url><url>
     <loc>https://blog.nemesiscodex.org/</loc>
-    <lastmod>2025-11-01T14:25:42-03:00</lastmod>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
   </url><url>
     <loc>https://blog.nemesiscodex.org/posts/</loc>
-    <lastmod>2025-11-01T14:25:42-03:00</lastmod>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/tags/svg/</loc>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/svg-filters/</loc>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
   </url><url>
     <loc>https://blog.nemesiscodex.org/tags/</loc>
-    <lastmod>2025-11-01T14:25:42-03:00</lastmod>
+    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
   </url><url>
     <loc>https://blog.nemesiscodex.org/categories/</loc>
   </url>

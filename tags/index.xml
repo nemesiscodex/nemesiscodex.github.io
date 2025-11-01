@@ -6,13 +6,27 @@
     <description>Recent content in Tags on Nemesiscodex&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Nov 2025 14:25:42 -0300</lastBuildDate>
+    <lastBuildDate>Sat, 01 Nov 2025 15:57:27 -0300</lastBuildDate>
     <atom:link href="https://blog.nemesiscodex.org/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog</title>
-      <link>https://blog.nemesiscodex.org/tags/blog/</link>
-      <pubDate>Sat, 01 Nov 2025 14:25:42 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/tags/blog/</guid>
+      <title>Css</title>
+      <link>https://blog.nemesiscodex.org/tags/css/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Html</title>
+      <link>https://blog.nemesiscodex.org/tags/html/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/html/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Svg</title>
+      <link>https://blog.nemesiscodex.org/tags/svg/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/svg/</guid>
       <description></description>
     </item>
   </channel>
