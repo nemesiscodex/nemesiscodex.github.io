@@ -2,21 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/new-blog/</loc>
+    <loc>https://blog.nemesiscodex.org/a-new-blog-is-coming-soon/</loc>
     <lastmod>2025-11-01T14:25:42-03:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/blog/</loc>
+    <loc>https://blog.nemesiscodex.org/tags/blog/</loc>
     <lastmod>2025-11-01T14:25:42-03:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://blog.nemesiscodex.org/</loc>
     <lastmod>2025-11-01T14:25:42-03:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://blog.nemesiscodex.org/posts/</loc>
     <lastmod>2025-11-01T14:25:42-03:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://blog.nemesiscodex.org/tags/</loc>
     <lastmod>2025-11-01T14:25:42-03:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://blog.nemesiscodex.org/categories/</loc>
   </url>
 </urlset>
