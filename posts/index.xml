@@ -9,7 +9,7 @@
         <atom:link href="https://blog.nemesiscodex.org/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Reliable Api Calls</title>
+            <title>Reliable API Calls</title>
             <link>https://blog.nemesiscodex.org/reliable-api-calls/</link>
             <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
             
@@ -69,6 +69,7 @@
 <p>The request goes from the frontend to the backend, then to the bank API, then to the database, and finally back to the frontend. Nothing can go wrong here&hellip; right?</p>
 <h2 id="what-can-go-wrong">What Can Go Wrong?</h2>
 <p>Let me walk you through the <strong>points of failure</strong> in this flow:</p>
+<p><img src="what-can-go-wrong.png" alt="Reliable Api Calls"></p>
 <p><strong>Every API request and response is a potential point of failure</strong>—from requests to your own backend, to third-party APIs, and even to your database. Each network hop, each service call, and each database operation can fail in ways that leave your system in an inconsistent state.</p>
 <h3 id="network-timeouts">Network Timeouts</h3>
 <ul>
