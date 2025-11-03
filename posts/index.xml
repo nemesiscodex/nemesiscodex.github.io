@@ -15,17 +15,11 @@
             
             <guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid>
             <description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;
+&lt;p&gt;Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;
 &lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Make your APIs idempotent&lt;/strong&gt; Use idempotency keys to prevent duplicate processing&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Use state machines&lt;/strong&gt; Track transaction lifecycle with clear states and transitions&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Optimistic locks are your friend&lt;/strong&gt; Use conditional state updates to prevent race conditions&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;The three-step process:&lt;/strong&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p>
-<p>Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.</p>
+<p>Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.</p>
 <h2 id="tldr">TL;DR</h2>
 <p><strong>If you remember one thing from this post:</strong></p>
 <ol>
@@ -671,6 +665,51 @@
 <li>What if the server crashes mid-process?</li>
 </ul>
 <p>With these patterns in place, you&rsquo;ll have answers to all of these questions.</p>
+<h2 id="going-further-asynchronous-processing">Going Further: Asynchronous Processing</h2>
+<p>Instead of making third-party API calls synchronously (inline), consider processing them asynchronously.</p>
+<p>When a client submits a transaction request, return a <code>200 OK</code> immediately after storing the transaction in your database. The client gets a result right away and doesn&rsquo;t need to wait for the third-party API response. Then execute the actual third-party API call later using a scheduler or by publishing the transaction to a message queue like Kafka.</p>
+<pre class="mermaid">
+    sequenceDiagram
+  autonumber
+  participant Client
+  participant Backend
+  participant DB as Database
+  participant Queue as Message Queue&lt;br/&gt;(Kafka/Scheduler)
+  participant API as 3rd Party API
+
+  activate Client
+  Client-&gt;&gt;Backend: POST /transaction (payload)
+  activate Backend
+  Backend-&gt;&gt;DB: INSERT transaction (status: PENDING)
+  activate DB
+  DB--&gt;&gt;Backend: write OK
+  deactivate DB
+  Backend-&gt;&gt;Queue: Publish transaction event
+  activate Queue
+  Backend--&gt;&gt;Client: 200 OK (transactionId, status: PENDING)
+  deactivate Backend
+  deactivate Client
+  
+  Note over Queue,Backend: Asynchronous processing
+  
+  Queue-&gt;&gt;Backend: Consume transaction event
+  activate Backend
+  Backend-&gt;&gt;DB: Read transaction details
+  activate DB
+  DB--&gt;&gt;Backend: transaction data
+  deactivate DB
+  Backend-&gt;&gt;API: POST /bank/transaction
+  activate API
+  API--&gt;&gt;Backend: 200 OK (result)
+  deactivate API
+  Backend-&gt;&gt;DB: UPDATE transaction (status: COMPLETED, result)
+  activate DB
+  DB--&gt;&gt;Backend: write OK
+  deactivate DB
+  deactivate Backend
+  deactivate Queue
+</pre>
+<p>This approach decouples your API from external dependencies and provides better resilience.</p>
 ]]></content>
         </item>
         

@@ -9,9 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Julio Reyes">
 <meta name="description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
-Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.
+Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.
 TL;DR If you remember one thing from this post:
-Make your APIs idempotent Use idempotency keys to prevent duplicate processing Use state machines Track transaction lifecycle with clear states and transitions Optimistic locks are your friend Use conditional state updates to prevent race conditions The three-step process:
 " />
 <meta name="keywords" content="backend, frontend, software engineering, software design, developer, tips, tricks, ai, java, typescript, react, html, css, svg, software-engineering, api, backend, reliability, database" />
 <meta name="robots" content="noodp" />
@@ -161,12 +160,11 @@ Everyone seems to think only about the happy path when …" />
 
   <meta itemprop="name" content="Reliable API Calls">
   <meta itemprop="description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
-Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.
-TL;DR If you remember one thing from this post:
-Make your APIs idempotent Use idempotency keys to prevent duplicate processing Use state machines Track transaction lifecycle with clear states and transitions Optimistic locks are your friend Use conditional state updates to prevent race conditions The three-step process:">
+Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.
+TL;DR If you remember one thing from this post:">
   <meta itemprop="datePublished" content="2025-11-02T00:21:02-03:00">
   <meta itemprop="dateModified" content="2025-11-02T00:21:02-03:00">
-  <meta itemprop="wordCount" content="3848">
+  <meta itemprop="wordCount" content="4051">
   <meta itemprop="image" content="https://blog.nemesiscodex.org/reliable-api-calls/post-cover.png">
   <meta itemprop="keywords" content="Software-Engineering,Api,Backend,Reliability,Database">
 
@@ -174,9 +172,8 @@ Make your APIs idempotent Use idempotency keys to prevent duplicate processing U
   <meta name="twitter:image" content="https://blog.nemesiscodex.org/reliable-api-calls/post-cover.png">
   <meta name="twitter:title" content="Reliable API Calls">
   <meta name="twitter:description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
-Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.
-TL;DR If you remember one thing from this post:
-Make your APIs idempotent Use idempotency keys to prevent duplicate processing Use state machines Track transaction lifecycle with clear states and transitions Optimistic locks are your friend Use conditional state updates to prevent race conditions The three-step process:">
+Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.
+TL;DR If you remember one thing from this post:">
 
 
 
@@ -256,7 +253,7 @@ Make your APIs idempotent Use idempotency keys to prevent duplicate processing U
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        19 minutes
+        20 minutes
 
         
       </p>
@@ -319,6 +316,7 @@ Make your APIs idempotent Use idempotency keys to prevent duplicate processing U
     <li><a href="#complete-flow-example">Complete Flow Example</a></li>
     <li><a href="#best-practices">Best Practices</a></li>
     <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#going-further-asynchronous-processing">Going Further: Asynchronous Processing</a></li>
   </ul>
 </nav>
         </aside>
@@ -328,7 +326,7 @@ Make your APIs idempotent Use idempotency keys to prevent duplicate processing U
 
       <div class="post-content">
         <p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p>
-<p>Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.</p>
+<p>Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.</p>
 <h2 id="tldr">TL;DR</h2>
 <p><strong>If you remember one thing from this post:</strong></p>
 <ol>
@@ -974,6 +972,51 @@ Make your APIs idempotent Use idempotency keys to prevent duplicate processing U
 <li>What if the server crashes mid-process?</li>
 </ul>
 <p>With these patterns in place, you&rsquo;ll have answers to all of these questions.</p>
+<h2 id="going-further-asynchronous-processing">Going Further: Asynchronous Processing</h2>
+<p>Instead of making third-party API calls synchronously (inline), consider processing them asynchronously.</p>
+<p>When a client submits a transaction request, return a <code>200 OK</code> immediately after storing the transaction in your database. The client gets a result right away and doesn&rsquo;t need to wait for the third-party API response. Then execute the actual third-party API call later using a scheduler or by publishing the transaction to a message queue like Kafka.</p>
+<pre class="mermaid">
+    sequenceDiagram
+  autonumber
+  participant Client
+  participant Backend
+  participant DB as Database
+  participant Queue as Message Queue&lt;br/&gt;(Kafka/Scheduler)
+  participant API as 3rd Party API
+
+  activate Client
+  Client-&gt;&gt;Backend: POST /transaction (payload)
+  activate Backend
+  Backend-&gt;&gt;DB: INSERT transaction (status: PENDING)
+  activate DB
+  DB--&gt;&gt;Backend: write OK
+  deactivate DB
+  Backend-&gt;&gt;Queue: Publish transaction event
+  activate Queue
+  Backend--&gt;&gt;Client: 200 OK (transactionId, status: PENDING)
+  deactivate Backend
+  deactivate Client
+  
+  Note over Queue,Backend: Asynchronous processing
+  
+  Queue-&gt;&gt;Backend: Consume transaction event
+  activate Backend
+  Backend-&gt;&gt;DB: Read transaction details
+  activate DB
+  DB--&gt;&gt;Backend: transaction data
+  deactivate DB
+  Backend-&gt;&gt;API: POST /bank/transaction
+  activate API
+  API--&gt;&gt;Backend: 200 OK (result)
+  deactivate API
+  Backend-&gt;&gt;DB: UPDATE transaction (status: COMPLETED, result)
+  activate DB
+  DB--&gt;&gt;Backend: write OK
+  deactivate DB
+  deactivate Backend
+  deactivate Queue
+</pre>
+<p>This approach decouples your API from external dependencies and provides better resilience.</p>
 
       </div>
     </article>
@@ -1003,7 +1046,7 @@ Make your APIs idempotent Use idempotency keys to prevent duplicate processing U
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        3848 Words
+        4051 Words
       </p>
 
       <p>
