@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.nemesiscodex.org/tags/api/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/tags/backend/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/tags/database/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/posts/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/tags/reliability/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/reliable-api-calls/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/tags/software-engineering/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://blog.nemesiscodex.org/tags/</loc>
+    <lastmod>2025-11-02T00:21:02-03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://blog.nemesiscodex.org/tags/css/</loc>
     <lastmod>2025-11-01T15:57:27-03:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -12,27 +57,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://blog.nemesiscodex.org/</loc>
-    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.nemesiscodex.org/posts/</loc>
-    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://blog.nemesiscodex.org/tags/svg/</loc>
     <lastmod>2025-11-01T15:57:27-03:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://blog.nemesiscodex.org/svg-filter/</loc>
-    <lastmod>2025-11-01T15:57:27-03:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://blog.nemesiscodex.org/tags/</loc>
     <lastmod>2025-11-01T15:57:27-03:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

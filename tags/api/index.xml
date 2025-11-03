@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Nemesiscodex&#39;s Blog</title>
-    <link>https://blog.nemesiscodex.org/</link>
-    <description>Recent content on Nemesiscodex&#39;s Blog</description>
+    <title>Api on Nemesiscodex&#39;s Blog</title>
+    <link>https://blog.nemesiscodex.org/tags/api/</link>
+    <description>Recent content in Api on Nemesiscodex&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 02 Nov 2025 00:21:02 -0300</lastBuildDate>
-    <atom:link href="https://blog.nemesiscodex.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.nemesiscodex.org/tags/api/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reliable Api Calls</title>
       <link>https://blog.nemesiscodex.org/reliable-api-calls/</link>
       <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
       <guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid>
       <description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;&#xA;&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;Make your APIs idempotent&lt;/strong&gt; — Use idempotency keys to prevent duplicate processing&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Use state machines&lt;/strong&gt; — Track transaction lifecycle with clear states and transitions&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Optimistic locks are your friend&lt;/strong&gt; — Use conditional state updates to prevent race conditions&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;The three-step process:&lt;/strong&gt;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>SVG Filter</title>
-      <link>https://blog.nemesiscodex.org/svg-filter/</link>
-      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/svg-filter/</guid>
-      <description>&lt;video fetchpriority=&#34;high&#34; autoplay muted loop  width=&#34;100%&#34;&gt;&#xA;    &lt;source src=&#34;https://blog.nemesiscodex.org/svg-filter/video/svg-filter.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;    Your browser does not support the video tag.&#xA;  &lt;/video&gt;&#xA;&lt;p&gt;Notice how those blobs smoothly merge and separate? That&amp;rsquo;s SVG filters at work.&lt;/p&gt;&#xA;&lt;p&gt;You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
