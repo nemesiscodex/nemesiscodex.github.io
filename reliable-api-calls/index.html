@@ -11,7 +11,7 @@
 <meta name="description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
 Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.
 TL;DR If you remember one thing from this post:
-Make your APIs idempotent — Use idempotency keys to prevent duplicate processing Use state machines — Track transaction lifecycle with clear states and transitions Optimistic locks are your friend — Use conditional state updates to prevent race conditions The three-step process:
+Make your APIs idempotent Use idempotency keys to prevent duplicate processing Use state machines Track transaction lifecycle with clear states and transitions Optimistic locks are your friend Use conditional state updates to prevent race conditions The three-step process:
 " />
 <meta name="keywords" content="backend, frontend, software engineering, software design, developer, tips, tricks, ai, java, typescript, react, html, css, svg, software-engineering, api, backend, reliability, database" />
 <meta name="robots" content="noodp" />
@@ -163,10 +163,10 @@ Everyone seems to think only about the happy path when …" />
   <meta itemprop="description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
 Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.
 TL;DR If you remember one thing from this post:
-Make your APIs idempotent — Use idempotency keys to prevent duplicate processing Use state machines — Track transaction lifecycle with clear states and transitions Optimistic locks are your friend — Use conditional state updates to prevent race conditions The three-step process:">
+Make your APIs idempotent Use idempotency keys to prevent duplicate processing Use state machines Track transaction lifecycle with clear states and transitions Optimistic locks are your friend Use conditional state updates to prevent race conditions The three-step process:">
   <meta itemprop="datePublished" content="2025-11-02T00:21:02-03:00">
   <meta itemprop="dateModified" content="2025-11-02T00:21:02-03:00">
-  <meta itemprop="wordCount" content="3846">
+  <meta itemprop="wordCount" content="3848">
   <meta itemprop="image" content="https://blog.nemesiscodex.org/reliable-api-calls/post-cover.png">
   <meta itemprop="keywords" content="Software-Engineering,Api,Backend,Reliability,Database">
 
@@ -176,7 +176,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
   <meta name="twitter:description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
 Everyone seems to think only about the happy path when integrating with 3rd party APIs. But what about failures? Unreliable network conditions, timeouts, server crashes, etc. These are all real problems that can cost you money, data integrity, and user trust.
 TL;DR If you remember one thing from this post:
-Make your APIs idempotent — Use idempotency keys to prevent duplicate processing Use state machines — Track transaction lifecycle with clear states and transitions Optimistic locks are your friend — Use conditional state updates to prevent race conditions The three-step process:">
+Make your APIs idempotent Use idempotency keys to prevent duplicate processing Use state machines Track transaction lifecycle with clear states and transitions Optimistic locks are your friend Use conditional state updates to prevent race conditions The three-step process:">
 
 
 
@@ -332,17 +332,17 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 <h2 id="tldr">TL;DR</h2>
 <p><strong>If you remember one thing from this post:</strong></p>
 <ol>
-<li><strong>Make your APIs idempotent</strong> — Use idempotency keys to prevent duplicate processing</li>
-<li><strong>Use state machines</strong> — Track transaction lifecycle with clear states and transitions</li>
-<li><strong>Optimistic locks are your friend</strong> — Use conditional state updates to prevent race conditions</li>
+<li><strong>Make your APIs idempotent</strong> Use idempotency keys to prevent duplicate processing</li>
+<li><strong>Use state machines</strong> Track transaction lifecycle with clear states and transitions</li>
+<li><strong>Optimistic locks are your friend</strong> Use conditional state updates to prevent race conditions</li>
 </ol>
 <p><strong>The three-step process:</strong></p>
 <ol>
-<li><strong>DB transaction: Save initial state</strong> — Create transaction record with all related tables in a single database transaction</li>
-<li><strong>API call</strong> — Make the external API call (only after initial state is persisted)</li>
-<li><strong>DB transaction: Save result</strong> — Update transaction state and all related tables in a single database transaction</li>
+<li><strong>DB transaction: Save initial state</strong> Create transaction record with all related tables in a single database transaction</li>
+<li><strong>API call</strong> Make the external API call (only after initial state is persisted)</li>
+<li><strong>DB transaction: Save result</strong> Update transaction state and all related tables in a single database transaction</li>
 </ol>
-<p><strong>Always have a recovery mechanism in mind</strong> — Implement a scheduler/job that periodically retries stuck transactions and moves them to final states.</p>
+<p><strong>Always have a recovery mechanism in mind</strong> Implement a scheduler/job that periodically retries stuck transactions and moves them to final states.</p>
 <hr>
 <h2 id="naive-approach">Naive Approach</h2>
 <p>Let&rsquo;s start with this seemingly innocent diagram. Can you spot what&rsquo;s wrong with it?</p>
@@ -373,7 +373,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 <h2 id="what-can-go-wrong">What Can Go Wrong?</h2>
 <p>Let me walk you through the <strong>points of failure</strong> in this flow:</p>
 <p><img src="what-can-go-wrong.png" alt="Reliable Api Calls"></p>
-<p><strong>Every API request and response is a potential point of failure</strong>—from requests to your own backend, to third-party APIs, and even to your database. Each network hop, each service call, and each database operation can fail in ways that leave your system in an inconsistent state.</p>
+<p><strong>Every API request and response is a potential point of failure</strong> from requests to your own backend, to third-party APIs, and even to your database. Each network hop, each service call, and each database operation can fail in ways that leave your system in an inconsistent state.</p>
 <h3 id="network-timeouts">Network Timeouts</h3>
 <ul>
 <li><strong>FE → BE timeout</strong>: User&rsquo;s request times out, did the backend process the request?</li>
@@ -420,7 +420,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 <li><strong>PATCH</strong>: Not guaranteed idempotent (depends on semantics)</li>
 <li><strong>POST</strong>: Not idempotent by default; can be made idempotent via server design (e.g., upsert-by-key) or idempotency keys</li>
 </ul>
-<p><strong>Why POST is tricky</strong>: By default POST creates new resources, so repeated POSTs can create duplicates—unacceptable for financial operations.</p>
+<p><strong>Why POST is tricky</strong>: By default POST creates new resources, so repeated POSTs can create duplicates. This is unacceptable for financial operations.</p>
 <p><strong>What we need</strong>: Make POSTs safe using <strong>idempotency keys</strong> (plus server-side upsert semantics where appropriate) so multiple calls with the same key return the same result.</p>
 <h2 id="pattern-1-idempotency-keys">Pattern 1: Idempotency Keys</h2>
 <p>The solution is simple: attach a unique identifier to each request. If the server has seen this identifier before, it returns the cached result instead of processing again.</p>
@@ -587,7 +587,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 <p>When implementing API calls with state management, it&rsquo;s critical to use proper <strong>database transaction boundaries</strong> to ensure data consistency. The process should follow these three steps:</p>
 <ol>
 <li>
-<p><strong>Save initial state in database</strong> (single database transaction): Create the transaction record with all necessary tables and initial state in a single database transaction. This ensures atomicity—if any part of the initial state creation fails, the entire operation rolls back, leaving your database in a consistent state.</p>
+<p><strong>Save initial state in database</strong> (single database transaction): Create the transaction record with all necessary tables and initial state in a single database transaction. This ensures atomicity, if any part of the initial state creation fails, the entire operation rolls back, leaving your database in a consistent state.</p>
 <p><strong>Example</strong>: If you need to create a transaction record and update a related table (e.g., deducting funds from an account), both operations must happen in the same transaction.</p>
 </li>
 <li>
@@ -622,7 +622,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 <li><strong>Backend Transaction Key</strong>: Tracks the transaction request on your backend (may be client-created or backend-created, depending on your approach)</li>
 <li><strong>External API Key</strong>: Used when calling the external API (always backend-created)</li>
 </ol>
-<p><strong>Why both?</strong> They serve different retry boundaries. When a client retries the same transaction request, your backend uses the transaction key to recognize it&rsquo;s a duplicate. However, when your backend needs to retry the external API call (due to a network error, timeout, etc.), it should use a separate key—either a new one each retry, or the external API may handle its own idempotency.</p>
+<p><strong>Why both?</strong> They serve different retry boundaries. When a client retries the same transaction request, your backend uses the transaction key to recognize it&rsquo;s a duplicate. However, when your backend needs to retry the external API call (due to a network error, timeout, etc.), it should use a separate key, either a new one each retry, or the external API may handle its own idempotency.</p>
 <p><strong>Example</strong>:</p>
 <ul>
 <li>Client retries <code>POST /transaction</code> with transaction key <code>abc-123</code> → Backend recognizes duplicate using <code>abc-123</code></li>
@@ -719,7 +719,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 <p>Consider updating a user&rsquo;s account balance when processing transactions. Two <strong>different transactions</strong> arrive concurrently:</p>
 <ul>
 <li><strong>Transaction A</strong>: Process $50 debit (transaction_id: <code>txn-1</code>)</li>
-<li><strong>Transaction B</strong>: Process $50 debit (transaction_id: <code>txn-2</code>) — different transaction!</li>
+<li><strong>Transaction B</strong>: Process $50 debit (transaction_id: <code>txn-2</code>). This is a different transaction!</li>
 </ul>
 <p>Both should be applied, so the balance should go from <code>$1000</code> → <code>$900</code> (1000 - 50 - 50).</p>
 <p><strong>Without optimistic locking</strong>, your code might do:</p>
@@ -754,7 +754,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
 </li>
 <li>The WHERE clause ensures only one request can proceed if they arrive simultaneously</li>
 </ol>
-<p>This is &ldquo;optimistic&rdquo; because you assume success and check afterwards—if another request beat you, you detect the conflict and abort.</p>
+<p>This is &ldquo;optimistic&rdquo; because you assume success and check afterwards. If another request beat you, you detect the conflict and abort.</p>
 <h3 id="solution-1-version-column">Solution 1: Version Column</h3>
 <p>Add a <code>version</code> column to your table (integer, starts at 0 or 1):</p>
 
@@ -1003,7 +1003,7 @@ Make your APIs idempotent — Use idempotency keys to prevent duplicate processi
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        3846 Words
+        3848 Words
       </p>
 
       <p>
