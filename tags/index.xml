@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Nemesiscodex&#39;s Engineering Blog</title>
+    <title>Tags on Nemesiscodex&#39;s Blog</title>
     <link>https://blog.nemesiscodex.org/tags/</link>
-    <description>Recent content in Tags on Nemesiscodex&#39;s Engineering Blog</description>
+    <description>Recent content in Tags on Nemesiscodex&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 02 Nov 2025 00:21:02 -0300</lastBuildDate>
     <atom:link href="https://blog.nemesiscodex.org/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Api</title>
-      <link>https://blog.nemesiscodex.org/tags/api/</link>
+      <title>Api-Design</title>
+      <link>https://blog.nemesiscodex.org/tags/api-design/</link>
       <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/tags/api/</guid>
+      <guid>https://blog.nemesiscodex.org/tags/api-design/</guid>
       <description></description>
     </item>
     <item>
-      <title>Backend</title>
-      <link>https://blog.nemesiscodex.org/tags/backend/</link>
+      <title>Idempotency</title>
+      <link>https://blog.nemesiscodex.org/tags/idempotency/</link>
       <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/tags/backend/</guid>
+      <guid>https://blog.nemesiscodex.org/tags/idempotency/</guid>
       <description></description>
     </item>
     <item>
-      <title>Database</title>
-      <link>https://blog.nemesiscodex.org/tags/database/</link>
+      <title>Optimistic-Locking</title>
+      <link>https://blog.nemesiscodex.org/tags/optimistic-locking/</link>
       <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/tags/database/</guid>
+      <guid>https://blog.nemesiscodex.org/tags/optimistic-locking/</guid>
       <description></description>
     </item>
     <item>
@@ -37,10 +37,31 @@
       <description></description>
     </item>
     <item>
-      <title>Software-Engineering</title>
-      <link>https://blog.nemesiscodex.org/tags/software-engineering/</link>
+      <title>Resilience</title>
+      <link>https://blog.nemesiscodex.org/tags/resilience/</link>
       <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/tags/software-engineering/</guid>
+      <guid>https://blog.nemesiscodex.org/tags/resilience/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Retries</title>
+      <link>https://blog.nemesiscodex.org/tags/retries/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/retries/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>State-Machines</title>
+      <link>https://blog.nemesiscodex.org/tags/state-machines/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/state-machines/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>System-Design</title>
+      <link>https://blog.nemesiscodex.org/tags/system-design/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/system-design/</guid>
       <description></description>
     </item>
     <item>
@@ -51,10 +72,17 @@
       <description></description>
     </item>
     <item>
-      <title>Html</title>
-      <link>https://blog.nemesiscodex.org/tags/html/</link>
+      <title>Gooey-Effect</title>
+      <link>https://blog.nemesiscodex.org/tags/gooey-effect/</link>
       <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
-      <guid>https://blog.nemesiscodex.org/tags/html/</guid>
+      <guid>https://blog.nemesiscodex.org/tags/gooey-effect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gradients</title>
+      <link>https://blog.nemesiscodex.org/tags/gradients/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/gradients/</guid>
       <description></description>
     </item>
     <item>
@@ -62,6 +90,27 @@
       <link>https://blog.nemesiscodex.org/tags/svg/</link>
       <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
       <guid>https://blog.nemesiscodex.org/tags/svg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Svg-Filters</title>
+      <link>https://blog.nemesiscodex.org/tags/svg-filters/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/svg-filters/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Visual-Effects</title>
+      <link>https://blog.nemesiscodex.org/tags/visual-effects/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/visual-effects/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web-Graphics</title>
+      <link>https://blog.nemesiscodex.org/tags/web-graphics/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/tags/web-graphics/</guid>
       <description></description>
     </item>
   </channel>

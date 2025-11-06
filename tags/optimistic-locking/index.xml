@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Optimistic-Locking on Nemesiscodex&#39;s Blog</title>
+    <link>https://blog.nemesiscodex.org/tags/optimistic-locking/</link>
+    <description>Recent content in Optimistic-Locking on Nemesiscodex&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Nov 2025 00:21:02 -0300</lastBuildDate>
+    <atom:link href="https://blog.nemesiscodex.org/tags/optimistic-locking/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title>
+      <link>https://blog.nemesiscodex.org/reliable-api-calls/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid>
+      <description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;&#xA;&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

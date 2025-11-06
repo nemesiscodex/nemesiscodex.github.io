@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Svg-Filters on Nemesiscodex&#39;s Blog</title>
+    <link>https://blog.nemesiscodex.org/tags/svg-filters/</link>
+    <description>Recent content in Svg-Filters on Nemesiscodex&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Nov 2025 15:57:27 -0300</lastBuildDate>
+    <atom:link href="https://blog.nemesiscodex.org/tags/svg-filters/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>You Can Use SVG Filters in CSS - Here&#39;s How</title>
+      <link>https://blog.nemesiscodex.org/svg-filter/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>https://blog.nemesiscodex.org/svg-filter/</guid>
+      <description>&lt;video fetchpriority=&#34;high&#34; autoplay muted loop  width=&#34;100%&#34;&gt;&#xA;    &lt;source src=&#34;https://blog.nemesiscodex.org/svg-filter/video/svg-filter.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;    Your browser does not support the video tag.&#xA;  &lt;/video&gt;&#xA;&lt;p&gt;Notice how those blobs smoothly merge and separate? That&amp;rsquo;s SVG filters at work.&lt;/p&gt;&#xA;&lt;p&gt;You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

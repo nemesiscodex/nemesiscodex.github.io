@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Nemesiscodex&#39;s Engineering Blog</title>
+    <title>Categories on Nemesiscodex&#39;s Blog</title>
     <link>https://blog.nemesiscodex.org/categories/</link>
-    <description>Recent content in Categories on Nemesiscodex&#39;s Engineering Blog</description>
+    <description>Recent content in Categories on Nemesiscodex&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <atom:link href="https://blog.nemesiscodex.org/categories/index.xml" rel="self" type="application/rss+xml" />
