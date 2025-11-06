@@ -710,6 +710,7 @@
   deactivate Queue
 </pre>
 <p>This approach decouples your API from external dependencies and provides better resilience.</p>
+<p>More patterns are coming as we dive into asynchronous processing - stay tuned.</p>
 ]]></content>
         </item>
         
