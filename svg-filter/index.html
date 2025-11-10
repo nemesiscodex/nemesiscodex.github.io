@@ -1,732 +1,214 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        
-
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author" content="Julio Reyes">
-<meta name="description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a basic page." />
-<meta name="keywords" content="backend, frontend, software engineering, software design, developer, tips, tricks, ai, java, typescript, react, html, css, svg, svg, svg-filters, css, web-graphics, visual-effects, gooey-effect, gradients" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="dark" />
-<link rel="canonical" href="https://blog.nemesiscodex.org/svg-filter/" />
-
-
-    <title>
-        
-            You Can Use SVG Filters in CSS - Here&#39;s How :: Nemesiscodex&#39;s Blog  — Software engineering, architecture, and modern development
-        
-    </title>
-
-
-
-
-
-  <link rel="stylesheet" href="/main.min.2729760c629597024c5de34b40ea9f372f2b5a2a192dcdca537b7ddfa483eab8.css" integrity="sha256-Jyl2DGKVlwJMXeNLQOqfNy8rWioZLc3KU3t936SD6rg=" crossorigin="anonymous">
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <meta name="msapplication-TileColor" content="">
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-
-
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.nemesiscodex.org/svg-filter/" />
-<meta property="og:title" content="You Can Use SVG Filters in CSS - Here&#39;s How :: Nemesiscodex&#39;s Blog" />
-<meta property="og:description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a …" />
-<meta property="og:site_name" content="Nemesiscodex&#39;s Blog" />
-
-<meta property="og:image" content="https://blog.nemesiscodex.org/svg-filter/post-cover.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-
-
-
-  
-  <meta property="article:published_time" content="2025-11-01T15:57:27-03:00" />
-  
-  
-  <meta property="article:modified_time" content="2025-11-01T15:57:27-03:00" />
-  
-  
-  <meta property="article:author" content="Julio Reyes" />
-  
-  
-  <meta property="article:tag" content="svg" />
-  
-  <meta property="article:tag" content="svg-filters" />
-  
-  <meta property="article:tag" content="css" />
-  
-  <meta property="article:tag" content="web-graphics" />
-  
-  <meta property="article:tag" content="visual-effects" />
-  
-  <meta property="article:tag" content="gooey-effect" />
-  
-  <meta property="article:tag" content="gradients" />
-  
-  
-
-
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="You Can Use SVG Filters in CSS - Here&#39;s How :: Nemesiscodex&#39;s Blog" />
-<meta name="twitter:description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a …" />
-
-<meta name="twitter:image" content="https://blog.nemesiscodex.org/svg-filter/post-cover.png" />
-
-
-  
-    
-    <meta name="twitter:site" content="https://x.com/nemesiscodex" />
-    
-  
-    
-  
-
-
-
-<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-<link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
-<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-<link rel="dns-prefetch" href="https://www.google-analytics.com" />
-
-
-
-
-  
-  
-  
-  
-  
-    
-      
-        
-      
-    
-      
-    
-  
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "\"You Can Use SVG Filters in CSS - Here's How\"",
-    "description": "\"This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a basic page.\"",
-    "image": "\"https://blog.nemesiscodex.org/svg-filter/post-cover.png\"",
-    "datePublished": "\"2025-11-01T15:57:27-03:00\"",
-    "dateModified": "\"2025-11-01T15:57:27-03:00\"",
-    "author": {
-      "@type": "Person",
-      "name": "\"Julio Reyes\"",
-      "url": "\"https://x.com/nemesiscodex\"",
-      "identifier": "nemesiscodex"
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "\"Julio Reyes\"",
-      "url": "\"https://x.com/nemesiscodex\""
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "\"https://blog.nemesiscodex.org/svg-filter/\""
-    },
-    "url": "\"https://blog.nemesiscodex.org/svg-filter/\"",
-    "keywords": "\"svg, svg-filters, css, web-graphics, visual-effects, gooey-effect, gradients\""
-  }
-  </script>
-
-
-
-
-
-  <meta itemprop="name" content="You Can Use SVG Filters in CSS - Here&#39;s How">
-  <meta itemprop="description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a basic page.">
-  <meta itemprop="datePublished" content="2025-11-01T15:57:27-03:00">
-  <meta itemprop="dateModified" content="2025-11-01T15:57:27-03:00">
-  <meta itemprop="wordCount" content="1221">
-  <meta itemprop="image" content="https://blog.nemesiscodex.org/svg-filter/post-cover.png">
-  <meta itemprop="keywords" content="Svg,Svg-Filters,Css,Web-Graphics,Visual-Effects,Gooey-Effect,Gradients">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://blog.nemesiscodex.org/svg-filter/post-cover.png">
-  <meta name="twitter:title" content="You Can Use SVG Filters in CSS - Here&#39;s How">
-  <meta name="twitter:description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a basic page.">
-
-
-
-
-
-
-
-
-
-    
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-J750Q0BHT0"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-J750Q0BHT0');
-        }
-      </script>
-
-
-
-    </head>
-
-    
-        <body>
-    
-    
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__mark">></span>
-            <span class="logo__text ">
-                nemesiscodex</span>
-            <span class="logo__cursor" style=
-                  "
-                   
-                   ">
-            </span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="/about/">About</a></li><li><a href="/posts">Posts</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-  <main class="post">
-
-    <div class="post-info">
-      <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-        6 minutes
-
-        
-      </p>
-    </div>
-
-    <article>
-      <h1 class="post-title">
-        <a href="https://blog.nemesiscodex.org/svg-filter/">You Can Use SVG Filters in CSS - Here&rsquo;s How</a>
-      </h1>
-
-      
-        <div class="post-excerpt">This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We&#39;ll build it step by step, starting from a basic page.</div>
-      
-
-      
-
-      
-
-      <div class="post-content">
-        <video fetchpriority="high" autoplay muted loop  width="100%">
-    <source src="/svg-filter/video/svg-filter.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-<p>Notice how those blobs smoothly merge and separate? That&rsquo;s SVG filters at work.</p>
-<p>You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.</p>
-<p>Let me show you an example. We&rsquo;ll start with a simple HTML page containing a container div for objects with gradients. Inside this I&rsquo;ll put two divs that are circles with gradients, all in a style tag.</p>
-<h2 id="basic-setup">Basic Setup</h2>
-<p><strong>HTML (index.html):</strong></p>
-<p>For simplicity, I&rsquo;m including the CSS in a <code>&lt;style&gt;</code> tag, but you could also use an external stylesheet.</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">style</span>&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">body</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: linear-gradient(
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">40</span><span style="color:#66d9ef">deg</span>, rgb(<span style="color:#ae81ff">108</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">162</span>), rgb(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">82</span>)
-</span></span><span style="display:flex;"><span>            );
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">vh</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">gradient-container</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">flex</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">justify-content</span>: <span style="color:#66d9ef">center</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">align-items</span>: <span style="color:#66d9ef">center</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">circle</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">400</span><span style="color:#66d9ef">px</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">400</span><span style="color:#66d9ef">px</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">-30</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">70</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">g1</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: radial-gradient(
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">circle</span> at <span style="color:#66d9ef">center</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">52</span>, <span style="color:#ae81ff">190</span>, <span style="color:#ae81ff">203</span>, <span style="color:#ae81ff">0.8</span>) <span style="color:#ae81ff">0</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">180</span>, <span style="color:#ae81ff">180</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">0</span>) <span style="color:#ae81ff">50</span><span style="color:#66d9ef">%</span>
-</span></span><span style="display:flex;"><span>            ) <span style="color:#66d9ef">no-repeat</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">g2</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: radial-gradient(
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">circle</span> at <span style="color:#66d9ef">center</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">172</span>, <span style="color:#ae81ff">159</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">0.8</span>) <span style="color:#ae81ff">0</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">202</span>, <span style="color:#ae81ff">248</span>, <span style="color:#ae81ff">0</span>) <span style="color:#ae81ff">50</span><span style="color:#66d9ef">%</span>
-</span></span><span style="display:flex;"><span>            ) <span style="color:#66d9ef">no-repeat</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">style</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gradient-container&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;circle g1&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;circle g2&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;</span></span></code></pre></div><p>This is the CSS I have. <code>g1</code> and <code>g2</code> define two background gradient colors. <code>circle</code> defines the size and shape with the border radius. For the gradient container, I make it fit the screen and define the disposition of the elements inside of it. Finally, the body just has the main background gradient.</p>
-<p>This produces two static, overlapping colored blobs on the background.</p>
-<p>Now let&rsquo;s add the magic that makes them blend together.</p>
-<h2 id="add-the-svg-filter">Add the SVG Filter</h2>
-<p>Now, inside the body, I will create a new SVG element. I will make sure this element is not visible with display none.</p>
-<p>Add an <code>&lt;svg&gt;</code> before the container div:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">svg</span>&gt;</span></span></code></pre></div><p>Now inside the SVG I can create my filter element with id svgfilter:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">filter</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;svgfilter&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">filter</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">svg</span>&gt;</span></span></code></pre></div><p>Now let&rsquo;s add the filter effects. Inside the filter, we can define the filter effect functions we want. For example, this Gaussian blur. (<code>&lt;feGaussianBlur&gt;</code>) where <code>fe</code> stands for <code>filter effect</code>, and I can track the result of a filter applied with the result attribute. In this case, the ID of the result will be blur. I can then use this ID as an entry for another filter.</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">filter</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;svgfilter&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- Apply blur effect and store result --&gt;</span>
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">feGaussianBlur</span> <span style="color:#a6e22e">stdDeviation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">filter</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">svg</span>&gt;</span></span></code></pre></div><p>I want these two circles to blend as they get closer, kind of like a melt or gooey effect. For that, I can use a color matrix filter effect. This color matrix takes as input the output of the blur effect. It applies an identity matrix to the color channels of the image.</p>
-<p>I&rsquo;ll leave all the color channels the same and tweak the output of the alpha channel to get the result I want. The values <code>18 -8</code> in the alpha row multiply the alpha channel by 18 and subtract 8, which amplifies the blending effect.</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">filter</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;svgfilter&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- Apply blur effect and store result --&gt;</span>
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">feGaussianBlur</span> <span style="color:#a6e22e">stdDeviation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- Enhance alpha channel for gooey effect --&gt;</span>
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">feColorMatrix</span> <span style="color:#a6e22e">in</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> <span style="color:#a6e22e">mode</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;matrix&#34;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">values</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                1 0 0 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                0 1 0 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                0 0 1 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                0 0 0 18 -8&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;colorMatrix&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">filter</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">svg</span>&gt;</span></span></code></pre></div><p>I can also bring back the original gradients for the circles by blending the original source graphic with the output of the color matrix:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">filter</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;svgfilter&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- Apply blur effect and store result --&gt;</span>
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">feGaussianBlur</span> <span style="color:#a6e22e">stdDeviation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- Enhance alpha channel for gooey effect --&gt;</span>
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">feColorMatrix</span> <span style="color:#a6e22e">in</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> <span style="color:#a6e22e">mode</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;matrix&#34;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">values</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                1 0 0 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                0 1 0 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                0 0 1 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                0 0 0 18 -8&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;colorMatrix&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- Blend original gradients with filtered result --&gt;</span>
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">feBlend</span> <span style="color:#a6e22e">in</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SourceGraphic&#34;</span> <span style="color:#a6e22e">in2</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;colorMatrix&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">filter</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">svg</span>&gt;</span></span></code></pre></div><p>With that ID in mind, I can set the filter property in the gradient container CSS to reference that filter element.</p>
-<p>Update <code>.gradient-container</code>:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">gradient-container</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* existing styles */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Reference the SVG filter by its ID */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">filter</span>: url(<span style="color:#e6db74">#svgfilter</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>This effect changes depending on how close the circles are. If I pull them apart, you can see they really seem to act as some kind of gooey material. It&rsquo;s a really cool effect.</p>
-<p>If you run this code, you&rsquo;ll notice the circles now blend together smoothly when they overlap, creating that gooey, liquid-like effect.</p>
-<p>But we can take it even further.</p>
-<h2 id="add-css-filter-on-top">Add CSS Filter on Top</h2>
-<p>And if we go to the CSS again, I can still apply any CSS filter on top of it.</p>
-<p>Update <code>.gradient-container</code>:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">gradient-container</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* existing styles */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* Combine SVG filter with additional CSS blur */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">filter</span>: url(<span style="color:#e6db74">#svgfilter</span>) blur(<span style="color:#ae81ff">40</span><span style="color:#66d9ef">px</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>And it&rsquo;s just a matter of tweaking it a bit to get my desired result. And I end up with this nice gradient background.</p>
-<p>To really show off how this gooey effect works, let&rsquo;s add some movement.</p>
-<h2 id="add-animation-to-demonstrate-the-effect">Add Animation to Demonstrate the Effect</h2>
-<p>Update <code>.g1</code> and <code>.g2</code>:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">g1</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* existing styles */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">animation</span>: moveApart1 <span style="color:#ae81ff">3</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-in-out</span> <span style="color:#66d9ef">infinite</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">g2</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* existing styles */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">animation</span>: moveApart2 <span style="color:#ae81ff">3</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-in-out</span> <span style="color:#66d9ef">infinite</span>;
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>Add the keyframes:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>@<span style="color:#66d9ef">keyframes</span> <span style="color:#f92672">moveApart1</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">0</span><span style="color:#f92672">%,</span> <span style="color:#f92672">100</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">50</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">-150</span><span style="color:#66d9ef">px</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@<span style="color:#66d9ef">keyframes</span> <span style="color:#f92672">moveApart2</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">0</span><span style="color:#f92672">%,</span> <span style="color:#f92672">100</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">50</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">150</span><span style="color:#66d9ef">px</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>The circles now dynamically separate and reconnect, highlighting the melting goo effect in motion.</p>
-<p>I bet you didn&rsquo;t know that SVG filters could create such smooth blending effects. This technique works great for backgrounds, hero sections, or any place where you want that organic, fluid look. If you made it this far, thank you for reading, and feel free to share this if you found it useful.</p>
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Here is an explanation for svg filters, now you know 🙂 <a href="https://t.co/D2MdxVwyAM">https://t.co/D2MdxVwyAM</a> <a href="https://t.co/22Y74ygALp">pic.twitter.com/22Y74ygALp</a></p>&mdash; Julio Reyes (@nemesiscodex) <a href="https://twitter.com/nemesiscodex/status/1973761290054345142?ref_src=twsrc%5Etfw">October 2, 2025</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>Full code:</p>
-
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;SVG Filters Demo&lt;/<span style="color:#f92672">title</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">style</span>&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">body</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: linear-gradient(
-</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">40</span><span style="color:#66d9ef">deg</span>, rgb(<span style="color:#ae81ff">108</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">162</span>), rgb(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">82</span>)
-</span></span><span style="display:flex;"><span>            );
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">vh</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">gradient-container</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">flex</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">justify-content</span>: <span style="color:#66d9ef">center</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">align-items</span>: <span style="color:#66d9ef">center</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">filter</span>: url(<span style="color:#e6db74">#svgfilter</span>) blur(<span style="color:#ae81ff">40</span><span style="color:#66d9ef">px</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">circle</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">400</span><span style="color:#66d9ef">px</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">400</span><span style="color:#66d9ef">px</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">-30</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">70</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">g1</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: radial-gradient(
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">circle</span> at <span style="color:#66d9ef">center</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">52</span>, <span style="color:#ae81ff">190</span>, <span style="color:#ae81ff">203</span>, <span style="color:#ae81ff">0.8</span>) <span style="color:#ae81ff">0</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">180</span>, <span style="color:#ae81ff">180</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">0</span>) <span style="color:#ae81ff">50</span><span style="color:#66d9ef">%</span>
-</span></span><span style="display:flex;"><span>            ) <span style="color:#66d9ef">no-repeat</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">/* Animate circle 1 to move left and right */</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">animation</span>: moveApart1 <span style="color:#ae81ff">3</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-in-out</span> <span style="color:#66d9ef">infinite</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">g2</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: radial-gradient(
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">circle</span> at <span style="color:#66d9ef">center</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">172</span>, <span style="color:#ae81ff">159</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">0.8</span>) <span style="color:#ae81ff">0</span>,
-</span></span><span style="display:flex;"><span>                rgba(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">202</span>, <span style="color:#ae81ff">248</span>, <span style="color:#ae81ff">0</span>) <span style="color:#ae81ff">50</span><span style="color:#66d9ef">%</span>
-</span></span><span style="display:flex;"><span>            ) <span style="color:#66d9ef">no-repeat</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">animation</span>: moveApart2 <span style="color:#ae81ff">3</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-in-out</span> <span style="color:#66d9ef">infinite</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        @<span style="color:#66d9ef">keyframes</span> <span style="color:#f92672">moveApart1</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">0</span><span style="color:#f92672">%,</span> <span style="color:#f92672">100</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">50</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">-150</span><span style="color:#66d9ef">px</span>);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        @<span style="color:#66d9ef">keyframes</span> <span style="color:#f92672">moveApart2</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">0</span><span style="color:#f92672">%,</span> <span style="color:#f92672">100</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">50</span><span style="color:#f92672">%</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">transform</span>: translateX(<span style="color:#ae81ff">150</span><span style="color:#66d9ef">px</span>);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">style</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display: none;&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">filter</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;svgfilter&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">feGaussianBlur</span> <span style="color:#a6e22e">stdDeviation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;10&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">feColorMatrix</span> <span style="color:#a6e22e">in</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blur&#34;</span> <span style="color:#a6e22e">mode</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;matrix&#34;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">values</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    1 0 0 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    0 1 0 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    0 0 1 0 0
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    0 0 0 18 -8&#34;</span> <span style="color:#a6e22e">result</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;colorMatrix&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">feBlend</span> <span style="color:#a6e22e">in</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SourceGraphic&#34;</span> <span style="color:#a6e22e">in2</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;colorMatrix&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">filter</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">svg</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gradient-container&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;circle g1&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;circle g2&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;</span></span></code></pre></div>
-      </div>
-    </article>
-
-    <hr />
-
-    <div class="post-info">
-      
-    <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
-
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/svg/">svg</a></span>
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/svg-filters/">svg-filters</a></span>
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/css/">css</a></span>
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/web-graphics/">web-graphics</a></span>
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/visual-effects/">visual-effects</a></span>
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/gooey-effect/">gooey-effect</a></span>
-        <span class="tag"><a href="https://blog.nemesiscodex.org/tags/gradients/">gradients</a></span>
-        
-    </p>
-
-      
-
-      <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-          <polyline points="10 9 9 9 8 9"></polyline>
-        </svg>
-        1221 Words
-      </p>
-
-      <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="16" y1="2" x2="16" y2="6"></line>
-          <line x1="8" y1="2" x2="8" y2="6"></line>
-          <line x1="3" y1="10" x2="21" y2="10"></line>
-        </svg>
-        
-          2025-11-01 15:57
-        
-
-         
-          
-        
-      </p>
-    </div>
-      <hr />
-      <div class="sharing-buttons">
-        
-<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
-  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
-  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
-      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;caption=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;canonicalUrl=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
-  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
-    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="mailto:?subject=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;body=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
-  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;media=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f;description=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
-  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;summary=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;source=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
-  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;resubmit=true&amp;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
-  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target="_blank" rel="noopener" aria-label="" title="Share on xing">
-  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="whatsapp://send?text=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How%20https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
-  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;t=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
-  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
-    </div>
-  </div>
-</a>
-
-
-<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
-  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-    </div>
-  </div>
-</a>
-
-      </div>
-
-    
-    <div class="pagination">
-        
-
-        <div class="pagination__buttons">
-            
-            <span class="button previous">
-                <a href="https://blog.nemesiscodex.org/reliable-api-calls/">
-                    <span class="button__icon">←</span>
-                    <span class="button__text">These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</span>
-                </a>
-            </span>
-            
-
-            
-        </div>
-    </div>
-
-
-    
-
-    
-
-    
-
-  </main>
-
-            </div>
-
-            
-                <footer class="footer">
-    
-    
-</footer>
-
-            
-        </div>
-
-        
-
-
-
-<script type="text/javascript" src="/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js" integrity="sha512-rVStlzZPd&#43;3jXe&#43;QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb&#43;bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script>
-
-
-
-
-    </body>
-</html>
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="Julio Reyes"><meta name=description content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a basic page."><meta name=keywords content="backend,frontend,software engineering,software design,developer,tips,tricks,ai,java,typescript,react,html,css,svg,svg,svg-filters,css,web-graphics,visual-effects,gooey-effect,gradients"><meta name=robots content="noodp"><meta name=theme-color content="dark"><link rel=canonical href=https://blog.nemesiscodex.org/svg-filter/><title>You Can Use SVG Filters in CSS - Here's How :: Nemesiscodex's Blog — Software engineering, architecture, and modern development</title><link rel=stylesheet href=/main.min.2729760c629597024c5de34b40ea9f372f2b5a2a192dcdca537b7ddfa483eab8.css integrity="sha256-Jyl2DGKVlwJMXeNLQOqfNy8rWioZLc3KU3t936SD6rg=" crossorigin=anonymous><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color><link rel="shortcut icon" href=/favicon.ico><meta name=msapplication-TileColor content><meta property="og:type" content="article"><meta property="og:url" content="https://blog.nemesiscodex.org/svg-filter/"><meta property="og:title" content="You Can Use SVG Filters in CSS - Here's How :: Nemesiscodex's Blog"><meta property="og:description" content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a …"><meta property="og:site_name" content="Nemesiscodex's Blog"><meta property="og:image" content="https://blog.nemesiscodex.org/svg-filter/post-cover.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="article:published_time" content="2025-11-01T15:57:27-03:00"><meta property="article:modified_time" content="2025-11-01T15:57:27-03:00"><meta property="article:author" content="Julio Reyes"><meta property="article:tag" content="svg"><meta property="article:tag" content="svg-filters"><meta property="article:tag" content="css"><meta property="article:tag" content="web-graphics"><meta property="article:tag" content="visual-effects"><meta property="article:tag" content="gooey-effect"><meta property="article:tag" content="gradients"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="You Can Use SVG Filters in CSS - Here's How :: Nemesiscodex's Blog"><meta name=twitter:description content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a …"><meta name=twitter:image content="https://blog.nemesiscodex.org/svg-filter/post-cover.png"><meta name=twitter:image:alt content="You Can Use SVG Filters in CSS - Here's How :: Nemesiscodex's Blog"><meta name=twitter:site content="@nemesiscodex"><meta name=twitter:creator content="@nemesiscodex"><link rel=preconnect href=https://www.googletagmanager.com crossorigin><link rel=preconnect href=https://www.google-analytics.com crossorigin><link rel=dns-prefetch href=https://www.googletagmanager.com><link rel=dns-prefetch href=https://www.google-analytics.com><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"\"You Can Use SVG Filters in CSS - Here's How\"","description":"\"This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a basic page.\"","image":"\"https://blog.nemesiscodex.org/svg-filter/post-cover.png\"","datePublished":"\"2025-11-01T15:57:27-03:00\"","dateModified":"\"2025-11-01T15:57:27-03:00\"","author":{"@type":"Person","name":"\"Julio Reyes\"","url":"\"https://x.com/nemesiscodex\"","identifier":"nemesiscodex"},"publisher":{"@type":"Person","name":"\"Julio Reyes\"","url":"\"https://x.com/nemesiscodex\""},"mainEntityOfPage":{"@type":"WebPage","@id":"\"https://blog.nemesiscodex.org/svg-filter/\""},"url":"\"https://blog.nemesiscodex.org/svg-filter/\"","keywords":"\"svg, svg-filters, css, web-graphics, visual-effects, gooey-effect, gradients\""}</script><meta itemprop=name content="You Can Use SVG Filters in CSS - Here's How"><meta itemprop=description content="This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a basic page."><meta itemprop=datePublished content="2025-11-01T15:57:27-03:00"><meta itemprop=dateModified content="2025-11-01T15:57:27-03:00"><meta itemprop=wordCount content="1221"><meta itemprop=image content="https://blog.nemesiscodex.org/svg-filter/post-cover.png"><meta itemprop=keywords content="Svg,Svg-Filters,Css,Web-Graphics,Visual-Effects,Gooey-Effect,Gradients"><script async src="https://www.googletagmanager.com/gtag/js?id=G-J750Q0BHT0"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-J750Q0BHT0")}</script></head><body><div class=container><header class=header><span class=header__inner><a href=/ style=text-decoration:none><div class=logo><span class=logo__mark>></span>
+<span class=logo__text>nemesiscodex</span>
+<span class=logo__cursor></span></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=/about/>About</a></li><li><a href=/posts>Posts</a></li></ul></nav><span class=menu-trigger><svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+6 minutes</p></div><article><h1 class=post-title><a href=https://blog.nemesiscodex.org/svg-filter/>You Can Use SVG Filters in CSS - Here&rsquo;s How</a></h1><div class=post-excerpt>This is a walkthrough of using SVG filters to create blob-like gradient effects with blurred, merging shapes. We'll build it step by step, starting from a basic page.</div><div class=post-content><video fetchpriority=high autoplay muted loop width=100%>
+<source src=/svg-filter/video/svg-filter.mp4 type=video/mp4>Your browser does not support the video tag.</video><p>Notice how those blobs smoothly merge and separate? That&rsquo;s SVG filters at work.</p><p>You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.</p><p>Let me show you an example. We&rsquo;ll start with a simple HTML page containing a container div for objects with gradients. Inside this I&rsquo;ll put two divs that are circles with gradients, all in a style tag.</p><h2 id=basic-setup>Basic Setup</h2><p><strong>HTML (index.html):</strong></p><p>For simplicity, I&rsquo;m including the CSS in a <code>&lt;style></code> tag, but you could also use an external stylesheet.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!DOCTYPE html&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>html</span> <span style=color:#a6e22e>lang</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;en&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>style</span>&gt;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>body</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>background</span>: linear-gradient(
+</span></span><span style=display:flex><span>                <span style=color:#ae81ff>40</span><span style=color:#66d9ef>deg</span>, rgb(<span style=color:#ae81ff>108</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>162</span>), rgb(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>17</span>, <span style=color:#ae81ff>82</span>)
+</span></span><span style=display:flex><span>            );
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>margin</span>: <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>vh</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>gradient-container</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>display</span>: <span style=color:#66d9ef>flex</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>justify-content</span>: <span style=color:#66d9ef>center</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>align-items</span>: <span style=color:#66d9ef>center</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>circle</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>400</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>400</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>margin</span>: <span style=color:#ae81ff>-30</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>border-radius</span>: <span style=color:#ae81ff>70</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>g1</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>background</span>: radial-gradient(
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>circle</span> at <span style=color:#66d9ef>center</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>52</span>, <span style=color:#ae81ff>190</span>, <span style=color:#ae81ff>203</span>, <span style=color:#ae81ff>0.8</span>) <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>180</span>, <span style=color:#ae81ff>180</span>, <span style=color:#ae81ff>50</span>, <span style=color:#ae81ff>0</span>) <span style=color:#ae81ff>50</span><span style=color:#66d9ef>%</span>
+</span></span><span style=display:flex><span>            ) <span style=color:#66d9ef>no-repeat</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>g2</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>background</span>: radial-gradient(
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>circle</span> at <span style=color:#66d9ef>center</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>172</span>, <span style=color:#ae81ff>159</span>, <span style=color:#ae81ff>38</span>, <span style=color:#ae81ff>0.8</span>) <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>16</span>, <span style=color:#ae81ff>202</span>, <span style=color:#ae81ff>248</span>, <span style=color:#ae81ff>0</span>) <span style=color:#ae81ff>50</span><span style=color:#66d9ef>%</span>
+</span></span><span style=display:flex><span>            ) <span style=color:#66d9ef>no-repeat</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>style</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;gradient-container&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;circle g1&#34;</span>&gt;&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;circle g2&#34;</span>&gt;&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>html</span>&gt;</span></span></code></pre></div><p>This is the CSS I have. <code>g1</code> and <code>g2</code> define two background gradient colors. <code>circle</code> defines the size and shape with the border radius. For the gradient container, I make it fit the screen and define the disposition of the elements inside of it. Finally, the body just has the main background gradient.</p><p>This produces two static, overlapping colored blobs on the background.</p><p>Now let&rsquo;s add the magic that makes them blend together.</p><h2 id=add-the-svg-filter>Add the SVG Filter</h2><p>Now, inside the body, I will create a new SVG element. I will make sure this element is not visible with display none.</p><p>Add an <code>&lt;svg></code> before the container div:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>svg</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display: none;&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>svg</span>&gt;</span></span></code></pre></div><p>Now inside the SVG I can create my filter element with id svgfilter:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>svg</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display: none;&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>filter</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;svgfilter&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>filter</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>svg</span>&gt;</span></span></code></pre></div><p>Now let&rsquo;s add the filter effects. Inside the filter, we can define the filter effect functions we want. For example, this Gaussian blur. (<code>&lt;feGaussianBlur></code>) where <code>fe</code> stands for <code>filter effect</code>, and I can track the result of a filter applied with the result attribute. In this case, the ID of the result will be blur. I can then use this ID as an entry for another filter.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>svg</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display: none;&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>filter</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;svgfilter&#34;</span>&gt;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Apply blur effect and store result --&gt;</span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>feGaussianBlur</span> <span style=color:#a6e22e>stdDeviation</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;10&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> /&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>filter</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>svg</span>&gt;</span></span></code></pre></div><p>I want these two circles to blend as they get closer, kind of like a melt or gooey effect. For that, I can use a color matrix filter effect. This color matrix takes as input the output of the blur effect. It applies an identity matrix to the color channels of the image.</p><p>I&rsquo;ll leave all the color channels the same and tweak the output of the alpha channel to get the result I want. The values <code>18 -8</code> in the alpha row multiply the alpha channel by 18 and subtract 8, which amplifies the blending effect.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>svg</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display: none;&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>filter</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;svgfilter&#34;</span>&gt;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Apply blur effect and store result --&gt;</span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>feGaussianBlur</span> <span style=color:#a6e22e>stdDeviation</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;10&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Enhance alpha channel for gooey effect --&gt;</span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>feColorMatrix</span> <span style=color:#a6e22e>in</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> <span style=color:#a6e22e>mode</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;matrix&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>values</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                1 0 0 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                0 1 0 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                0 0 1 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                0 0 0 18 -8&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;colorMatrix&#34;</span> /&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>filter</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>svg</span>&gt;</span></span></code></pre></div><p>I can also bring back the original gradients for the circles by blending the original source graphic with the output of the color matrix:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>svg</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display: none;&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>filter</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;svgfilter&#34;</span>&gt;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Apply blur effect and store result --&gt;</span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>feGaussianBlur</span> <span style=color:#a6e22e>stdDeviation</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;10&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Enhance alpha channel for gooey effect --&gt;</span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>feColorMatrix</span> <span style=color:#a6e22e>in</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> <span style=color:#a6e22e>mode</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;matrix&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>values</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                1 0 0 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                0 1 0 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                0 0 1 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                0 0 0 18 -8&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;colorMatrix&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Blend original gradients with filtered result --&gt;</span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>feBlend</span> <span style=color:#a6e22e>in</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SourceGraphic&#34;</span> <span style=color:#a6e22e>in2</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;colorMatrix&#34;</span> /&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>filter</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>svg</span>&gt;</span></span></code></pre></div><p>With that ID in mind, I can set the filter property in the gradient container CSS to reference that filter element.</p><p>Update <code>.gradient-container</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span>.<span style=color:#a6e22e>gradient-container</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* existing styles */</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* Reference the SVG filter by its ID */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>filter</span>: url(<span style=color:#e6db74>#svgfilter</span>);
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>This effect changes depending on how close the circles are. If I pull them apart, you can see they really seem to act as some kind of gooey material. It&rsquo;s a really cool effect.</p><p>If you run this code, you&rsquo;ll notice the circles now blend together smoothly when they overlap, creating that gooey, liquid-like effect.</p><p>But we can take it even further.</p><h2 id=add-css-filter-on-top>Add CSS Filter on Top</h2><p>And if we go to the CSS again, I can still apply any CSS filter on top of it.</p><p>Update <code>.gradient-container</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span>.<span style=color:#a6e22e>gradient-container</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* existing styles */</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* Combine SVG filter with additional CSS blur */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>filter</span>: url(<span style=color:#e6db74>#svgfilter</span>) blur(<span style=color:#ae81ff>40</span><span style=color:#66d9ef>px</span>);
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>And it&rsquo;s just a matter of tweaking it a bit to get my desired result. And I end up with this nice gradient background.</p><p>To really show off how this gooey effect works, let&rsquo;s add some movement.</p><h2 id=add-animation-to-demonstrate-the-effect>Add Animation to Demonstrate the Effect</h2><p>Update <code>.g1</code> and <code>.g2</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span>.<span style=color:#a6e22e>g1</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* existing styles */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>animation</span>: moveApart1 <span style=color:#ae81ff>3</span><span style=color:#66d9ef>s</span> <span style=color:#66d9ef>ease-in-out</span> <span style=color:#66d9ef>infinite</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>.<span style=color:#a6e22e>g2</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* existing styles */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>animation</span>: moveApart2 <span style=color:#ae81ff>3</span><span style=color:#66d9ef>s</span> <span style=color:#66d9ef>ease-in-out</span> <span style=color:#66d9ef>infinite</span>;
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>Add the keyframes:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span>@<span style=color:#66d9ef>keyframes</span> <span style=color:#f92672>moveApart1</span> {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>0</span><span style=color:#f92672>%,</span> <span style=color:#f92672>100</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#f92672>50</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>-150</span><span style=color:#66d9ef>px</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@<span style=color:#66d9ef>keyframes</span> <span style=color:#f92672>moveApart2</span> {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>0</span><span style=color:#f92672>%,</span> <span style=color:#f92672>100</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#f92672>50</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>150</span><span style=color:#66d9ef>px</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>The circles now dynamically separate and reconnect, highlighting the melting goo effect in motion.</p><p>I bet you didn&rsquo;t know that SVG filters could create such smooth blending effects. This technique works great for backgrounds, hero sections, or any place where you want that organic, fluid look. If you made it this far, thank you for reading, and feel free to share this if you found it useful.</p><blockquote class=twitter-tweet><p lang=en dir=ltr>Here is an explanation for svg filters, now you know 🙂 <a href=https://t.co/D2MdxVwyAM>https://t.co/D2MdxVwyAM</a> <a href=https://t.co/22Y74ygALp>pic.twitter.com/22Y74ygALp</a></p>&mdash; Julio Reyes (@nemesiscodex) <a href="https://twitter.com/nemesiscodex/status/1973761290054345142?ref_src=twsrc%5Etfw">October 2, 2025</a></blockquote><script async src=https://platform.twitter.com/widgets.js></script><p>Full code:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!DOCTYPE html&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>html</span> <span style=color:#a6e22e>lang</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;en&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>charset</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;UTF-8&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;viewport&#34;</span> <span style=color:#a6e22e>content</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;width=device-width, initial-scale=1.0&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>title</span>&gt;SVG Filters Demo&lt;/<span style=color:#f92672>title</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>style</span>&gt;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>body</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>background</span>: linear-gradient(
+</span></span><span style=display:flex><span>                <span style=color:#ae81ff>40</span><span style=color:#66d9ef>deg</span>, rgb(<span style=color:#ae81ff>108</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>162</span>), rgb(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>17</span>, <span style=color:#ae81ff>82</span>)
+</span></span><span style=display:flex><span>            );
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>margin</span>: <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>vh</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>gradient-container</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>display</span>: <span style=color:#66d9ef>flex</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>justify-content</span>: <span style=color:#66d9ef>center</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>align-items</span>: <span style=color:#66d9ef>center</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>filter</span>: url(<span style=color:#e6db74>#svgfilter</span>) blur(<span style=color:#ae81ff>40</span><span style=color:#66d9ef>px</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>circle</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>400</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>400</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>margin</span>: <span style=color:#ae81ff>-30</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>border-radius</span>: <span style=color:#ae81ff>70</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>g1</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>background</span>: radial-gradient(
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>circle</span> at <span style=color:#66d9ef>center</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>52</span>, <span style=color:#ae81ff>190</span>, <span style=color:#ae81ff>203</span>, <span style=color:#ae81ff>0.8</span>) <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>180</span>, <span style=color:#ae81ff>180</span>, <span style=color:#ae81ff>50</span>, <span style=color:#ae81ff>0</span>) <span style=color:#ae81ff>50</span><span style=color:#66d9ef>%</span>
+</span></span><span style=display:flex><span>            ) <span style=color:#66d9ef>no-repeat</span>;
+</span></span><span style=display:flex><span>            <span style=color:#75715e>/* Animate circle 1 to move left and right */</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>animation</span>: moveApart1 <span style=color:#ae81ff>3</span><span style=color:#66d9ef>s</span> <span style=color:#66d9ef>ease-in-out</span> <span style=color:#66d9ef>infinite</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        .<span style=color:#a6e22e>g2</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>background</span>: radial-gradient(
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>circle</span> at <span style=color:#66d9ef>center</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>172</span>, <span style=color:#ae81ff>159</span>, <span style=color:#ae81ff>38</span>, <span style=color:#ae81ff>0.8</span>) <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>                rgba(<span style=color:#ae81ff>16</span>, <span style=color:#ae81ff>202</span>, <span style=color:#ae81ff>248</span>, <span style=color:#ae81ff>0</span>) <span style=color:#ae81ff>50</span><span style=color:#66d9ef>%</span>
+</span></span><span style=display:flex><span>            ) <span style=color:#66d9ef>no-repeat</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>animation</span>: moveApart2 <span style=color:#ae81ff>3</span><span style=color:#66d9ef>s</span> <span style=color:#66d9ef>ease-in-out</span> <span style=color:#66d9ef>infinite</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        @<span style=color:#66d9ef>keyframes</span> <span style=color:#f92672>moveApart1</span> {
+</span></span><span style=display:flex><span>            <span style=color:#f92672>0</span><span style=color:#f92672>%,</span> <span style=color:#f92672>100</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            <span style=color:#f92672>50</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>-150</span><span style=color:#66d9ef>px</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        @<span style=color:#66d9ef>keyframes</span> <span style=color:#f92672>moveApart2</span> {
+</span></span><span style=display:flex><span>            <span style=color:#f92672>0</span><span style=color:#f92672>%,</span> <span style=color:#f92672>100</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            <span style=color:#f92672>50</span><span style=color:#f92672>%</span> {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>transform</span>: translateX(<span style=color:#ae81ff>150</span><span style=color:#66d9ef>px</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>style</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>svg</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display: none;&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>filter</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;svgfilter&#34;</span>&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>feGaussianBlur</span> <span style=color:#a6e22e>stdDeviation</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;10&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> /&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>feColorMatrix</span> <span style=color:#a6e22e>in</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;blur&#34;</span> <span style=color:#a6e22e>mode</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;matrix&#34;</span>
+</span></span><span style=display:flex><span>                <span style=color:#a6e22e>values</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    1 0 0 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    0 1 0 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    0 0 1 0 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    0 0 0 18 -8&#34;</span> <span style=color:#a6e22e>result</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;colorMatrix&#34;</span> /&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>feBlend</span> <span style=color:#a6e22e>in</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SourceGraphic&#34;</span> <span style=color:#a6e22e>in2</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;colorMatrix&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>filter</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>svg</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;gradient-container&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;circle g1&#34;</span>&gt;&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;circle g2&#34;</span>&gt;&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>html</span>&gt;</span></span></code></pre></div></div></article><hr><div class=post-info><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/svg/>svg</a></span>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/svg-filters/>svg-filters</a></span>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/css/>css</a></span>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/web-graphics/>web-graphics</a></span>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/visual-effects/>visual-effects</a></span>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/gooey-effect/>gooey-effect</a></span>
+<span class=tag><a href=https://blog.nemesiscodex.org/tags/gradients/>gradients</a></span></p><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+1221 Words</p><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+2025-11-01 15:57</p></div><hr><div class=sharing-buttons><a class=resp-sharing-button__link href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_blank rel=noopener aria-label title="Share on facebook"><div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_blank rel=noopener aria-label title="Share on twitter"><div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;caption=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;canonicalUrl=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_blank rel=noopener aria-label title="Share on tumblr"><div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093.0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941.0 9.999.0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg></div></div></a><a class=resp-sharing-button__link href="mailto:?subject=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;body=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_self rel=noopener aria-label title="Share via email"><div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div></div></a><a class=resp-sharing-button__link href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;media=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f;description=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target=_blank rel=noopener aria-label title="Share on pinterest"><div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017.0C5.396.0.029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024.0 1.518.769 1.518 1.688.0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128.0 3.768-2.245 3.768-5.487.0-2.861-2.063-4.869-5.008-4.869-3.41.0-5.409 2.562-5.409 5.199.0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646.0-3.776 2.748-7.252 7.92-7.252 4.158.0 7.392 2.967 7.392 6.923.0 4.135-2.607 7.462-6.233 7.462-1.214.0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607.0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017.0z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;summary=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;source=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_blank rel=noopener aria-label title="Share on linkedin"><div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div></div></a><a class=resp-sharing-button__link href="https://reddit.com/submit/?url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;resubmit=true&amp;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target=_blank rel=noopener aria-label title="Share on reddit"><div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688.0 1.25.561 1.25 1.249a1.25 1.25.0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968.0 1.754.786 1.754 1.754.0.716-.435 1.333-1.01 1.614a3.111 3.111.0 01.042.52c0 2.694-3.13 4.87-7.004 4.87s-7.004-2.176-7.004-4.87c0-.183.015-.366.043-.534A1.748 1.748.0 014.028 12c0-.968.786-1.754 1.754-1.754.463.0.898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342.0 01.14-.197.35.35.0 01.238-.042l2.906.617a1.214 1.214.0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687.0 1.248-.561 1.248-1.249S9.937 12 9.249 12zm5.5.0c-.687.0-1.248.561-1.248 1.25.0.687.561 1.248 1.249 1.248S16 13.937 16 13.249c0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327.0 00-.231.094.33.33.0 000 .463c.842.842 2.484.913 2.961.913s2.105-.056 2.961-.913a.361.361.0 00.029-.463.33.33.0 00-.464.0c-.547.533-1.684.73-2.512.73-.828.0-1.979-.196-2.512-.73a.326.326.0 00-.232-.095z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f;title=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target=_blank rel=noopener aria-label title="Share on xing"><div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188.0c-.517.0-.741.325-.927.66.0.0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211.0.375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016.0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894.0 21.686.0h-3.498zM3.648 4.74c-.211.0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016.0.021L1.86 16.051c-.099.188-.093.381.0.529.085.142.239.234.45.234h3.461c.518.0.766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg></div></div></a><a class=resp-sharing-button__link href="whatsapp://send?text=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How%20https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_blank rel=noopener aria-label title="Share on whatsapp"><div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198.0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479.0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87.0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86.0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64.0 5.122 1.03 6.988 2.898a9.825 9.825.0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815.0 0012.05.0C5.495.0.16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882.0 005.683 1.448h.005c6.554.0 11.89-5.335 11.893-11.893a11.821 11.821.0 00-3.48-8.413z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f&amp;t=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How" target=_blank rel=noopener aria-label title="Share on hacker news"><div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://telegram.me/share/url?text=You%20Can%20Use%20SVG%20Filters%20in%20CSS%20-%20Here%27s%20How&amp;url=https%3a%2f%2fblog.nemesiscodex.org%2fsvg-filter%2f" target=_blank rel=noopener aria-label title="Share on telegram"><div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div></div></a></div><div class=pagination><div class=pagination__buttons><span class="button previous"><a href=https://blog.nemesiscodex.org/reliable-api-calls/><span class=button__icon>←</span>
+<span class=button__text>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</span></a></span></div></div></main></div><footer class=footer></footer></div><script type=text/javascript src=/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js integrity="sha512-rVStlzZPd+3jXe+QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb+bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script></body></html>
