@@ -1,4 +1,149 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/posts/</link><description>Recent content in Posts on Nemesiscodex's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 02 Nov 2025 00:21:02 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title><link>https://blog.nemesiscodex.org/reliable-api-calls/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid><description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/posts/</link><description>Recent content in Posts on Nemesiscodex's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 07 Dec 2025 23:35:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Turn Your AI IDE Into a Relentless Code Reviewer</title><link>https://blog.nemesiscodex.org/my-review-prompt/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/my-review-prompt/</guid><description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.&lt;/p&gt;</description><content type="html"><![CDATA[<p>Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.</p>
+<blockquote>
+<p><strong>Important:</strong> This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.</p>
+</blockquote>
+<h2 id="tldr">TL;DR</h2>
+<p>A 10-step prompt that turns any agentic IDE into a comprehensive code reviewer. It analyzes git diffs, finds bugs, suggests alternatives, and provides actionable feedback with certainty scores.</p>
+<p><strong>&raquo;&raquo; <a href="https://github.com/nemesiscodex/prompts">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+
+ Get it on GitHub</a> | <a href="https://youtu.be/lxDpAMaVDeY">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+</svg>
+
+ Watch Demo</a> &laquo;&laquo;</strong></p>
+<hr>
+<h2 id="the-problem">The Problem</h2>
+<p>Code reviews are critical, but they are also time-consuming. When you are the go-to person for reviews, you become a bottleneck. Your team waits on you, and you spend hours reviewing code instead of building features.</p>
+<p>The solution is to let AI do the heavy lifting. But generic AI prompts are not enough. You need a structured, systematic approach that actually catches real issues.</p>
+<h2 id="the-solution-a-10-step-review-process">The Solution: A 10-Step Review Process</h2>
+<p>This prompt transforms your IDE into a comprehensive code reviewer through a structured 10-step process:</p>
+<ol>
+<li>
+<p><strong>Check available tools</strong><br>
+Identifies what git and analysis tools are available.</p>
+</li>
+<li>
+<p><strong>Understand context</strong><br>
+Analyzes the git diff and commit messages.</p>
+</li>
+<li>
+<p><strong>Call provided tools</strong><br>
+Runs linters, tests, or other tools you specify.</p>
+</li>
+<li>
+<p><strong>Identify main goal</strong><br>
+Determines what the PR is trying to achieve.</p>
+</li>
+<li>
+<p><strong>Evaluate alternatives</strong><br>
+Suggests alternative approaches with pros and cons plus certainty scores.</p>
+</li>
+<li>
+<p><strong>Find bugs</strong><br>
+Performs line-by-line analysis for bugs and weirdness.</p>
+</li>
+<li>
+<p><strong>Identify code smells</strong><br>
+Detects patterns that might cause problems later.</p>
+</li>
+<li>
+<p><strong>Assess readability</strong><br>
+Evaluates code clarity and maintainability.</p>
+</li>
+<li>
+<p><strong>Check test coverage</strong><br>
+Lists test cases you should cover.</p>
+</li>
+<li>
+<p><strong>Final rating</strong><br>
+Provides an overall quality score and merge recommendation.</p>
+</li>
+</ol>
+<p>The prompt does not just say &ldquo;looks good&rdquo;; it gives you certainty scores, prioritizes issues (high vs. medium priority), and provides actionable feedback.</p>
+<h2 id="how-to-use-it-in-cursor">How to Use It in Cursor</h2>
+<p>Setting it up is simple:</p>
+<ol>
+<li>Go to <strong>Cursor Settings → Rules and commands</strong>.</li>
+<li>Scroll down to add a new command (you can do this globally or per project).</li>
+<li>Give it a name (for example, <code>review</code>).</li>
+<li>Paste the content from the <a href="https://github.com/nemesiscodex/prompts/tree/main/review">review markdown file</a>.</li>
+<li>Save it.</li>
+</ol>
+<p>Now you can use it by pressing <code>/</code> in Cursor and selecting your review command. You can provide additional instructions like:</p>
+<ul>
+<li>&ldquo;Review against the master branch as the base branch&rdquo;</li>
+<li>&ldquo;Make sure to use the full diff&rdquo;</li>
+<li>&ldquo;Run the linter and test suite&rdquo;</li>
+</ul>
+<p>Then pick your model and let it run. The prompt works well with:</p>
+<ul>
+<li><strong>Opus 4.5</strong>: Great for complex PRs</li>
+<li><strong>GPT-5.1</strong>: Also gives good results</li>
+<li><strong>Composer</strong>: Good for straightforward changes</li>
+<li><strong>Gemini 3</strong>: Can be a bit verbose, but worth trying</li>
+</ul>
+<h2 id="what-makes-it-different">What Makes It Different</h2>
+<p>Most AI code reviewers are generic. They might catch obvious bugs, but they do not provide the depth you need. This prompt:</p>
+<ul>
+<li><strong>Provides certainty scores</strong>: It tells you how confident it is in its findings.</li>
+<li><strong>Suggests alternatives</strong>: Not just &ldquo;this is wrong,&rdquo; but &ldquo;here are better approaches and why.&rdquo;</li>
+<li><strong>Prioritizes issues</strong>: High priority vs. medium priority, so you know what to fix first.</li>
+<li><strong>Thinks about edge cases</strong>: Suggests test cases you might have missed.</li>
+<li><strong>Gives context-specific feedback</strong>: Considers performance, security, and UI concerns.</li>
+</ul>
+<p>In the video demo, it caught multiple issues in a simple PR: missing timeouts, duplicate argument parsing, potential file corruption handling, missing string validation, and hardcoded values. These are not theoretical concerns; they are real bugs that could cause problems in production.</p>
+<h2 id="how-it-complements-existing-tools">How It Complements Existing Tools</h2>
+<p>This prompt is not meant to replace existing code review tools like Coderabbit, GitHub Copilot, or other automated reviewers. Instead, it is a companion that works alongside them.</p>
+<p><strong>Existing tools</strong> (like Coderabbit) are great for:</p>
+<ul>
+<li>Automated checks on every PR</li>
+<li>Integration with your CI/CD pipeline</li>
+<li>Consistent rule enforcement across the team</li>
+<li>Catching common patterns and security issues</li>
+</ul>
+<p><strong>This prompt</strong> complements them by:</p>
+<ul>
+<li>Providing deep, contextual analysis when you need it</li>
+<li>Working directly in your IDE during development</li>
+<li>Giving you control over when and how to use it</li>
+<li>Offering detailed explanations and alternative approaches</li>
+</ul>
+<p>My team uses Coderabbit for automated reviews on every PR, and I use this prompt for deeper analysis when I need it. They work together; Coderabbit catches the obvious issues automatically, and this prompt helps me understand the bigger picture and think through edge cases.</p>
+<h2 id="try-it-yourself">Try It Yourself</h2>
+<p>The repository is public and includes:</p>
+<ul>
+<li>The review prompt markdown file</li>
+<li>Instructions for setting it up in Cursor</li>
+<li>Usage examples</li>
+</ul>
+<p><strong>&raquo;&raquo; <a href="https://github.com/nemesiscodex/prompts">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+
+ github.com/nemesiscodex/prompts</a> &laquo;&laquo;</strong></p>
+<p>If you find it useful, please star the repository. And if you want to see more content like this, subscribe to my <a href="https://www.youtube.com/@nemesiscodex">YouTube channel</a>. This is actually my first video on the channel, so your support means a lot.</p>
+<h2 id="watch-the-demo">Watch the Demo</h2>
+<p>Here is a walkthrough showing the prompt in action:</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/lxDpAMaVDeY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p>The video shows a real review of a CLI feature that checks for new versions. Even though the change was straightforward, the prompt found several issues worth addressing before merging.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>This prompt has been a game-changer for me. It is not about replacing human reviewers; it is about making the review process more efficient and thorough. By catching issues early and providing structured feedback, it helps teams ship better code faster.</p>
+<p>Remember: always do your own code review. This prompt is like having a colleague do a first pass and give you a detailed overview, but the final responsibility for code quality and correctness is yours. Use it to enhance your review process, not replace it.</p>
+<p>If you try it out, let me know what you think. And if you have suggestions for improvements, feel free to open an issue or PR on the repository.</p>
+]]></content></item><item><title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title><link>https://blog.nemesiscodex.org/reliable-api-calls/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid><description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;
 &lt;h2 id="tldr"&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description><content type="html"><![CDATA[<p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p>
