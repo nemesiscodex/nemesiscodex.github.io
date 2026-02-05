@@ -1,11 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/</link><description>Recent content on Nemesiscodex's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 07 Dec 2025 23:35:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/index.xml" rel="self" type="application/rss+xml"/><item><title>Turn Your AI IDE Into a Relentless Code Reviewer</title><link>https://blog.nemesiscodex.org/my-review-prompt/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/my-review-prompt/</guid><description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.&lt;/p&gt;</description></item><item><title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title><link>https://blog.nemesiscodex.org/reliable-api-calls/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid><description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;
-&lt;h2 id="tldr"&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>You Can Use SVG Filters in CSS - Here's How</title><link>https://blog.nemesiscodex.org/svg-filter/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/svg-filter/</guid><description>&lt;video fetchpriority="high" autoplay muted loop width="100%"&gt;
- &lt;source src="https://blog.nemesiscodex.org/svg-filter/video/svg-filter.mp4" type="video/mp4"&gt;
- Your browser does not support the video tag.
- &lt;/video&gt;
-&lt;p&gt;Notice how those blobs smoothly merge and separate? That&amp;rsquo;s SVG filters at work.&lt;/p&gt;
-&lt;p&gt;You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nemesiscodex&#39;s Blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Nemesiscodex&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Dec 2025 23:35:00 -0300</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Turn Your AI IDE Into a Relentless Code Reviewer</title>
+      <link>http://localhost:1313/my-review-prompt/</link>
+      <pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate>
+      <guid>http://localhost:1313/my-review-prompt/</guid>
+      <description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title>
+      <link>http://localhost:1313/reliable-api-calls/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/reliable-api-calls/</guid>
+      <description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;&#xA;&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>You Can Use SVG Filters in CSS - Here&#39;s How</title>
+      <link>http://localhost:1313/svg-filter/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/svg-filter/</guid>
+      <description>&lt;video fetchpriority=&#34;high&#34; autoplay muted loop  width=&#34;100%&#34;&gt;&#xA;    &lt;source src=&#34;http://localhost:1313/svg-filter/video/svg-filter.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;    Your browser does not support the video tag.&#xA;  &lt;/video&gt;&#xA;&lt;p&gt;Notice how those blobs smoothly merge and separate? That&amp;rsquo;s SVG filters at work.&lt;/p&gt;&#xA;&lt;p&gt;You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;img &#xA;        src=&#34;http://localhost:1313/img/julio.jpg&#34; &#xA;         alt=&#34;Julio Daniel Reyes&#34;  &#xA;        class=&#34;left&#34; &#xA;         style=&#34;max-width:140px;border-radius:50%;margin-right:14px;&#34; &#xA;        loading=&#34;lazy&#34;&#xA;        decoding=&#34;async&#34; /&gt;&#xA;&#xA;&#xA;&lt;p&gt;Hi - I’m Julio Daniel Reyes, a generalist software engineer from Paraguay. Online I go by &lt;code&gt;nemesiscodex&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I enjoy building practical, reliable software and exploring systems across the stack. I have more than 12 years of experience, mostly in fintech and education. Day to day I work with Java, Scala, JavaScript/TypeScript, Python, and Rust.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;GitHub: &lt;a href=&#34;https://github.com/nemesiscodex&#34;&gt;@nemesiscodex&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;X/Twitter: &lt;a href=&#34;https://x.com/nemesiscodex&#34;&gt;@nemesiscodex&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;About this site: it’s my place for deep dives, notes, and hands-on guides about software engineering, architecture, and developer workflows. If you find something useful or have a question, feel free to reach out.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

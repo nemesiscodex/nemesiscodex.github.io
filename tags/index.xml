@@ -1,1 +1,145 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/tags/</link><description>Recent content in Tags on Nemesiscodex's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 07 Dec 2025 23:35:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>Ai</title><link>https://blog.nemesiscodex.org/tags/ai/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/ai/</guid><description/></item><item><title>Code-Review</title><link>https://blog.nemesiscodex.org/tags/code-review/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/code-review/</guid><description/></item><item><title>Cursor</title><link>https://blog.nemesiscodex.org/tags/cursor/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/cursor/</guid><description/></item><item><title>Prompts</title><link>https://blog.nemesiscodex.org/tags/prompts/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/prompts/</guid><description/></item><item><title>Api-Design</title><link>https://blog.nemesiscodex.org/tags/api-design/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/api-design/</guid><description/></item><item><title>Idempotency</title><link>https://blog.nemesiscodex.org/tags/idempotency/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/idempotency/</guid><description/></item><item><title>Optimistic-Locking</title><link>https://blog.nemesiscodex.org/tags/optimistic-locking/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/optimistic-locking/</guid><description/></item><item><title>Reliability</title><link>https://blog.nemesiscodex.org/tags/reliability/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/reliability/</guid><description/></item><item><title>Resilience</title><link>https://blog.nemesiscodex.org/tags/resilience/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/resilience/</guid><description/></item><item><title>Retries</title><link>https://blog.nemesiscodex.org/tags/retries/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/retries/</guid><description/></item><item><title>State-Machines</title><link>https://blog.nemesiscodex.org/tags/state-machines/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/state-machines/</guid><description/></item><item><title>System-Design</title><link>https://blog.nemesiscodex.org/tags/system-design/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/system-design/</guid><description/></item><item><title>Css</title><link>https://blog.nemesiscodex.org/tags/css/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/css/</guid><description/></item><item><title>Gooey-Effect</title><link>https://blog.nemesiscodex.org/tags/gooey-effect/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/gooey-effect/</guid><description/></item><item><title>Gradients</title><link>https://blog.nemesiscodex.org/tags/gradients/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/gradients/</guid><description/></item><item><title>Svg</title><link>https://blog.nemesiscodex.org/tags/svg/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/svg/</guid><description/></item><item><title>Svg-Filters</title><link>https://blog.nemesiscodex.org/tags/svg-filters/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/svg-filters/</guid><description/></item><item><title>Visual-Effects</title><link>https://blog.nemesiscodex.org/tags/visual-effects/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/visual-effects/</guid><description/></item><item><title>Web-Graphics</title><link>https://blog.nemesiscodex.org/tags/web-graphics/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/tags/web-graphics/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Nemesiscodex&#39;s Blog</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on Nemesiscodex&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Dec 2025 23:35:00 -0300</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>http://localhost:1313/tags/ai/</link>
+      <pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate>
+      <guid>http://localhost:1313/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Code-Review</title>
+      <link>http://localhost:1313/tags/code-review/</link>
+      <pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate>
+      <guid>http://localhost:1313/tags/code-review/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cursor</title>
+      <link>http://localhost:1313/tags/cursor/</link>
+      <pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate>
+      <guid>http://localhost:1313/tags/cursor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prompts</title>
+      <link>http://localhost:1313/tags/prompts/</link>
+      <pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate>
+      <guid>http://localhost:1313/tags/prompts/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Api-Design</title>
+      <link>http://localhost:1313/tags/api-design/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/api-design/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Idempotency</title>
+      <link>http://localhost:1313/tags/idempotency/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/idempotency/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Optimistic-Locking</title>
+      <link>http://localhost:1313/tags/optimistic-locking/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/optimistic-locking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reliability</title>
+      <link>http://localhost:1313/tags/reliability/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/reliability/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Resilience</title>
+      <link>http://localhost:1313/tags/resilience/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/resilience/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Retries</title>
+      <link>http://localhost:1313/tags/retries/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/retries/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>State-Machines</title>
+      <link>http://localhost:1313/tags/state-machines/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/state-machines/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>System-Design</title>
+      <link>http://localhost:1313/tags/system-design/</link>
+      <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
+      <guid>http://localhost:1313/tags/system-design/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Css</title>
+      <link>http://localhost:1313/tags/css/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gooey-Effect</title>
+      <link>http://localhost:1313/tags/gooey-effect/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/gooey-effect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gradients</title>
+      <link>http://localhost:1313/tags/gradients/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/gradients/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Svg</title>
+      <link>http://localhost:1313/tags/svg/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/svg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Svg-Filters</title>
+      <link>http://localhost:1313/tags/svg-filters/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/svg-filters/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Visual-Effects</title>
+      <link>http://localhost:1313/tags/visual-effects/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/visual-effects/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web-Graphics</title>
+      <link>http://localhost:1313/tags/web-graphics/</link>
+      <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
+      <guid>http://localhost:1313/tags/web-graphics/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

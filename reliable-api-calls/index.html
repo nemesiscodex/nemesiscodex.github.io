@@ -1,14 +1,391 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="Julio Reyes"><meta name=description content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Julio Reyes">
+<meta name="description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
 Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.
 TL;DR If you remember one thing from this post:
-"><meta name=keywords content="backend,frontend,software engineering,software design,developer,tips,tricks,ai,java,typescript,react,html,css,svg,api-design,reliability,resilience,idempotency,state-machines,retries,optimistic-locking,system-design"><meta name=robots content="noodp"><meta name=theme-color content="dark"><link rel=canonical href=https://blog.nemesiscodex.org/reliable-api-calls/><title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex's Blog — Software engineering, architecture, and modern development</title><link rel=stylesheet href=/main.min.2729760c629597024c5de34b40ea9f372f2b5a2a192dcdca537b7ddfa483eab8.css integrity="sha256-Jyl2DGKVlwJMXeNLQOqfNy8rWioZLc3KU3t936SD6rg=" crossorigin=anonymous><link rel=stylesheet type=text/css href=/css/custom.css><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color><link rel="shortcut icon" href=/favicon.ico><meta name=msapplication-TileColor content><meta property="og:type" content="article"><meta property="og:url" content="https://blog.nemesiscodex.org/reliable-api-calls/"><meta property="og:title" content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex's Blog"><meta property="og:description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
-Everyone seems to think only about the happy path when …"><meta property="og:site_name" content="Nemesiscodex's Blog"><meta property="og:image" content="https://blog.nemesiscodex.org/images/reliable-api-calls/naive-api.gif"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="article:published_time" content="2025-11-02T00:21:02-03:00"><meta property="article:modified_time" content="2025-11-02T00:21:02-03:00"><meta property="article:author" content="Julio Reyes"><meta property="article:tag" content="api-design"><meta property="article:tag" content="reliability"><meta property="article:tag" content="resilience"><meta property="article:tag" content="idempotency"><meta property="article:tag" content="state-machines"><meta property="article:tag" content="retries"><meta property="article:tag" content="optimistic-locking"><meta property="article:tag" content="system-design"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex's Blog"><meta name=twitter:description content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
-Everyone seems to think only about the happy path when …"><meta name=twitter:image content="https://blog.nemesiscodex.org/images/reliable-api-calls/naive-api.gif"><meta name=twitter:image:alt content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex's Blog"><meta name=twitter:site content="@nemesiscodex"><meta name=twitter:creator content="@nemesiscodex"><link rel=preconnect href=https://www.googletagmanager.com crossorigin><link rel=preconnect href=https://www.google-analytics.com crossorigin><link rel=dns-prefetch href=https://www.googletagmanager.com><link rel=dns-prefetch href=https://www.google-analytics.com><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"\"These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable\"","description":"\"I will teach you 3 patterns that will immediately improve the reliability of your API calls.\\nEveryone seems to think only about the happy path when …\"","image":"\"https://blog.nemesiscodex.org/images/reliable-api-calls/naive-api.gif\"","datePublished":"\"2025-11-02T00:21:02-03:00\"","dateModified":"\"2025-11-02T00:21:02-03:00\"","author":{"@type":"Person","name":"\"Julio Reyes\"","url":"\"https://x.com/nemesiscodex\"","identifier":"nemesiscodex"},"publisher":{"@type":"Person","name":"\"Julio Reyes\"","url":"\"https://x.com/nemesiscodex\""},"mainEntityOfPage":{"@type":"WebPage","@id":"\"https://blog.nemesiscodex.org/reliable-api-calls/\""},"url":"\"https://blog.nemesiscodex.org/reliable-api-calls/\"","keywords":"\"api-design, reliability, resilience, idempotency, state-machines, retries, optimistic-locking, system-design\""}</script><meta itemprop=name content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable"><meta itemprop=description content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
+" />
+<meta name="keywords" content="backend, frontend, software engineering, software design, developer, tips, tricks, ai, java, typescript, react, html, css, svg, api-design, reliability, resilience, idempotency, state-machines, retries, optimistic-locking, system-design" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="dark" />
+<link rel="canonical" href="http://localhost:1313/reliable-api-calls/" />
+
+
+    <title>
+        
+            These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex&#39;s Blog  — Software engineering, architecture, and modern development
+        
+    </title>
+
+
+
+
+
+  <link rel="stylesheet" href="/main.min.2729760c629597024c5de34b40ea9f372f2b5a2a192dcdca537b7ddfa483eab8.css" integrity="sha256-Jyl2DGKVlwJMXeNLQOqfNy8rWioZLc3KU3t936SD6rg=" crossorigin="anonymous">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/reliable-api-calls/" />
+<meta property="og:title" content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex&#39;s Blog" />
+<meta property="og:description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
+Everyone seems to think only about the happy path when …" />
+<meta property="og:site_name" content="Nemesiscodex&#39;s Blog" />
+
+<meta property="og:image" content="http://localhost:1313/images/reliable-api-calls/naive-api.gif" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+
+
+  
+  <meta property="article:published_time" content="2025-11-02T00:21:02-03:00" />
+  
+  
+  <meta property="article:modified_time" content="2025-11-02T00:21:02-03:00" />
+  
+  
+  <meta property="article:author" content="Julio Reyes" />
+  
+  
+  <meta property="article:tag" content="api-design" />
+  
+  <meta property="article:tag" content="reliability" />
+  
+  <meta property="article:tag" content="resilience" />
+  
+  <meta property="article:tag" content="idempotency" />
+  
+  <meta property="article:tag" content="state-machines" />
+  
+  <meta property="article:tag" content="retries" />
+  
+  <meta property="article:tag" content="optimistic-locking" />
+  
+  <meta property="article:tag" content="system-design" />
+  
+  
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex&#39;s Blog" />
+<meta name="twitter:description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
+Everyone seems to think only about the happy path when …" />
+
+<meta name="twitter:image" content="http://localhost:1313/images/reliable-api-calls/naive-api.gif" />
+  
+  
+  
+  <meta name="twitter:image:alt" content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable :: Nemesiscodex&#39;s Blog" />
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+<meta name="twitter:site" content="@nemesiscodex" />
+
+
+<meta name="twitter:creator" content="@nemesiscodex" />
+
+
+
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+<link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+
+
+
+  
+  
+  
+  
+  
+    
+      
+        
+      
+    
+      
+    
+      
+    
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "\"These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable\"",
+    "description": "\"I will teach you 3 patterns that will immediately improve the reliability of your API calls.\\nEveryone seems to think only about the happy path when …\"",
+    "image": "\"http://localhost:1313/images/reliable-api-calls/naive-api.gif\"",
+    "datePublished": "\"2025-11-02T00:21:02-03:00\"",
+    "dateModified": "\"2025-11-02T00:21:02-03:00\"",
+    "author": {
+      "@type": "Person",
+      "name": "\"Julio Reyes\"",
+      "url": "\"https://x.com/nemesiscodex\"",
+      "identifier": "nemesiscodex"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "\"Julio Reyes\"",
+      "url": "\"https://x.com/nemesiscodex\""
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "\"http://localhost:1313/reliable-api-calls/\""
+    },
+    "url": "\"http://localhost:1313/reliable-api-calls/\"",
+    "keywords": "\"api-design, reliability, resilience, idempotency, state-machines, retries, optimistic-locking, system-design\""
+  }
+  </script>
+
+
+
+
+
+  <meta itemprop="name" content="These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable">
+  <meta itemprop="description" content="I will teach you 3 patterns that will immediately improve the reliability of your API calls.
 Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.
-TL;DR If you remember one thing from this post:"><meta itemprop=datePublished content="2025-11-02T00:21:02-03:00"><meta itemprop=dateModified content="2025-11-02T00:21:02-03:00"><meta itemprop=wordCount content="4064"><meta itemprop=image content="https://blog.nemesiscodex.org/images/reliable-api-calls/naive-api.gif"><meta itemprop=keywords content="Api-Design,Reliability,Resilience,Idempotency,State-Machines,Retries,Optimistic-Locking,System-Design"><script async src="https://www.googletagmanager.com/gtag/js?id=G-J750Q0BHT0"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-J750Q0BHT0")}</script></head><body><div class=container><header class=header><span class=header__inner><a href=/ style=text-decoration:none><div class=logo><span class=logo__mark>></span>
-<span class=logo__text>nemesiscodex</span>
-<span class=logo__cursor></span></div></a><span class=header__right><nav class=menu><ul class=menu__inner><li><a href=/about/>About</a></li><li><a href=/posts>Posts</a></li></ul></nav><span class=menu-trigger><svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></span></span></header><div class=content><main class=post><div class=post-info><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-20 minutes</p></div><article><h1 class=post-title><a href=https://blog.nemesiscodex.org/reliable-api-calls/>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</a></h1><hr><aside id=toc><div class=toc-title>Table of Contents</div><nav id=TableOfContents><ul><li><a href=#tldr>TL;DR</a></li><li><a href=#naive-approach>Naive Approach</a></li><li><a href=#what-can-go-wrong>What Can Go Wrong?</a><ul><li><a href=#network-timeouts>Network Timeouts</a></li><li><a href=#api-failures>API Failures</a></li><li><a href=#database-failures>Database Failures</a></li><li><a href=#duplicate-requests>Duplicate Requests</a></li><li><a href=#partial-completion>Partial Completion</a></li><li><a href=#race-conditions>Race Conditions</a></li><li><a href=#crash-scenarios>Crash Scenarios</a></li></ul></li><li><a href=#the-retry-problem>The Retry Problem</a></li><li><a href=#understanding-idempotency>Understanding Idempotency</a></li><li><a href=#pattern-1-idempotency-keys>Pattern 1: Idempotency Keys</a><ul><li><a href=#two-approaches-server-created-vs-client-created>Two Approaches: Server-Created vs Client-Created</a></li><li><a href=#uuid-uniqueness-is-it-good-enough>UUID Uniqueness: Is It Good Enough?</a></li><li><a href=#alternatives-to-random-uuids>Alternatives to Random UUIDs</a></li><li><a href=#implementation-details>Implementation Details</a></li></ul></li><li><a href=#pattern-2-state-machines>Pattern 2: State Machines</a><ul><li><a href=#what-to-save-in-the-database>What to Save in the Database</a></li><li><a href=#database-transaction-strategy>Database Transaction Strategy</a></li><li><a href=#two-types-of-idempotency-keys>Two Types of Idempotency Keys</a></li><li><a href=#state-transitions>State Transitions</a></li><li><a href=#recovery-scheduler>Recovery Scheduler</a></li></ul></li><li><a href=#pattern-3-optimistic-locking>Pattern 3: Optimistic Locking</a><ul><li><a href=#the-problem>The Problem</a></li><li><a href=#the-optimistic-locking-pattern>The Optimistic Locking Pattern</a></li><li><a href=#solution-1-version-column>Solution 1: Version Column</a></li><li><a href=#solution-2-conditional-state-updates>Solution 2: Conditional State Updates</a></li><li><a href=#which-to-use>Which to Use?</a></li></ul></li><li><a href=#complete-flow-example>Complete Flow Example</a></li><li><a href=#best-practices>Best Practices</a></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#going-further-asynchronous-processing>Going Further: Asynchronous Processing</a></li></ul></nav></aside><hr><div class=post-content><p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p><p>Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.</p><h2 id=tldr>TL;DR</h2><p><strong>If you remember one thing from this post:</strong></p><ol><li><strong>Make your APIs idempotent</strong> Use idempotency keys to prevent duplicate processing</li><li><strong>Use state machines</strong> Track transaction lifecycle with clear states and transitions</li><li><strong>Optimistic locks are your friend</strong> Use conditional state updates to prevent race conditions</li></ol><p><strong>The three-step process:</strong></p><ol><li><strong>DB transaction: Save initial state</strong> Create transaction record with all related tables in a single database transaction</li><li><strong>API call</strong> Make the external API call (only after initial state is persisted)</li><li><strong>DB transaction: Save result</strong> Update transaction state and all related tables in a single database transaction</li></ol><p><strong>Always have a recovery mechanism in mind</strong> Implement a scheduler/job that periodically retries stuck transactions and moves them to final states.</p><hr><h2 id=naive-approach>Naive Approach</h2><p>Let&rsquo;s start with this seemingly innocent diagram. Can you spot what&rsquo;s wrong with it?</p><pre class=mermaid>
+TL;DR If you remember one thing from this post:">
+  <meta itemprop="datePublished" content="2025-11-02T00:21:02-03:00">
+  <meta itemprop="dateModified" content="2025-11-02T00:21:02-03:00">
+  <meta itemprop="wordCount" content="4064">
+  <meta itemprop="image" content="http://localhost:1313/images/reliable-api-calls/naive-api.gif">
+  <meta itemprop="keywords" content="Api-Design,Reliability,Resilience,Idempotency,State-Machines,Retries,Optimistic-Locking,System-Design">
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap">
+
+
+
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-J750Q0BHT0"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-J750Q0BHT0');
+        }
+      </script>
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text ">
+                nemesiscodex</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about/">About</a></li><li><a href="/posts">Posts</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        20 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="http://localhost:1313/reliable-api-calls/">These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</a>
+      </h1>
+
+      
+
+      
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#naive-approach">Naive Approach</a></li>
+    <li><a href="#what-can-go-wrong">What Can Go Wrong?</a>
+      <ul>
+        <li><a href="#network-timeouts">Network Timeouts</a></li>
+        <li><a href="#api-failures">API Failures</a></li>
+        <li><a href="#database-failures">Database Failures</a></li>
+        <li><a href="#duplicate-requests">Duplicate Requests</a></li>
+        <li><a href="#partial-completion">Partial Completion</a></li>
+        <li><a href="#race-conditions">Race Conditions</a></li>
+        <li><a href="#crash-scenarios">Crash Scenarios</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-retry-problem">The Retry Problem</a></li>
+    <li><a href="#understanding-idempotency">Understanding Idempotency</a></li>
+    <li><a href="#pattern-1-idempotency-keys">Pattern 1: Idempotency Keys</a>
+      <ul>
+        <li><a href="#two-approaches-server-created-vs-client-created">Two Approaches: Server-Created vs Client-Created</a></li>
+        <li><a href="#uuid-uniqueness-is-it-good-enough">UUID Uniqueness: Is It Good Enough?</a></li>
+        <li><a href="#alternatives-to-random-uuids">Alternatives to Random UUIDs</a></li>
+        <li><a href="#implementation-details">Implementation Details</a></li>
+      </ul>
+    </li>
+    <li><a href="#pattern-2-state-machines">Pattern 2: State Machines</a>
+      <ul>
+        <li><a href="#what-to-save-in-the-database">What to Save in the Database</a></li>
+        <li><a href="#database-transaction-strategy">Database Transaction Strategy</a></li>
+        <li><a href="#two-types-of-idempotency-keys">Two Types of Idempotency Keys</a></li>
+        <li><a href="#state-transitions">State Transitions</a></li>
+        <li><a href="#recovery-scheduler">Recovery Scheduler</a></li>
+      </ul>
+    </li>
+    <li><a href="#pattern-3-optimistic-locking">Pattern 3: Optimistic Locking</a>
+      <ul>
+        <li><a href="#the-problem">The Problem</a></li>
+        <li><a href="#the-optimistic-locking-pattern">The Optimistic Locking Pattern</a></li>
+        <li><a href="#solution-1-version-column">Solution 1: Version Column</a></li>
+        <li><a href="#solution-2-conditional-state-updates">Solution 2: Conditional State Updates</a></li>
+        <li><a href="#which-to-use">Which to Use?</a></li>
+      </ul>
+    </li>
+    <li><a href="#complete-flow-example">Complete Flow Example</a></li>
+    <li><a href="#best-practices">Best Practices</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#going-further-asynchronous-processing">Going Further: Asynchronous Processing</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
+
+      
+
+      <div class="post-content">
+        <p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p>
+<p>Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.</p>
+<h2 id="tldr">TL;DR</h2>
+<p><strong>If you remember one thing from this post:</strong></p>
+<ol>
+<li><strong>Make your APIs idempotent</strong> Use idempotency keys to prevent duplicate processing</li>
+<li><strong>Use state machines</strong> Track transaction lifecycle with clear states and transitions</li>
+<li><strong>Optimistic locks are your friend</strong> Use conditional state updates to prevent race conditions</li>
+</ol>
+<p><strong>The three-step process:</strong></p>
+<ol>
+<li><strong>DB transaction: Save initial state</strong> Create transaction record with all related tables in a single database transaction</li>
+<li><strong>API call</strong> Make the external API call (only after initial state is persisted)</li>
+<li><strong>DB transaction: Save result</strong> Update transaction state and all related tables in a single database transaction</li>
+</ol>
+<p><strong>Always have a recovery mechanism in mind</strong> Implement a scheduler/job that periodically retries stuck transactions and moves them to final states.</p>
+<hr>
+<h2 id="naive-approach">Naive Approach</h2>
+<p>Let&rsquo;s start with this seemingly innocent diagram. Can you spot what&rsquo;s wrong with it?</p>
+<pre class="mermaid">
     sequenceDiagram
   autonumber
   participant FE as Frontend
@@ -30,7 +407,81 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
   BE--&gt;&gt;FE: 201 Created (transactionId, status)
   deactivate BE
   deactivate FE
-</pre><p>The request goes from the frontend to the backend, then to the bank API, then to the database, and finally back to the frontend. Nothing can go wrong here&mldr; right?</p><h2 id=what-can-go-wrong>What Can Go Wrong?</h2><p>Let me walk you through the <strong>points of failure</strong> in this flow:</p><p><img src=what-can-go-wrong.png alt="Reliable Api Calls"></p><p><strong>Every API request and response is a potential point of failure</strong> from requests to your own backend, to third-party APIs, and even to your database. Each network hop, each service call, and each database operation can fail in ways that leave your system in an inconsistent state.</p><h3 id=network-timeouts>Network Timeouts</h3><ul><li><strong>FE → BE timeout</strong>: User&rsquo;s request times out, did the backend process the request?</li><li><strong>BE → API timeout</strong>: Backend calls the bank API, but the connection times out. Did the transaction go through?</li></ul><h3 id=api-failures>API Failures</h3><ul><li><strong>5xx errors</strong>: The bank API returns 500 Internal Server Error. Was the transaction processed? Unclear.</li></ul><h3 id=database-failures>Database Failures</h3><ul><li><strong>Write fails after API succeeds</strong>: The bank API processed the transaction, but our database write fails. We have no record of the transaction, but the money moved.</li></ul><h3 id=duplicate-requests>Duplicate Requests</h3><ul><li><strong>User double-click</strong>: User clicks &ldquo;Send&rdquo; twice, both requests go through.</li><li><strong>Network retry</strong>: Frontend retries the request automatically after a timeout</li></ul><h3 id=partial-completion>Partial Completion</h3><ul><li><strong>API succeeds, DB fails</strong>: Money transferred, but no record saved</li></ul><h3 id=race-conditions>Race Conditions</h3><ul><li><strong>Concurrent identical requests</strong>: Two requests with the same payload arrive at the same time, both get processed</li></ul><h3 id=crash-scenarios>Crash Scenarios</h3><ul><li><strong>Backend dies after API call</strong>: Bank processed the transaction, backend crashed before saving to DB. On restart, we have no record.</li></ul><p>The scary part? <strong>All of these failures can lead to duplicate transactions or lost data</strong>. Without proper handling, a user might get charged twice, or a transaction might disappear into the void.</p><h2 id=the-retry-problem>The Retry Problem</h2><p>The network is unreliable. Packets drop, connections reset, servers get overloaded. When these failures happen:</p><ul><li>Servers return <strong>5xx</strong> errors.</li><li>Timeouts occur at connection, read, or write levels</li><li>Clients may <strong>retry</strong> requests</li></ul><h2 id=understanding-idempotency>Understanding Idempotency</h2><p>According to REST principles, an <strong>idempotent</strong> operation is one that can be called multiple times with the same result. In other words, calling it once or calling it 10 times should produce the same outcome.</p><p><strong>HTTP methods and idempotency:</strong></p><ul><li><strong>GET, PUT, DELETE, HEAD, OPTIONS</strong>: Idempotent by design</li><li><strong>PATCH</strong>: Not guaranteed idempotent (depends on semantics)</li><li><strong>POST</strong>: Not idempotent by default; can be made idempotent via server design (e.g., upsert-by-key) or idempotency keys</li></ul><p><strong>Why POST is tricky</strong>: By default POST creates new resources, so repeated POSTs can create duplicates. This is unacceptable for financial operations.</p><p><strong>What we need</strong>: Make POSTs safe using <strong>idempotency keys</strong> (plus server-side upsert semantics where appropriate) so multiple calls with the same key return the same result.</p><h2 id=pattern-1-idempotency-keys>Pattern 1: Idempotency Keys</h2><p>The solution is simple: attach a unique identifier to each request. If the server has seen this identifier before, it returns the cached result instead of processing again.</p><h3 id=two-approaches-server-created-vs-client-created>Two Approaches: Server-Created vs Client-Created</h3><p>There are two main approaches to handling idempotency:</p><h4 id=server-created-idempotency-keys>Server-Created Idempotency Keys</h4><p>With this approach, the client first calls the server to create a transaction record:</p><ol><li>Client calls server (non-idempotent call to create transaction)</li><li>Server creates transaction record with ID and initial state<ul><li>(e.g., <code>POST /transaction</code> creates a record with state <code>pending</code>)</li></ul></li><li>Server returns transaction ID to client</li><li>Client confirms/executes using an <strong>idempotent</strong> call with the transaction ID<ul><li>(e.g. <code>PUT /transaction/{transactionId}/confirm</code> will move it from <code>pending</code> to <code>processing</code>)</li></ul></li></ol><pre class=mermaid>
+</pre>
+<p>The request goes from the frontend to the backend, then to the bank API, then to the database, and finally back to the frontend. Nothing can go wrong here&hellip; right?</p>
+<h2 id="what-can-go-wrong">What Can Go Wrong?</h2>
+<p>Let me walk you through the <strong>points of failure</strong> in this flow:</p>
+<p><img src="what-can-go-wrong.png" alt="Reliable Api Calls"></p>
+<p><strong>Every API request and response is a potential point of failure</strong> from requests to your own backend, to third-party APIs, and even to your database. Each network hop, each service call, and each database operation can fail in ways that leave your system in an inconsistent state.</p>
+<h3 id="network-timeouts">Network Timeouts</h3>
+<ul>
+<li><strong>FE → BE timeout</strong>: User&rsquo;s request times out, did the backend process the request?</li>
+<li><strong>BE → API timeout</strong>: Backend calls the bank API, but the connection times out. Did the transaction go through?</li>
+</ul>
+<h3 id="api-failures">API Failures</h3>
+<ul>
+<li><strong>5xx errors</strong>: The bank API returns 500 Internal Server Error. Was the transaction processed? Unclear.</li>
+</ul>
+<h3 id="database-failures">Database Failures</h3>
+<ul>
+<li><strong>Write fails after API succeeds</strong>: The bank API processed the transaction, but our database write fails. We have no record of the transaction, but the money moved.</li>
+</ul>
+<h3 id="duplicate-requests">Duplicate Requests</h3>
+<ul>
+<li><strong>User double-click</strong>: User clicks &ldquo;Send&rdquo; twice, both requests go through.</li>
+<li><strong>Network retry</strong>: Frontend retries the request automatically after a timeout</li>
+</ul>
+<h3 id="partial-completion">Partial Completion</h3>
+<ul>
+<li><strong>API succeeds, DB fails</strong>: Money transferred, but no record saved</li>
+</ul>
+<h3 id="race-conditions">Race Conditions</h3>
+<ul>
+<li><strong>Concurrent identical requests</strong>: Two requests with the same payload arrive at the same time, both get processed</li>
+</ul>
+<h3 id="crash-scenarios">Crash Scenarios</h3>
+<ul>
+<li><strong>Backend dies after API call</strong>: Bank processed the transaction, backend crashed before saving to DB. On restart, we have no record.</li>
+</ul>
+<p>The scary part? <strong>All of these failures can lead to duplicate transactions or lost data</strong>. Without proper handling, a user might get charged twice, or a transaction might disappear into the void.</p>
+<h2 id="the-retry-problem">The Retry Problem</h2>
+<p>The network is unreliable. Packets drop, connections reset, servers get overloaded. When these failures happen:</p>
+<ul>
+<li>Servers return <strong>5xx</strong> errors.</li>
+<li>Timeouts occur at connection, read, or write levels</li>
+<li>Clients may <strong>retry</strong> requests</li>
+</ul>
+<h2 id="understanding-idempotency">Understanding Idempotency</h2>
+<p>According to REST principles, an <strong>idempotent</strong> operation is one that can be called multiple times with the same result. In other words, calling it once or calling it 10 times should produce the same outcome.</p>
+<p><strong>HTTP methods and idempotency:</strong></p>
+<ul>
+<li><strong>GET, PUT, DELETE, HEAD, OPTIONS</strong>: Idempotent by design</li>
+<li><strong>PATCH</strong>: Not guaranteed idempotent (depends on semantics)</li>
+<li><strong>POST</strong>: Not idempotent by default; can be made idempotent via server design (e.g., upsert-by-key) or idempotency keys</li>
+</ul>
+<p><strong>Why POST is tricky</strong>: By default POST creates new resources, so repeated POSTs can create duplicates. This is unacceptable for financial operations.</p>
+<p><strong>What we need</strong>: Make POSTs safe using <strong>idempotency keys</strong> (plus server-side upsert semantics where appropriate) so multiple calls with the same key return the same result.</p>
+<h2 id="pattern-1-idempotency-keys">Pattern 1: Idempotency Keys</h2>
+<p>The solution is simple: attach a unique identifier to each request. If the server has seen this identifier before, it returns the cached result instead of processing again.</p>
+<h3 id="two-approaches-server-created-vs-client-created">Two Approaches: Server-Created vs Client-Created</h3>
+<p>There are two main approaches to handling idempotency:</p>
+<h4 id="server-created-idempotency-keys">Server-Created Idempotency Keys</h4>
+<p>With this approach, the client first calls the server to create a transaction record:</p>
+<ol>
+<li>Client calls server (non-idempotent call to create transaction)</li>
+<li>Server creates transaction record with ID and initial state
+<ul>
+<li>(e.g., <code>POST /transaction</code> creates a record with state <code>pending</code>)</li>
+</ul>
+</li>
+<li>Server returns transaction ID to client</li>
+<li>Client confirms/executes using an <strong>idempotent</strong> call with the transaction ID
+<ul>
+<li>(e.g. <code>PUT /transaction/{transactionId}/confirm</code> will move it from <code>pending</code> to <code>processing</code>)</li>
+</ul>
+</li>
+</ol>
+<pre class="mermaid">
     sequenceDiagram
   autonumber
   participant FE as Frontend
@@ -47,7 +498,31 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
   BE-&gt;&gt;BE: Update state: pending → processing &lt;br/&gt; begins processing
   BE--&gt;&gt;FE: 200 OK (result)
   deactivate BE
-</pre><p><strong>Pros:</strong></p><ul><li>Server controls transaction lifecycle</li><li>Can validate before committing</li><li>Clear separation of concerns</li></ul><p><strong>Cons:</strong></p><ul><li>Two-step process requires additional round-trip</li><li>More complex client logic</li><li>Duplicate requests will create transaction records, but those will never be processed. (may need cleanup/expiry logic)</li></ul><h4 id=client-created-idempotency>Client-Created Idempotency</h4><p>With this approach, the client generates the idempotency key:</p><ol><li>Client generates idempotency key and sends with request</li><li>Server attempts an atomic insert under a unique constraint (no prior read)<ul><li>If the insert succeeds: create the transaction and process it</li><li>If the insert conflicts: fetch and return the existing transaction/result</li></ul></li></ol><pre class=mermaid>
+</pre>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Server controls transaction lifecycle</li>
+<li>Can validate before committing</li>
+<li>Clear separation of concerns</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Two-step process requires additional round-trip</li>
+<li>More complex client logic</li>
+<li>Duplicate requests will create transaction records, but those will never be processed. (may need cleanup/expiry logic)</li>
+</ul>
+<h4 id="client-created-idempotency">Client-Created Idempotency</h4>
+<p>With this approach, the client generates the idempotency key:</p>
+<ol>
+<li>Client generates idempotency key and sends with request</li>
+<li>Server attempts an atomic insert under a unique constraint (no prior read)
+<ul>
+<li>If the insert succeeds: create the transaction and process it</li>
+<li>If the insert conflicts: fetch and return the existing transaction/result</li>
+</ul>
+</li>
+</ol>
+<pre class="mermaid">
     sequenceDiagram
   autonumber
   participant FE as Frontend
@@ -67,27 +542,136 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
     BE--&gt;&gt;FE: 200 OK (cached result)
   end
   deactivate BE
-</pre><p><strong>Pros:</strong></p><ul><li>Single round-trip</li><li>Simpler client flow</li><li>Immediate execution</li></ul><p><strong>Cons:</strong></p><ul><li>Client responsible for uniqueness</li><li>Less server control over transaction creation</li></ul><h3 id=uuid-uniqueness-is-it-good-enough>UUID Uniqueness: Is It Good Enough?</h3><p>When using client-created idempotency, you need a way to generate unique keys. <strong>Random UUIDs (v4)</strong> are the most common choice, though <strong>UUIDs (v7)</strong> are a good alternative.</p><p><strong>UUID v4 (Random)</strong>:</p><ul><li>128 bits of randomness</li><li>Collision probability is astronomically low</li><li>No inherent ordering or timestamp information</li></ul><p><strong>UUID v7 (Time-Ordered)</strong>:</p><ul><li>Includes a timestamp component (48 bits) plus randomness (74 bits)</li><li>Sortable by creation time (useful for database indexing)</li><li>Better for debugging/logging (you can see when the key was created)</li><li>Still maintains high uniqueness with collision probability similar to v4</li></ul><p><strong>Collision probability</strong>: With v4/v7, collisions are negligible for practical scales.</p><p>Choose <strong>v7</strong> if you want time-ordering; otherwise <strong>v4</strong> is perfectly fine.</p><p><strong>Is it unique enough?</strong> Yes, for virtually all use cases. The theoretical edge case where multiple clients generate identical UUIDs is so rare that it&rsquo;s not a practical concern.</p><h3 id=alternatives-to-random-uuids>Alternatives to Random UUIDs</h3><p>For special requirements, you might want <strong>deterministic</strong> idempotency keys:</p><p><strong>Format</strong>: <code>module + client_id + request_hash</code></p><ul><li><strong>Module identifier</strong>: e.g., &ldquo;payment&rdquo;, &ldquo;transfer&rdquo;, &ldquo;purchase&rdquo;</li><li><strong>Client ID</strong>: Unique per client/user</li><li><strong>Request hash</strong>: Deterministic hash of the request payload</li></ul><p><strong>Example</strong>: <code>payment_user123_a3f5b2c1d4e6f7g8h9i0j1k2l3m4n5o6p7</code></p><p><strong>Benefits:</strong></p><ul><li>Predictable and debuggable (you can see what operation it represents)</li><li>Can detect duplicate attempts from the same client with the same payload</li><li>Easier to trace in logs</li></ul><p><strong>Trade-offs:</strong></p><ul><li>Longer keys (storage considerations)</li><li>Requires careful design to avoid collisions (different clients with same payload would collide)</li><li>Must ensure client_id is unique and secure</li></ul><p><strong>Hybrid approach</strong>: Use deterministic keys for client retries, random UUIDs for unique operations.</p><p><strong>Recommendation</strong>: Random UUIDs are fine for most cases. Use deterministic keys when you need to detect exact duplicate requests from the same client.</p><h3 id=implementation-details>Implementation Details</h3><ul><li><strong>Storage</strong>: Idempotency key → result mapping in database/cache (indexed for fast lookup)</li><li><strong>Response handling</strong>: Return the same result for the same key</li><li><strong>TTL considerations</strong>: How long to store keys (typically 24-48 hours)</li></ul><p><strong>Atomic creation (concurrency-safe) example:</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Unique index on (idempotency_key)
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>INTO</span> transactions (idempotency_key, <span style=color:#66d9ef>state</span>, created_at)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>VALUES</span> (<span style=color:#960050;background-color:#1e0010>$</span><span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#39;pending&#39;</span>, NOW())
-</span></span><span style=display:flex><span><span style=color:#66d9ef>ON</span> CONFLICT (idempotency_key) <span style=color:#66d9ef>DO</span> <span style=color:#66d9ef>NOTHING</span>
-</span></span><span style=display:flex><span>RETURNING id;
-</span></span><span style=display:flex><span><span style=color:#75715e>-- If no row returned → SELECT existing row by idempotency_key</span></span></span></code></pre></div><h2 id=pattern-2-state-machines>Pattern 2: State Machines</h2><p>To properly handle the transaction lifecycle, we need to track state. A state machine ensures we know exactly where each transaction is in the process.</p><h3 id=what-to-save-in-the-database>What to Save in the Database</h3><p>Your transaction record should include:</p><ul><li><strong>id</strong>: Primary key (opaque, should not be exposed to the client)</li><li><strong>public_uid/idempotency_key</strong>: Key from the client (if using client-created approach)</li><li><strong>state</strong>: Current state of the transaction</li><li><strong>version</strong>: For optimistic locking (we&rsquo;ll cover this next)</li><li><strong>external_public_uid/external_idempotency_key</strong>: Key used when calling external API (backend-created, persisted before the external call)</li><li><strong>result</strong>: Result + metadata from external API</li><li><strong>error_details</strong>: Error information if failed</li><li><strong>created_at, updated_at</strong>: Timestamps</li></ul><h3 id=database-transaction-strategy>Database Transaction Strategy</h3><p>When implementing API calls with state management, it&rsquo;s critical to use proper <strong>database transaction boundaries</strong> to ensure data consistency. The process should follow these three steps:</p><ol><li><p><strong>Save initial state in database</strong> (single database transaction): Create the transaction record with all necessary tables and initial state in a single database transaction. This ensures atomicity, if any part of the initial state creation fails, the entire operation rolls back, leaving your database in a consistent state.</p><p><strong>Example</strong>: If you need to create a transaction record and update a related table (e.g., deducting funds from an account), both operations must happen in the same transaction.</p></li><li><p><strong>Persist external idempotency key, then do API call</strong>: After the initial state is saved, persist the external idempotency key on the transaction (optionally transition to <code>processing</code>), then make the external API call. This enables safe replay after crashes/timeouts.</p></li><li><p><strong>Save result + new state in database</strong> (single database transaction): After receiving the API response (success or failure), update all related tables and the transaction state in a single database transaction. This includes updating the transaction record with the result, updating any related account balances, and modifying any other dependent records.</p></li></ol><p><strong>Why this matters</strong>: Without proper transaction boundaries, you risk partial updates. For example, if you update the transaction state successfully but fail to update a related account balance, your data becomes inconsistent. By wrapping all related updates in a single transaction, you ensure all-or-nothing semantics.</p><p><strong>Implementation pattern</strong>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>BEGIN</span> <span style=color:#66d9ef>TRANSACTION</span>;
-</span></span><span style=display:flex><span>  <span style=color:#75715e>-- Step 1: Create initial state (all tables)
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>INTO</span> transactions (...) <span style=color:#66d9ef>VALUES</span> (...);
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>UPDATE</span> accounts <span style=color:#66d9ef>SET</span> ... <span style=color:#66d9ef>WHERE</span> ...;
-</span></span><span style=display:flex><span>  <span style=color:#75715e>-- Commit only if all succeed
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>COMMIT</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>-- Step 2: Make API call (outside transaction)
-</span></span></span><span style=display:flex><span><span style=color:#75715e>-- ... API call here ...
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>BEGIN</span> <span style=color:#66d9ef>TRANSACTION</span>;
-</span></span><span style=display:flex><span>  <span style=color:#75715e>-- Step 3: Update with result (all tables)
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#66d9ef>UPDATE</span> transactions <span style=color:#66d9ef>SET</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;completed&#39;</span>, <span style=color:#66d9ef>result</span> <span style=color:#f92672>=</span> ... <span style=color:#66d9ef>WHERE</span> ...;
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>UPDATE</span> accounts <span style=color:#66d9ef>SET</span> ... <span style=color:#66d9ef>WHERE</span> ...;
-</span></span><span style=display:flex><span>  <span style=color:#75715e>-- Commit only if all succeed
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>COMMIT</span>;</span></span></code></pre></div><p>This strategy ensures that your database always reflects a consistent state, even if the API call fails or the server crashes between operations.</p><h3 id=two-types-of-idempotency-keys>Two Types of Idempotency Keys</h3><p>You need <strong>two separate idempotency keys</strong> for different purposes:</p><ol><li><strong>Backend Transaction Key</strong>: Tracks the transaction request on your backend (may be client-created or backend-created, depending on your approach)</li><li><strong>External API Key</strong>: Used when calling the external API (always backend-created)</li></ol><p><strong>Why both?</strong> They serve different retry boundaries. When a client retries the same transaction request, your backend uses the transaction key to recognize it&rsquo;s a duplicate. However, when your backend needs to retry the external API call (due to a network error, timeout, etc.), it should use a separate key, either a new one each retry, or the external API may handle its own idempotency.</p><p><strong>Example</strong>:</p><ul><li>Client retries <code>POST /transaction</code> with transaction key <code>abc-123</code> → Backend recognizes duplicate using <code>abc-123</code></li><li>Backend calls bank API with external key <code>xyz-789</code> → If the backend needs to retry the same logical operation, reuse <code>xyz-789</code> when the provider supports idempotency keys. Rotating keys can create duplicates.</li></ul><h3 id=state-transitions>State Transitions</h3><p>The state flow depends on which idempotency approach you&rsquo;re using:</p><h4 id=client-created-idempotency-key>Client-Created Idempotency Key</h4><p>With client-created keys, everything happens in a single request, so the state machine is simpler:</p><pre class=mermaid>
+</pre>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Single round-trip</li>
+<li>Simpler client flow</li>
+<li>Immediate execution</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Client responsible for uniqueness</li>
+<li>Less server control over transaction creation</li>
+</ul>
+<h3 id="uuid-uniqueness-is-it-good-enough">UUID Uniqueness: Is It Good Enough?</h3>
+<p>When using client-created idempotency, you need a way to generate unique keys. <strong>Random UUIDs (v4)</strong> are the most common choice, though <strong>UUIDs (v7)</strong> are a good alternative.</p>
+<p><strong>UUID v4 (Random)</strong>:</p>
+<ul>
+<li>128 bits of randomness</li>
+<li>Collision probability is astronomically low</li>
+<li>No inherent ordering or timestamp information</li>
+</ul>
+<p><strong>UUID v7 (Time-Ordered)</strong>:</p>
+<ul>
+<li>Includes a timestamp component (48 bits) plus randomness (74 bits)</li>
+<li>Sortable by creation time (useful for database indexing)</li>
+<li>Better for debugging/logging (you can see when the key was created)</li>
+<li>Still maintains high uniqueness with collision probability similar to v4</li>
+</ul>
+<p><strong>Collision probability</strong>: With v4/v7, collisions are negligible for practical scales.</p>
+<p>Choose <strong>v7</strong> if you want time-ordering; otherwise <strong>v4</strong> is perfectly fine.</p>
+<p><strong>Is it unique enough?</strong> Yes, for virtually all use cases. The theoretical edge case where multiple clients generate identical UUIDs is so rare that it&rsquo;s not a practical concern.</p>
+<h3 id="alternatives-to-random-uuids">Alternatives to Random UUIDs</h3>
+<p>For special requirements, you might want <strong>deterministic</strong> idempotency keys:</p>
+<p><strong>Format</strong>: <code>module + client_id + request_hash</code></p>
+<ul>
+<li><strong>Module identifier</strong>: e.g., &ldquo;payment&rdquo;, &ldquo;transfer&rdquo;, &ldquo;purchase&rdquo;</li>
+<li><strong>Client ID</strong>: Unique per client/user</li>
+<li><strong>Request hash</strong>: Deterministic hash of the request payload</li>
+</ul>
+<p><strong>Example</strong>: <code>payment_user123_a3f5b2c1d4e6f7g8h9i0j1k2l3m4n5o6p7</code></p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Predictable and debuggable (you can see what operation it represents)</li>
+<li>Can detect duplicate attempts from the same client with the same payload</li>
+<li>Easier to trace in logs</li>
+</ul>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li>Longer keys (storage considerations)</li>
+<li>Requires careful design to avoid collisions (different clients with same payload would collide)</li>
+<li>Must ensure client_id is unique and secure</li>
+</ul>
+<p><strong>Hybrid approach</strong>: Use deterministic keys for client retries, random UUIDs for unique operations.</p>
+<p><strong>Recommendation</strong>: Random UUIDs are fine for most cases. Use deterministic keys when you need to detect exact duplicate requests from the same client.</p>
+<h3 id="implementation-details">Implementation Details</h3>
+<ul>
+<li><strong>Storage</strong>: Idempotency key → result mapping in database/cache (indexed for fast lookup)</li>
+<li><strong>Response handling</strong>: Return the same result for the same key</li>
+<li><strong>TTL considerations</strong>: How long to store keys (typically 24-48 hours)</li>
+</ul>
+<p><strong>Atomic creation (concurrency-safe) example:</strong></p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Unique index on (idempotency_key)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> transactions (idempotency_key, <span style="color:#66d9ef">state</span>, created_at)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">VALUES</span> (<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;pending&#39;</span>, NOW())
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ON</span> CONFLICT (idempotency_key) <span style="color:#66d9ef">DO</span> <span style="color:#66d9ef">NOTHING</span>
+</span></span><span style="display:flex;"><span>RETURNING id;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- If no row returned → SELECT existing row by idempotency_key</span></span></span></code></pre></div><h2 id="pattern-2-state-machines">Pattern 2: State Machines</h2>
+<p>To properly handle the transaction lifecycle, we need to track state. A state machine ensures we know exactly where each transaction is in the process.</p>
+<h3 id="what-to-save-in-the-database">What to Save in the Database</h3>
+<p>Your transaction record should include:</p>
+<ul>
+<li><strong>id</strong>: Primary key (opaque, should not be exposed to the client)</li>
+<li><strong>public_uid/idempotency_key</strong>: Key from the client (if using client-created approach)</li>
+<li><strong>state</strong>: Current state of the transaction</li>
+<li><strong>version</strong>: For optimistic locking (we&rsquo;ll cover this next)</li>
+<li><strong>external_public_uid/external_idempotency_key</strong>: Key used when calling external API (backend-created, persisted before the external call)</li>
+<li><strong>result</strong>: Result + metadata from external API</li>
+<li><strong>error_details</strong>: Error information if failed</li>
+<li><strong>created_at, updated_at</strong>: Timestamps</li>
+</ul>
+<h3 id="database-transaction-strategy">Database Transaction Strategy</h3>
+<p>When implementing API calls with state management, it&rsquo;s critical to use proper <strong>database transaction boundaries</strong> to ensure data consistency. The process should follow these three steps:</p>
+<ol>
+<li>
+<p><strong>Save initial state in database</strong> (single database transaction): Create the transaction record with all necessary tables and initial state in a single database transaction. This ensures atomicity, if any part of the initial state creation fails, the entire operation rolls back, leaving your database in a consistent state.</p>
+<p><strong>Example</strong>: If you need to create a transaction record and update a related table (e.g., deducting funds from an account), both operations must happen in the same transaction.</p>
+</li>
+<li>
+<p><strong>Persist external idempotency key, then do API call</strong>: After the initial state is saved, persist the external idempotency key on the transaction (optionally transition to <code>processing</code>), then make the external API call. This enables safe replay after crashes/timeouts.</p>
+</li>
+<li>
+<p><strong>Save result + new state in database</strong> (single database transaction): After receiving the API response (success or failure), update all related tables and the transaction state in a single database transaction. This includes updating the transaction record with the result, updating any related account balances, and modifying any other dependent records.</p>
+</li>
+</ol>
+<p><strong>Why this matters</strong>: Without proper transaction boundaries, you risk partial updates. For example, if you update the transaction state successfully but fail to update a related account balance, your data becomes inconsistent. By wrapping all related updates in a single transaction, you ensure all-or-nothing semantics.</p>
+<p><strong>Implementation pattern</strong>:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- Step 1: Create initial state (all tables)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> transactions (...) <span style="color:#66d9ef">VALUES</span> (...);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UPDATE</span> accounts <span style="color:#66d9ef">SET</span> ... <span style="color:#66d9ef">WHERE</span> ...;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- Commit only if all succeed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">COMMIT</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- Step 2: Make API call (outside transaction)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- ... API call here ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- Step 3: Update with result (all tables)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">UPDATE</span> transactions <span style="color:#66d9ef">SET</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;completed&#39;</span>, <span style="color:#66d9ef">result</span> <span style="color:#f92672">=</span> ... <span style="color:#66d9ef">WHERE</span> ...;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UPDATE</span> accounts <span style="color:#66d9ef">SET</span> ... <span style="color:#66d9ef">WHERE</span> ...;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- Commit only if all succeed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">COMMIT</span>;</span></span></code></pre></div><p>This strategy ensures that your database always reflects a consistent state, even if the API call fails or the server crashes between operations.</p>
+<h3 id="two-types-of-idempotency-keys">Two Types of Idempotency Keys</h3>
+<p>You need <strong>two separate idempotency keys</strong> for different purposes:</p>
+<ol>
+<li><strong>Backend Transaction Key</strong>: Tracks the transaction request on your backend (may be client-created or backend-created, depending on your approach)</li>
+<li><strong>External API Key</strong>: Used when calling the external API (always backend-created)</li>
+</ol>
+<p><strong>Why both?</strong> They serve different retry boundaries. When a client retries the same transaction request, your backend uses the transaction key to recognize it&rsquo;s a duplicate. However, when your backend needs to retry the external API call (due to a network error, timeout, etc.), it should use a separate key, either a new one each retry, or the external API may handle its own idempotency.</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Client retries <code>POST /transaction</code> with transaction key <code>abc-123</code> → Backend recognizes duplicate using <code>abc-123</code></li>
+<li>Backend calls bank API with external key <code>xyz-789</code> → If the backend needs to retry the same logical operation, reuse <code>xyz-789</code> when the provider supports idempotency keys. Rotating keys can create duplicates.</li>
+</ul>
+<h3 id="state-transitions">State Transitions</h3>
+<p>The state flow depends on which idempotency approach you&rsquo;re using:</p>
+<h4 id="client-created-idempotency-key">Client-Created Idempotency Key</h4>
+<p>With client-created keys, everything happens in a single request, so the state machine is simpler:</p>
+<pre class="mermaid">
     stateDiagram-v2
     [*] --&gt; pending: Create transaction
     pending --&gt; completed: API success
@@ -95,7 +679,22 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
     failed --&gt; pending: Retry
     completed --&gt; [*]
     failed --&gt; [*]
-</pre><p><strong>State meanings:</strong></p><ul><li><strong>pending</strong>: Record created, ready to process API call</li><li><strong>completed</strong>: API call succeeded, transaction finished</li><li><strong>failed</strong>: API call failed or error occurred</li></ul><p><strong>When to transition:</strong></p><ul><li><strong>Create record</strong>: Set state to <code>pending</code></li><li><strong>After API call</strong>: Transition directly from <code>pending</code> to <code>completed</code> or <code>failed</code></li><li><strong>On retry</strong>: Transition from <code>failed</code> back to <code>pending</code> (then retry API call)</li></ul><h4 id=server-created-idempotency-key>Server-Created Idempotency Key</h4><p>With server-created keys, you have a two-step process, so you need an intermediate <code>processing</code> state:</p><pre class=mermaid>
+</pre>
+<p><strong>State meanings:</strong></p>
+<ul>
+<li><strong>pending</strong>: Record created, ready to process API call</li>
+<li><strong>completed</strong>: API call succeeded, transaction finished</li>
+<li><strong>failed</strong>: API call failed or error occurred</li>
+</ul>
+<p><strong>When to transition:</strong></p>
+<ul>
+<li><strong>Create record</strong>: Set state to <code>pending</code></li>
+<li><strong>After API call</strong>: Transition directly from <code>pending</code> to <code>completed</code> or <code>failed</code></li>
+<li><strong>On retry</strong>: Transition from <code>failed</code> back to <code>pending</code> (then retry API call)</li>
+</ul>
+<h4 id="server-created-idempotency-key">Server-Created Idempotency Key</h4>
+<p>With server-created keys, you have a two-step process, so you need an intermediate <code>processing</code> state:</p>
+<pre class="mermaid">
     stateDiagram-v2
     [*] --&gt; pending: First request creates transaction
     pending --&gt; processing: Second request starts API call
@@ -104,38 +703,166 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
     failed --&gt; processing: Retry
     completed --&gt; [*]
     failed --&gt; [*]
-</pre><p><strong>State meanings:</strong></p><ul><li><strong>pending</strong>: Record created in first request, waiting for confirmation/execution</li><li><strong>processing</strong>: Currently calling external API</li><li><strong>completed</strong>: API call succeeded, transaction finished</li><li><strong>failed</strong>: API call failed or error occurred</li></ul><p><strong>When to transition:</strong></p><ul><li><strong>First request</strong>: Create record with state <code>pending</code>, return transaction ID to client</li><li><strong>Second request</strong>: Transition from <code>pending</code> to <code>processing</code> before API call</li><li><strong>After API call</strong>: Transition to <code>completed</code> or <code>failed</code></li><li><strong>On retry</strong>: Transition from <code>failed</code> back to <code>processing</code></li></ul><h3 id=recovery-scheduler>Recovery Scheduler</h3><p>Transactions can get stuck in <code>pending</code> state due to:</p><ul><li>Server crashes after creating a transaction but before calling the API</li><li>Network failures that prevent API call completion</li><li>Timeouts that leave transactions in an intermediate state</li></ul><p><strong>Solution</strong>: Implement a recovery scheduler (also called a &ldquo;sweeper&rdquo; or &ldquo;cleanup job&rdquo;) that periodically:</p><ol><li>Finds transactions stuck in <code>pending</code> state</li><li>Retries processing them (with appropriate retry limits)</li><li>Moves them to final states (<code>completed</code> or <code>failed</code>)</li></ol><p><strong>Implementation approach:</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Find transactions stuck in pending
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>SELECT</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>FROM</span> transactions 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;pending&#39;</span> 
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>AND</span> updated_at <span style=color:#f92672>&lt;</span> NOW() <span style=color:#f92672>-</span> INTERVAL <span style=color:#e6db74>&#39;5 minutes&#39;</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>ORDER</span> <span style=color:#66d9ef>BY</span> created_at <span style=color:#66d9ef>ASC</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>LIMIT</span> <span style=color:#ae81ff>100</span>;</span></span></code></pre></div><p><strong>Key considerations:</strong></p><ul><li><strong>Frequency</strong>: Run every few minutes (e.g., 1-5 minutes depending on your SLA)</li><li><strong>Time threshold</strong>: Only process transactions older than X minutes (e.g., 5 minutes) to avoid interfering with in-flight requests</li><li><strong>Batch size</strong>: Process in batches to avoid overwhelming the system</li><li><strong>Idempotency</strong>: Use the same optimistic locking mechanisms to ensure safe retries (e.g., <code>WHERE state = 'pending'</code>)</li><li><strong>Retry limits</strong>: Track <code>retry_attempts</code> and move to <code>failed</code> after max retries</li><li><strong>Processing order</strong>: Process oldest transactions first (ORDER BY created_at)</li></ul><p><strong>State transitions for recovery:</strong></p><ul><li><code>pending</code> (stuck) → process API call → <code>completed</code> or <code>failed</code> (using optimistic locking)</li></ul><p>This ensures no transaction is left hanging indefinitely and improves overall system reliability.</p><h2 id=pattern-3-optimistic-locking>Pattern 3: Optimistic Locking</h2><p>When a transaction record already exists (from a previous request or retry), concurrent requests trying to update it can cause race conditions. <strong>Optimistic locking</strong> ensures only one request can successfully update and process the transaction at a time.</p><h3 id=the-problem>The Problem</h3><p>Consider updating a user&rsquo;s account balance when processing transactions. Two <strong>different transactions</strong> arrive concurrently:</p><ul><li><strong>Transaction A</strong>: Process $50 debit (transaction_id: <code>txn-1</code>)</li><li><strong>Transaction B</strong>: Process $50 debit (transaction_id: <code>txn-2</code>). This is a different transaction!</li></ul><p>Both should be applied, so the balance should go from <code>$1000</code> → <code>$900</code> (1000 - 50 - 50).</p><p><strong>Without optimistic locking</strong>, your code might do:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Read balance, calculate new value, then update
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>SELECT</span> balance <span style=color:#66d9ef>FROM</span> accounts <span style=color:#66d9ef>WHERE</span> user_id <span style=color:#f92672>=</span> <span style=color:#ae81ff>123</span>;
-</span></span><span style=display:flex><span><span style=color:#75715e>-- Returns: balance = $1000
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
-</span></span><span style=display:flex><span><span style=color:#75715e>-- Later, update with calculated value (no check on current balance)
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>UPDATE</span> accounts 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>SET</span> balance <span style=color:#f92672>=</span> <span style=color:#ae81ff>950</span>  <span style=color:#75715e>-- calculated as 1000 - 50
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>WHERE</span> user_id <span style=color:#f92672>=</span> <span style=color:#ae81ff>123</span></span></span></code></pre></div><p><strong>What happens with concurrent requests:</strong></p><ol><li>Request A (txn-1) reads balance → <code>$1000</code>, calculates new balance = <code>$950</code></li><li>Request B (txn-2) reads balance → <code>$1000</code> (before A updates), calculates new balance = <code>$950</code></li><li>Request A executes UPDATE → balance becomes <code>$950</code> ✓ (txn-1 processed)</li><li>Request B executes UPDATE → balance becomes <code>$950</code> ❌ <strong>Wrong!</strong> (txn-2 overwrites, should be <code>$900</code>)</li><li><strong>Expected</strong>: Balance should be <code>$900</code> (both transactions: 1000 - 50 - 50)</li><li><strong>Actual</strong>: Balance is <code>$950</code> → <strong>Lost $50!</strong> Transaction B&rsquo;s debit was lost.</li></ol><p>The problem: The WHERE clause doesn&rsquo;t verify the balance hasn&rsquo;t changed since you read it. Both requests see the same initial value (<code>$1000</code>) and both updates succeed, causing the second transaction to overwrite the first instead of being applied on top. This same race condition occurs with <strong>state transitions</strong> (<code>pending</code> → <code>completed</code>, <code>failed</code> → <code>pending</code>) when multiple requests try to update the same record.</p><p><strong>Note</strong>: Record creation is protected by a <strong>unique constraint</strong> on <code>idempotency_key</code> (database-level pessimistic locking). Optimistic locking is needed for <strong>updating existing records</strong> when multiple requests try to change the state concurrently.</p><h3 id=the-optimistic-locking-pattern>The Optimistic Locking Pattern</h3><p>These solutions follow the same pattern:</p><ol><li><strong>Optimistically attempt the update</strong> with a conditional WHERE clause</li><li><strong>Check affected rows count</strong>:<ul><li><strong>0 rows updated</strong> → Conflict detected, rollback/fail the transaction</li><li><strong>1 row updated</strong> → Success, continue processing</li></ul></li><li>The WHERE clause ensures only one request can proceed if they arrive simultaneously</li></ol><p>This is &ldquo;optimistic&rdquo; because you assume success and check afterwards. If another request beat you, you detect the conflict and abort.</p><h3 id=solution-1-version-column>Solution 1: Version Column</h3><p>Add a <code>version</code> column to your table (integer, starts at 0 or 1):</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Example: Update balance with version check
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>UPDATE</span> accounts 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>SET</span> balance <span style=color:#f92672>=</span> <span style=color:#f92672>?</span>, <span style=color:#66d9ef>version</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>version</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span> 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> user_id <span style=color:#f92672>=</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>AND</span> <span style=color:#66d9ef>version</span> <span style=color:#f92672>=</span> <span style=color:#f92672>?</span></span></span></code></pre></div><p><strong>How it works:</strong></p><ol><li>Read account with current version (e.g., <code>balance = $1000, version = 5</code>)</li><li>Calculate new balance (e.g., <code>$1000 - $50 = $950</code>)</li><li>Optimistically attempt update: only succeeds if version still matches</li><li>If version changed → WHERE clause fails → 0 rows updated → conflict detected → rollback (another request modified it)</li><li>If version matches → 1 row updated → success → continue</li></ol><p><strong>Also works for state transitions:</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Example: Update transaction state
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>UPDATE</span> transactions 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>SET</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;completed&#39;</span>, <span style=color:#66d9ef>result</span> <span style=color:#f92672>=</span> <span style=color:#f92672>?</span>, <span style=color:#66d9ef>version</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>version</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span> 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> id <span style=color:#f92672>=</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>AND</span> <span style=color:#66d9ef>version</span> <span style=color:#f92672>=</span> <span style=color:#f92672>?</span></span></span></code></pre></div><p><strong>Use on all updates</strong>: Apply this pattern to any update where concurrent modifications must be prevented (balance updates, state transitions, etc.)</p><p><strong>Pros:</strong></p><ul><li>Flexible, can update any field</li><li>Good for complex updates</li></ul><p><strong>Cons:</strong></p><ul><li>Requires version check in all update queries</li></ul><h3 id=solution-2-conditional-state-updates>Solution 2: Conditional State Updates</h3><p>Use the WHERE clause to ensure state hasn&rsquo;t changed:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Example: Update from pending to completed
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>UPDATE</span> transactions 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>SET</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;completed&#39;</span>, <span style=color:#66d9ef>result</span> <span style=color:#f92672>=</span> <span style=color:#f92672>?</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> idempotency_key <span style=color:#f92672>=</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>AND</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;pending&#39;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>-- Example: Retry from failed to pending
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>UPDATE</span> transactions 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>SET</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;pending&#39;</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> idempotency_key <span style=color:#f92672>=</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>AND</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;failed&#39;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>-- Example: Mark as failed
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>UPDATE</span> transactions 
-</span></span><span style=display:flex><span><span style=color:#66d9ef>SET</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;failed&#39;</span>, error <span style=color:#f92672>=</span> <span style=color:#f92672>?</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> idempotency_key <span style=color:#f92672>=</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>AND</span> <span style=color:#66d9ef>state</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;pending&#39;</span></span></span></code></pre></div><p><strong>How it works:</strong></p><ol><li>Optimistically attempt update: only succeeds if current state matches expected state</li><li>If state changed → WHERE clause fails → 0 rows updated → conflict detected → rollback</li><li>If state matches → 1 row updated → success → continue</li></ol><p><strong>Use on all updates</strong>: Apply conditional state checks to every state transition. The WHERE clause ensures atomic state machine transitions.</p><p><strong>Pros:</strong></p><ul><li>Simpler, no version column needed</li><li>Atomic by nature</li><li>Perfect for state machine transitions</li></ul><p><strong>Cons:</strong></p><ul><li>Only works for state transitions</li><li>Less flexible for other updates</li></ul><h3 id=which-to-use>Which to Use?</h3><p><strong>For state machines</strong>: Use conditional state updates (recommended). It&rsquo;s simpler and perfectly suited for atomic state transitions.</p><p><strong>For complex updates</strong>: Use version column when you need to update multiple fields and detect conflicts on any change.</p><h2 id=complete-flow-example>Complete Flow Example</h2><p>Let&rsquo;s see all three patterns working together:</p><pre class=mermaid>
+</pre>
+<p><strong>State meanings:</strong></p>
+<ul>
+<li><strong>pending</strong>: Record created in first request, waiting for confirmation/execution</li>
+<li><strong>processing</strong>: Currently calling external API</li>
+<li><strong>completed</strong>: API call succeeded, transaction finished</li>
+<li><strong>failed</strong>: API call failed or error occurred</li>
+</ul>
+<p><strong>When to transition:</strong></p>
+<ul>
+<li><strong>First request</strong>: Create record with state <code>pending</code>, return transaction ID to client</li>
+<li><strong>Second request</strong>: Transition from <code>pending</code> to <code>processing</code> before API call</li>
+<li><strong>After API call</strong>: Transition to <code>completed</code> or <code>failed</code></li>
+<li><strong>On retry</strong>: Transition from <code>failed</code> back to <code>processing</code></li>
+</ul>
+<h3 id="recovery-scheduler">Recovery Scheduler</h3>
+<p>Transactions can get stuck in <code>pending</code> state due to:</p>
+<ul>
+<li>Server crashes after creating a transaction but before calling the API</li>
+<li>Network failures that prevent API call completion</li>
+<li>Timeouts that leave transactions in an intermediate state</li>
+</ul>
+<p><strong>Solution</strong>: Implement a recovery scheduler (also called a &ldquo;sweeper&rdquo; or &ldquo;cleanup job&rdquo;) that periodically:</p>
+<ol>
+<li>Finds transactions stuck in <code>pending</code> state</li>
+<li>Retries processing them (with appropriate retry limits)</li>
+<li>Moves them to final states (<code>completed</code> or <code>failed</code>)</li>
+</ol>
+<p><strong>Implementation approach:</strong></p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Find transactions stuck in pending
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> transactions 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pending&#39;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">AND</span> updated_at <span style="color:#f92672">&lt;</span> NOW() <span style="color:#f92672">-</span> INTERVAL <span style="color:#e6db74">&#39;5 minutes&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> created_at <span style="color:#66d9ef">ASC</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">LIMIT</span> <span style="color:#ae81ff">100</span>;</span></span></code></pre></div><p><strong>Key considerations:</strong></p>
+<ul>
+<li><strong>Frequency</strong>: Run every few minutes (e.g., 1-5 minutes depending on your SLA)</li>
+<li><strong>Time threshold</strong>: Only process transactions older than X minutes (e.g., 5 minutes) to avoid interfering with in-flight requests</li>
+<li><strong>Batch size</strong>: Process in batches to avoid overwhelming the system</li>
+<li><strong>Idempotency</strong>: Use the same optimistic locking mechanisms to ensure safe retries (e.g., <code>WHERE state = 'pending'</code>)</li>
+<li><strong>Retry limits</strong>: Track <code>retry_attempts</code> and move to <code>failed</code> after max retries</li>
+<li><strong>Processing order</strong>: Process oldest transactions first (ORDER BY created_at)</li>
+</ul>
+<p><strong>State transitions for recovery:</strong></p>
+<ul>
+<li><code>pending</code> (stuck) → process API call → <code>completed</code> or <code>failed</code> (using optimistic locking)</li>
+</ul>
+<p>This ensures no transaction is left hanging indefinitely and improves overall system reliability.</p>
+<h2 id="pattern-3-optimistic-locking">Pattern 3: Optimistic Locking</h2>
+<p>When a transaction record already exists (from a previous request or retry), concurrent requests trying to update it can cause race conditions. <strong>Optimistic locking</strong> ensures only one request can successfully update and process the transaction at a time.</p>
+<h3 id="the-problem">The Problem</h3>
+<p>Consider updating a user&rsquo;s account balance when processing transactions. Two <strong>different transactions</strong> arrive concurrently:</p>
+<ul>
+<li><strong>Transaction A</strong>: Process $50 debit (transaction_id: <code>txn-1</code>)</li>
+<li><strong>Transaction B</strong>: Process $50 debit (transaction_id: <code>txn-2</code>). This is a different transaction!</li>
+</ul>
+<p>Both should be applied, so the balance should go from <code>$1000</code> → <code>$900</code> (1000 - 50 - 50).</p>
+<p><strong>Without optimistic locking</strong>, your code might do:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Read balance, calculate new value, then update
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> balance <span style="color:#66d9ef">FROM</span> accounts <span style="color:#66d9ef">WHERE</span> user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- Returns: balance = $1000
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- Later, update with calculated value (no check on current balance)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> accounts 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> balance <span style="color:#f92672">=</span> <span style="color:#ae81ff">950</span>  <span style="color:#75715e">-- calculated as 1000 - 50
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">WHERE</span> user_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span></span></span></code></pre></div><p><strong>What happens with concurrent requests:</strong></p>
+<ol>
+<li>Request A (txn-1) reads balance → <code>$1000</code>, calculates new balance = <code>$950</code></li>
+<li>Request B (txn-2) reads balance → <code>$1000</code> (before A updates), calculates new balance = <code>$950</code></li>
+<li>Request A executes UPDATE → balance becomes <code>$950</code> ✓ (txn-1 processed)</li>
+<li>Request B executes UPDATE → balance becomes <code>$950</code> ❌ <strong>Wrong!</strong> (txn-2 overwrites, should be <code>$900</code>)</li>
+<li><strong>Expected</strong>: Balance should be <code>$900</code> (both transactions: 1000 - 50 - 50)</li>
+<li><strong>Actual</strong>: Balance is <code>$950</code> → <strong>Lost $50!</strong> Transaction B&rsquo;s debit was lost.</li>
+</ol>
+<p>The problem: The WHERE clause doesn&rsquo;t verify the balance hasn&rsquo;t changed since you read it. Both requests see the same initial value (<code>$1000</code>) and both updates succeed, causing the second transaction to overwrite the first instead of being applied on top. This same race condition occurs with <strong>state transitions</strong> (<code>pending</code> → <code>completed</code>, <code>failed</code> → <code>pending</code>) when multiple requests try to update the same record.</p>
+<p><strong>Note</strong>: Record creation is protected by a <strong>unique constraint</strong> on <code>idempotency_key</code> (database-level pessimistic locking). Optimistic locking is needed for <strong>updating existing records</strong> when multiple requests try to change the state concurrently.</p>
+<h3 id="the-optimistic-locking-pattern">The Optimistic Locking Pattern</h3>
+<p>These solutions follow the same pattern:</p>
+<ol>
+<li><strong>Optimistically attempt the update</strong> with a conditional WHERE clause</li>
+<li><strong>Check affected rows count</strong>:
+<ul>
+<li><strong>0 rows updated</strong> → Conflict detected, rollback/fail the transaction</li>
+<li><strong>1 row updated</strong> → Success, continue processing</li>
+</ul>
+</li>
+<li>The WHERE clause ensures only one request can proceed if they arrive simultaneously</li>
+</ol>
+<p>This is &ldquo;optimistic&rdquo; because you assume success and check afterwards. If another request beat you, you detect the conflict and abort.</p>
+<h3 id="solution-1-version-column">Solution 1: Version Column</h3>
+<p>Add a <code>version</code> column to your table (integer, starts at 0 or 1):</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Example: Update balance with version check
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> accounts 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> balance <span style="color:#f92672">=</span> <span style="color:#f92672">?</span>, <span style="color:#66d9ef">version</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">version</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> user_id <span style="color:#f92672">=</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">version</span> <span style="color:#f92672">=</span> <span style="color:#f92672">?</span></span></span></code></pre></div><p><strong>How it works:</strong></p>
+<ol>
+<li>Read account with current version (e.g., <code>balance = $1000, version = 5</code>)</li>
+<li>Calculate new balance (e.g., <code>$1000 - $50 = $950</code>)</li>
+<li>Optimistically attempt update: only succeeds if version still matches</li>
+<li>If version changed → WHERE clause fails → 0 rows updated → conflict detected → rollback (another request modified it)</li>
+<li>If version matches → 1 row updated → success → continue</li>
+</ol>
+<p><strong>Also works for state transitions:</strong></p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Example: Update transaction state
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> transactions 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;completed&#39;</span>, <span style="color:#66d9ef">result</span> <span style="color:#f92672">=</span> <span style="color:#f92672">?</span>, <span style="color:#66d9ef">version</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">version</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">version</span> <span style="color:#f92672">=</span> <span style="color:#f92672">?</span></span></span></code></pre></div><p><strong>Use on all updates</strong>: Apply this pattern to any update where concurrent modifications must be prevented (balance updates, state transitions, etc.)</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Flexible, can update any field</li>
+<li>Good for complex updates</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Requires version check in all update queries</li>
+</ul>
+<h3 id="solution-2-conditional-state-updates">Solution 2: Conditional State Updates</h3>
+<p>Use the WHERE clause to ensure state hasn&rsquo;t changed:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Example: Update from pending to completed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> transactions 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;completed&#39;</span>, <span style="color:#66d9ef">result</span> <span style="color:#f92672">=</span> <span style="color:#f92672">?</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> idempotency_key <span style="color:#f92672">=</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pending&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- Example: Retry from failed to pending
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> transactions 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pending&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> idempotency_key <span style="color:#f92672">=</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;failed&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- Example: Mark as failed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">UPDATE</span> transactions 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;failed&#39;</span>, error <span style="color:#f92672">=</span> <span style="color:#f92672">?</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> idempotency_key <span style="color:#f92672">=</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">state</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pending&#39;</span></span></span></code></pre></div><p><strong>How it works:</strong></p>
+<ol>
+<li>Optimistically attempt update: only succeeds if current state matches expected state</li>
+<li>If state changed → WHERE clause fails → 0 rows updated → conflict detected → rollback</li>
+<li>If state matches → 1 row updated → success → continue</li>
+</ol>
+<p><strong>Use on all updates</strong>: Apply conditional state checks to every state transition. The WHERE clause ensures atomic state machine transitions.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Simpler, no version column needed</li>
+<li>Atomic by nature</li>
+<li>Perfect for state machine transitions</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Only works for state transitions</li>
+<li>Less flexible for other updates</li>
+</ul>
+<h3 id="which-to-use">Which to Use?</h3>
+<p><strong>For state machines</strong>: Use conditional state updates (recommended). It&rsquo;s simpler and perfectly suited for atomic state transitions.</p>
+<p><strong>For complex updates</strong>: Use version column when you need to update multiple fields and detect conflicts on any change.</p>
+<h2 id="complete-flow-example">Complete Flow Example</h2>
+<p>Let&rsquo;s see all three patterns working together:</p>
+<pre class="mermaid">
     sequenceDiagram
   autonumber
   participant FE as Frontend
@@ -177,7 +904,119 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
   end
   
   deactivate BE
-</pre><p><strong>Error recovery scenarios:</strong></p><ul><li><strong>Network timeout</strong>: Client retries with same idempotency key → backend returns cached result</li><li><strong>API 5xx error</strong>: Transaction marked as <code>failed</code>, can retry later (might need manual intervention or retry job)</li><li><strong>Duplicate request</strong>: Same idempotency key arrives twice → second request returns existing result</li></ul><h2 id=best-practices>Best Practices</h2><ol><li><p><strong>Idempotency key format</strong>:</p><ul><li>Use UUID v4 (random) or UUID v7 (time-ordered) for most cases (high uniqueness)</li><li>UUID v7 is better if you need sortable keys or timestamp information for debugging</li><li>Use deterministic keys (module + client_id + hash) when you need to detect exact duplicates</li></ul></li><li><p><strong>Header placement</strong>:</p><ul><li>Use <code>Idempotency-Key</code> header (standard practice, defined in some API specs)</li><li>Avoid putting it in the request body</li></ul></li><li><p><strong>Storage strategy</strong>:</p><ul><li>Index idempotency keys for fast lookup</li><li>Set reasonable TTL (24-48 hours typically)</li><li>Consider cache layer for hot lookups</li></ul></li><li><p><strong>Error handling</strong>:</p><ul><li>If key lookup fails (database error), return 500 and log</li><li>If duplicate key detected, return cached result (don&rsquo;t treat as error)</li></ul></li><li><p><strong>State machine design</strong>:</p><ul><li>Keep it simple with clear, descriptive state names</li><li>Make transitions explicit and atomic</li><li>Document valid state transitions</li></ul></li><li><p><strong>Optimistic locking</strong>:</p><ul><li>Use conditional state updates for state machine transitions (simpler, atomic)</li><li>Use version column when updating multiple fields independently</li></ul></li><li><p><strong>Server vs Client created</strong>:</p><ul><li>Use client-created for simple flows (single round-trip)</li><li>Use server-created when you need validation/preprocessing before execution</li></ul></li><li><p><strong>Deterministic vs Random</strong>:</p><ul><li>Random UUIDs (v4 or v7) for general use (simpler, sufficient uniqueness)</li><li>UUID v7 preferred if you need time-ordering or better database indexing performance</li><li>Deterministic keys when you need to detect exact duplicate attempts from same client</li></ul></li><li><p><strong>Database transaction boundaries</strong>:</p><ul><li>Always save initial state in a single database transaction (create transaction record + update all related tables atomically)</li><li>Make the API call only after initial state is successfully persisted</li><li>Save result + updated state in a single database transaction (update transaction record + all related tables atomically)</li><li>This ensures all-or-nothing semantics and prevents partial updates that lead to data inconsistency</li></ul></li><li><p><strong>Retry policy and deadlines</strong>:</p></li></ol><ul><li>Use exponential backoff with jitter and a maximum retry budget</li><li>Propagate and enforce end-to-end timeouts/deadlines across internal and external calls</li></ul><ol start=11><li><strong>Replay responses</strong>:</li></ol><ul><li>Return the same body and a stable status (200, or 201 if you always return 201)</li><li>Optionally add a replay-indicator header (e.g., <code>Idempotent-Replay: true</code>)</li></ul><h2 id=conclusion>Conclusion</h2><p>By implementing these <strong>3 patterns</strong>, you&rsquo;ll dramatically improve the reliability of your API integrations:</p><ol><li><strong>Idempotency Keys</strong>: Prevent duplicate processing by using unique identifiers</li><li><strong>State Machines</strong>: Track transaction lifecycle with clear states and transitions</li><li><strong>Optimistic Locking</strong>: Prevent race conditions with atomic state updates</li></ol><p>These patterns work together to handle the reality of distributed systems: networks fail, servers crash, clients retry. Instead of hoping these failures don&rsquo;t happen, we design for them.</p><p>The next time you integrate with a 3rd party API, ask yourself:</p><ul><li>What happens if the network times out?</li><li>What if the client retries?</li><li>What if two requests arrive simultaneously?</li><li>What if the server crashes mid-process?</li></ul><p>With these patterns in place, you&rsquo;ll have answers to all of these questions.</p><h2 id=going-further-asynchronous-processing>Going Further: Asynchronous Processing</h2><p>Instead of making third-party API calls synchronously (inline), consider processing them asynchronously.</p><p>When a client submits a transaction request, return a <code>200 OK</code> immediately after storing the transaction in your database. The client gets a result right away and doesn&rsquo;t need to wait for the third-party API response. Then execute the actual third-party API call later using a scheduler or by publishing the transaction to a message queue like Kafka.</p><pre class=mermaid>
+</pre>
+<p><strong>Error recovery scenarios:</strong></p>
+<ul>
+<li><strong>Network timeout</strong>: Client retries with same idempotency key → backend returns cached result</li>
+<li><strong>API 5xx error</strong>: Transaction marked as <code>failed</code>, can retry later (might need manual intervention or retry job)</li>
+<li><strong>Duplicate request</strong>: Same idempotency key arrives twice → second request returns existing result</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Idempotency key format</strong>:</p>
+<ul>
+<li>Use UUID v4 (random) or UUID v7 (time-ordered) for most cases (high uniqueness)</li>
+<li>UUID v7 is better if you need sortable keys or timestamp information for debugging</li>
+<li>Use deterministic keys (module + client_id + hash) when you need to detect exact duplicates</li>
+</ul>
+</li>
+<li>
+<p><strong>Header placement</strong>:</p>
+<ul>
+<li>Use <code>Idempotency-Key</code> header (standard practice, defined in some API specs)</li>
+<li>Avoid putting it in the request body</li>
+</ul>
+</li>
+<li>
+<p><strong>Storage strategy</strong>:</p>
+<ul>
+<li>Index idempotency keys for fast lookup</li>
+<li>Set reasonable TTL (24-48 hours typically)</li>
+<li>Consider cache layer for hot lookups</li>
+</ul>
+</li>
+<li>
+<p><strong>Error handling</strong>:</p>
+<ul>
+<li>If key lookup fails (database error), return 500 and log</li>
+<li>If duplicate key detected, return cached result (don&rsquo;t treat as error)</li>
+</ul>
+</li>
+<li>
+<p><strong>State machine design</strong>:</p>
+<ul>
+<li>Keep it simple with clear, descriptive state names</li>
+<li>Make transitions explicit and atomic</li>
+<li>Document valid state transitions</li>
+</ul>
+</li>
+<li>
+<p><strong>Optimistic locking</strong>:</p>
+<ul>
+<li>Use conditional state updates for state machine transitions (simpler, atomic)</li>
+<li>Use version column when updating multiple fields independently</li>
+</ul>
+</li>
+<li>
+<p><strong>Server vs Client created</strong>:</p>
+<ul>
+<li>Use client-created for simple flows (single round-trip)</li>
+<li>Use server-created when you need validation/preprocessing before execution</li>
+</ul>
+</li>
+<li>
+<p><strong>Deterministic vs Random</strong>:</p>
+<ul>
+<li>Random UUIDs (v4 or v7) for general use (simpler, sufficient uniqueness)</li>
+<li>UUID v7 preferred if you need time-ordering or better database indexing performance</li>
+<li>Deterministic keys when you need to detect exact duplicate attempts from same client</li>
+</ul>
+</li>
+<li>
+<p><strong>Database transaction boundaries</strong>:</p>
+<ul>
+<li>Always save initial state in a single database transaction (create transaction record + update all related tables atomically)</li>
+<li>Make the API call only after initial state is successfully persisted</li>
+<li>Save result + updated state in a single database transaction (update transaction record + all related tables atomically)</li>
+<li>This ensures all-or-nothing semantics and prevents partial updates that lead to data inconsistency</li>
+</ul>
+</li>
+<li>
+<p><strong>Retry policy and deadlines</strong>:</p>
+</li>
+</ol>
+<ul>
+<li>Use exponential backoff with jitter and a maximum retry budget</li>
+<li>Propagate and enforce end-to-end timeouts/deadlines across internal and external calls</li>
+</ul>
+<ol start="11">
+<li><strong>Replay responses</strong>:</li>
+</ol>
+<ul>
+<li>Return the same body and a stable status (200, or 201 if you always return 201)</li>
+<li>Optionally add a replay-indicator header (e.g., <code>Idempotent-Replay: true</code>)</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>By implementing these <strong>3 patterns</strong>, you&rsquo;ll dramatically improve the reliability of your API integrations:</p>
+<ol>
+<li><strong>Idempotency Keys</strong>: Prevent duplicate processing by using unique identifiers</li>
+<li><strong>State Machines</strong>: Track transaction lifecycle with clear states and transitions</li>
+<li><strong>Optimistic Locking</strong>: Prevent race conditions with atomic state updates</li>
+</ol>
+<p>These patterns work together to handle the reality of distributed systems: networks fail, servers crash, clients retry. Instead of hoping these failures don&rsquo;t happen, we design for them.</p>
+<p>The next time you integrate with a 3rd party API, ask yourself:</p>
+<ul>
+<li>What happens if the network times out?</li>
+<li>What if the client retries?</li>
+<li>What if two requests arrive simultaneously?</li>
+<li>What if the server crashes mid-process?</li>
+</ul>
+<p>With these patterns in place, you&rsquo;ll have answers to all of these questions.</p>
+<h2 id="going-further-asynchronous-processing">Going Further: Asynchronous Processing</h2>
+<p>Instead of making third-party API calls synchronously (inline), consider processing them asynchronously.</p>
+<p>When a client submits a transaction request, return a <code>200 OK</code> immediately after storing the transaction in your database. The client gets a result right away and doesn&rsquo;t need to wait for the third-party API response. Then execute the actual third-party API call later using a scheduler or by publishing the transaction to a message queue like Kafka.</p>
+<pre class="mermaid">
     sequenceDiagram
   autonumber
   participant Client
@@ -217,20 +1056,209 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
   deactivate DB
   deactivate Backend
   deactivate Queue
-</pre><p>This approach decouples your API from external dependencies and provides better resilience.</p><p>More patterns are coming as we dive into asynchronous processing - stay tuned.</p></div></article><hr><div class=post-info><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/api-design/>api-design</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/reliability/>reliability</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/resilience/>resilience</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/idempotency/>idempotency</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/state-machines/>state-machines</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/retries/>retries</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/optimistic-locking/>optimistic-locking</a></span>
-<span class=tag><a href=https://blog.nemesiscodex.org/tags/system-design/>system-design</a></span></p><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-4064 Words</p><p><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-2025-11-02 00:21</p></div><hr><div class=sharing-buttons><a class=resp-sharing-button__link href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_blank rel=noopener aria-label title="Share on facebook"><div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_blank rel=noopener aria-label title="Share on twitter"><div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;caption=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;canonicalUrl=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_blank rel=noopener aria-label title="Share on tumblr"><div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093.0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941.0 9.999.0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg></div></div></a><a class=resp-sharing-button__link href="mailto:?subject=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;body=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_self rel=noopener aria-label title="Share via email"><div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div></div></a><a class=resp-sharing-button__link href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f&amp;media=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f;description=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target=_blank rel=noopener aria-label title="Share on pinterest"><div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017.0C5.396.0.029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024.0 1.518.769 1.518 1.688.0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128.0 3.768-2.245 3.768-5.487.0-2.861-2.063-4.869-5.008-4.869-3.41.0-5.409 2.562-5.409 5.199.0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646.0-3.776 2.748-7.252 7.92-7.252 4.158.0 7.392 2.967 7.392 6.923.0 4.135-2.607 7.462-6.233 7.462-1.214.0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607.0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017.0z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f&amp;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;summary=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;source=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_blank rel=noopener aria-label title="Share on linkedin"><div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div></div></a><a class=resp-sharing-button__link href="https://reddit.com/submit/?url=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f&amp;resubmit=true&amp;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target=_blank rel=noopener aria-label title="Share on reddit"><div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688.0 1.25.561 1.25 1.249a1.25 1.25.0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968.0 1.754.786 1.754 1.754.0.716-.435 1.333-1.01 1.614a3.111 3.111.0 01.042.52c0 2.694-3.13 4.87-7.004 4.87s-7.004-2.176-7.004-4.87c0-.183.015-.366.043-.534A1.748 1.748.0 014.028 12c0-.968.786-1.754 1.754-1.754.463.0.898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342.0 01.14-.197.35.35.0 01.238-.042l2.906.617a1.214 1.214.0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687.0 1.248-.561 1.248-1.249S9.937 12 9.249 12zm5.5.0c-.687.0-1.248.561-1.248 1.25.0.687.561 1.248 1.249 1.248S16 13.937 16 13.249c0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327.0 00-.231.094.33.33.0 000 .463c.842.842 2.484.913 2.961.913s2.105-.056 2.961-.913a.361.361.0 00.029-.463.33.33.0 00-.464.0c-.547.533-1.684.73-2.512.73-.828.0-1.979-.196-2.512-.73a.326.326.0 00-.232-.095z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target=_blank rel=noopener aria-label title="Share on xing"><div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188.0c-.517.0-.741.325-.927.66.0.0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211.0.375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016.0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894.0 21.686.0h-3.498zM3.648 4.74c-.211.0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016.0.021L1.86 16.051c-.099.188-.093.381.0.529.085.142.239.234.45.234h3.461c.518.0.766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg></div></div></a><a class=resp-sharing-button__link href="whatsapp://send?text=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable%20https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_blank rel=noopener aria-label title="Share on whatsapp"><div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198.0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479.0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87.0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86.0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64.0 5.122 1.03 6.988 2.898a9.825 9.825.0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815.0 0012.05.0C5.495.0.16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882.0 005.683 1.448h.005c6.554.0 11.89-5.335 11.893-11.893a11.821 11.821.0 00-3.48-8.413z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f&amp;t=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target=_blank rel=noopener aria-label title="Share on hacker news"><div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://telegram.me/share/url?text=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;url=https%3a%2f%2fblog.nemesiscodex.org%2freliable-api-calls%2f" target=_blank rel=noopener aria-label title="Share on telegram"><div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div></div></a></div><div class=pagination><div class=pagination__buttons><span class="button previous"><a href=https://blog.nemesiscodex.org/my-review-prompt/><span class=button__icon>←</span>
-<span class=button__text>Turn Your AI IDE Into a Relentless Code Reviewer</span>
-</a></span><span class="button next"><a href=https://blog.nemesiscodex.org/svg-filter/><span class=button__text>You Can Use SVG Filters in CSS - Here's How</span>
-<span class=button__icon>→</span></a></span></div></div></main></div><footer class=footer></footer></div><script type=text/javascript src=/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js integrity="sha512-rVStlzZPd+3jXe+QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb+bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script><script type=module>
+</pre>
+<p>This approach decouples your API from external dependencies and provides better resilience.</p>
+<p>More patterns are coming as we dive into asynchronous processing - stay tuned.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="http://localhost:1313/tags/api-design/">api-design</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/reliability/">reliability</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/resilience/">resilience</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/idempotency/">idempotency</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/state-machines/">state-machines</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/retries/">retries</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/optimistic-locking/">optimistic-locking</a></span>
+        <span class="tag"><a href="http://localhost:1313/tags/system-design/">system-design</a></span>
+        
+    </p>
+
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        4064 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2025-11-02 00:21
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;caption=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;canonicalUrl=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;body=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f&amp;media=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f;description=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f&amp;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;summary=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;source=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f&amp;resubmit=true&amp;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f;title=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable%20http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f&amp;t=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=These%203%20Patterns%20Will%20Make%20Your%203rd-Party%20API%20Calls%20More%20Reliable&amp;url=http%3a%2f%2flocalhost%3a1313%2freliable-api-calls%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="http://localhost:1313/my-review-prompt/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">Turn Your AI IDE Into a Relentless Code Reviewer</span>
+                </a>
+            </span>
+            
+
+            
+            <span class="button next">
+                <a href="http://localhost:1313/svg-filter/">
+                    <span class="button__text">You Can Use SVG Filters in CSS - Here&#39;s How</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js" integrity="sha512-rVStlzZPd&#43;3jXe&#43;QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb&#43;bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script>
+
+
+
+
+<script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs";
 
     let preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -256,4 +1284,7 @@ TL;DR If you remember one thing from this post:"><meta itemprop=datePublished co
         }
     ;
     mermaid.initialize(settings);
-</script></body></html>
+</script>
+
+    </body>
+</html>
