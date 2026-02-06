@@ -1,23 +1,6 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Posts on Nemesiscodex&#39;s Blog</title>
-        <link>http://localhost:1313/posts/</link>
-        <description>Recent content in Posts on Nemesiscodex&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <lastBuildDate>Sun, 07 Dec 2025 23:35:00 -0300</lastBuildDate>
-        <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
-        
-        <item>
-            <title>Turn Your AI IDE Into a Relentless Code Reviewer</title>
-            <link>http://localhost:1313/my-review-prompt/</link>
-            <pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate>
-            
-            <guid>http://localhost:1313/my-review-prompt/</guid>
-            <description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/posts/</link><description>Recent content in Posts on Nemesiscodex's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Feb 2026 12:00:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Turn Your AI IDE Into a Relentless Code Reviewer</title><link>https://blog.nemesiscodex.org/my-review-prompt/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/my-review-prompt/</guid><description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<p>Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.</p>
+&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.&lt;/p&gt;</description><content type="html"><![CDATA[<p>Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.</p>
 <blockquote>
 <p><strong>Important:</strong> This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.</p>
 </blockquote>
@@ -160,20 +143,10 @@ Provides an overall quality score and merge recommendation.</p>
 <p>This prompt has been a game-changer for me. It is not about replacing human reviewers; it is about making the review process more efficient and thorough. By catching issues early and providing structured feedback, it helps teams ship better code faster.</p>
 <p>Remember: always do your own code review. This prompt is like having a colleague do a first pass and give you a detailed overview, but the final responsibility for code quality and correctness is yours. Use it to enhance your review process, not replace it.</p>
 <p>If you try it out, let me know what you think. And if you have suggestions for improvements, feel free to open an issue or PR on the repository.</p>
-]]></content>
-        </item>
-        
-        <item>
-            <title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title>
-            <link>http://localhost:1313/reliable-api-calls/</link>
-            <pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate>
-            
-            <guid>http://localhost:1313/reliable-api-calls/</guid>
-            <description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;
+]]></content></item><item><title>These 3 Patterns Will Make Your 3rd-Party API Calls More Reliable</title><link>https://blog.nemesiscodex.org/reliable-api-calls/</link><pubDate>Sun, 02 Nov 2025 00:21:02 -0300</pubDate><guid>https://blog.nemesiscodex.org/reliable-api-calls/</guid><description>&lt;p&gt;I will teach you &lt;strong&gt;3 patterns that will immediately improve the reliability of your API calls&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.&lt;/p&gt;
-&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p>
+&lt;h2 id="tldr"&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;If you remember one thing from this post:&lt;/strong&gt;&lt;/p&gt;</description><content type="html"><![CDATA[<p>I will teach you <strong>3 patterns that will immediately improve the reliability of your API calls</strong>.</p>
 <p>Everyone seems to think only about the happy path when integrating with third-party APIs. But what about failures? Unreliable network conditions, timeouts, server overload, third-party APIs may not be reliable and are out of your control. These are all real problems that can cost you money, data integrity, and user trust.</p>
 <h2 id="tldr">TL;DR</h2>
 <p><strong>If you remember one thing from this post:</strong></p>
@@ -866,22 +839,12 @@ Provides an overall quality score and merge recommendation.</p>
 </pre>
 <p>This approach decouples your API from external dependencies and provides better resilience.</p>
 <p>More patterns are coming as we dive into asynchronous processing - stay tuned.</p>
-]]></content>
-        </item>
-        
-        <item>
-            <title>You Can Use SVG Filters in CSS - Here&#39;s How</title>
-            <link>http://localhost:1313/svg-filter/</link>
-            <pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate>
-            
-            <guid>http://localhost:1313/svg-filter/</guid>
-            <description>&lt;video fetchpriority=&#34;high&#34; autoplay muted loop  width=&#34;100%&#34;&gt;
-    &lt;source src=&#34;http://localhost:1313/svg-filter/video/svg-filter.mp4&#34; type=&#34;video/mp4&#34;&gt;
-    Your browser does not support the video tag.
-  &lt;/video&gt;
+]]></content></item><item><title>You Can Use SVG Filters in CSS - Here's How</title><link>https://blog.nemesiscodex.org/svg-filter/</link><pubDate>Sat, 01 Nov 2025 15:57:27 -0300</pubDate><guid>https://blog.nemesiscodex.org/svg-filter/</guid><description>&lt;video fetchpriority="high" autoplay muted loop width="100%"&gt;
+&lt;source src="https://blog.nemesiscodex.org/svg-filter/video/svg-filter.mp4" type="video/mp4"&gt;
+Your browser does not support the video tag.
+&lt;/video&gt;
 &lt;p&gt;Notice how those blobs smoothly merge and separate? That&amp;rsquo;s SVG filters at work.&lt;/p&gt;
-&lt;p&gt;You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<video fetchpriority="high" autoplay muted loop  width="100%">
+&lt;p&gt;You may already know you can include SVGs in a web page. But did you know about SVG filters? Filters are effects that can be applied to SVG elements, like blurs, shadows, or color adjustments. And it turns out you can also apply them to HTML elements with CSS.&lt;/p&gt;</description><content type="html"><![CDATA[<video fetchpriority="high" autoplay muted loop  width="100%">
     <source src="/svg-filter/video/svg-filter.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -1132,8 +1095,4 @@ Provides an overall quality score and merge recommendation.</p>
 </span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;circle g2&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
 </span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;</span></span></code></pre></div>]]></content>
-        </item>
-        
-    </channel>
-</rss>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;</span></span></code></pre></div>]]></content></item></channel></rss>
