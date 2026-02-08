@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/tags/git/</link><description>Recent content in Git on Nemesiscodex's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 05 Feb 2026 12:00:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>A Better Way to Run Git Worktrees Finally!</title><link>https://blog.nemesiscodex.org/git-gtr-worktree-runner/</link><pubDate>Thu, 05 Feb 2026 12:00:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/git-gtr-worktree-runner/</guid><description>&lt;p&gt;Git worktrees are one of the most underrated features in Git. They solve a real problem, but the workflow is usually too manual to use every day.&lt;/p&gt;
+&lt;p&gt;In this post, I will show you how I use &lt;code&gt;git-gtr&lt;/code&gt; from CodeRabbit to make worktrees fast, practical, and AI-friendly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;raquo;&amp;raquo; &lt;a href="https://github.com/coderabbitai/git-worktree-runner"&gt;
+
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+ &lt;path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"&gt;&lt;/path&gt;
+&lt;/svg&gt;
+
+ Repository&lt;/a&gt; | &lt;a href="https://www.youtube.com/watch?v=r9uGLZ3AkWo"&gt;
+
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+ &lt;path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"&gt;&lt;/path&gt;
+ &lt;polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"&gt;&lt;/polygon&gt;
+&lt;/svg&gt;
+
+ Watch Video&lt;/a&gt; &amp;laquo;&amp;laquo;&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>Stacked Pull Requests: Deliver Bigger Features Without Large PRs</title><link>https://blog.nemesiscodex.org/stacked-pull-requests-graphite/</link><pubDate>Thu, 05 Feb 2026 12:00:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/stacked-pull-requests-graphite/</guid><description>&lt;p&gt;What slows large features is often not the code. It is review flow. One big PR, one long wait.&lt;/p&gt;
+&lt;p&gt;In this post, I will teach you how to use &lt;strong&gt;stacked pull requests&lt;/strong&gt; so you can keep delivering while reviews are still in progress.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;raquo;&amp;raquo; &lt;a href="https://www.youtube.com/watch?v=DXUhnqYhU4I"&gt;
+
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+ &lt;path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"&gt;&lt;/path&gt;
+ &lt;polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"&gt;&lt;/polygon&gt;
+&lt;/svg&gt;
+
+ Watch Video&lt;/a&gt; &amp;laquo;&amp;laquo;&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>

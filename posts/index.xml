@@ -1,4 +1,361 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/posts/</link><description>Recent content in Posts on Nemesiscodex's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Feb 2026 12:00:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Turn Your AI IDE Into a Relentless Code Reviewer</title><link>https://blog.nemesiscodex.org/my-review-prompt/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/my-review-prompt/</guid><description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/posts/</link><description>Recent content in Posts on Nemesiscodex's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Feb 2026 12:00:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>A Better Way to Run Git Worktrees Finally!</title><link>https://blog.nemesiscodex.org/git-gtr-worktree-runner/</link><pubDate>Thu, 05 Feb 2026 12:00:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/git-gtr-worktree-runner/</guid><description>&lt;p&gt;Git worktrees are one of the most underrated features in Git. They solve a real problem, but the workflow is usually too manual to use every day.&lt;/p&gt;
+&lt;p&gt;In this post, I will show you how I use &lt;code&gt;git-gtr&lt;/code&gt; from CodeRabbit to make worktrees fast, practical, and AI-friendly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;raquo;&amp;raquo; &lt;a href="https://github.com/coderabbitai/git-worktree-runner"&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+&lt;path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"&gt;&lt;/path&gt;
+&lt;/svg&gt;
+Repository&lt;/a&gt; | &lt;a href="https://www.youtube.com/watch?v=r9uGLZ3AkWo"&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+&lt;path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"&gt;&lt;/path&gt;
+&lt;polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"&gt;&lt;/polygon&gt;
+&lt;/svg&gt;
+Watch Video&lt;/a&gt; &amp;laquo;&amp;laquo;&lt;/strong&gt;&lt;/p&gt;</description><content type="html"><![CDATA[<p>Git worktrees are one of the most underrated features in Git. They solve a real problem, but the workflow is usually too manual to use every day.</p>
+<p>In this post, I will show you how I use <code>git-gtr</code> from CodeRabbit to make worktrees fast, practical, and AI-friendly.</p>
+<p><strong>&raquo;&raquo; <a href="https://github.com/coderabbitai/git-worktree-runner">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+
+ Repository</a> | <a href="https://www.youtube.com/watch?v=r9uGLZ3AkWo">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+</svg>
+
+ Watch Video</a> &laquo;&laquo;</strong></p>
+<hr>
+<h2 id="tldr">TL;DR</h2>
+<p><strong>If you remember one thing from this post: native Git worktrees are powerful, and <code>git-gtr</code> removes the friction that stops most people from using them.</strong></p>
+<ol>
+<li><strong>Avoid constant branch switching</strong> Use separate worktrees for separate tasks, without repeated stash and restore steps.</li>
+<li><strong>Automate setup</strong> Copy env/config files and run setup hooks when a worktree is created.</li>
+<li><strong>Scale parallel work</strong> Open editor and AI sessions per branch with simple commands.</li>
+</ol>
+<p><strong>The 5-command workflow:</strong></p>
+<ol>
+<li><code>gw new &lt;branch-name&gt;</code></li>
+<li><code>gw editor &lt;branch-name&gt;</code></li>
+<li><code>gw ai &lt;branch-name&gt;</code></li>
+<li><code>gw run &lt;branch-name&gt; &lt;command&gt;</code></li>
+<li><code>gw rm &lt;branch-name&gt;</code></li>
+</ol>
+<h2 id="the-problem">The Problem</h2>
+<p>Normally, you work on one branch at a time. Then priorities change. You are deep in a feature, and suddenly you need to fix production, review a PR, or test another idea.</p>
+<p>What happens next? Usually this:</p>
+<ol>
+<li>Stash changes</li>
+<li>Switch branch</li>
+<li>Do the urgent work</li>
+<li>Switch back</li>
+<li>Restore stash and recover context</li>
+</ol>
+<p>It works, but it is expensive when repeated daily.</p>
+<p>Yes, you can clone the repository again into another folder. But that duplicates everything and turns into workspace clutter.</p>
+<p>Git already has the right primitive: <code>git worktree</code>. The issue is developer experience. For many teams it still feels manual, fragile, and easy to get wrong.</p>
+<h2 id="the-solution">The Solution</h2>
+<p><code>git-gtr</code> wraps native Git worktree commands and adds quality-of-life features that make the workflow practical.</p>
+<p>Here is what it adds:</p>
+<ul>
+<li>A simpler CLI focused on daily usage</li>
+<li>Editor integration (for example Cursor, VS Code)</li>
+<li>AI CLI integration (for example Codex, Claude)</li>
+<li>Copy rules for env files and directories</li>
+<li>Hooks for setup and teardown actions</li>
+<li>Shell completion and cross-platform support</li>
+</ul>
+<p>This is not a replacement for Git knowledge. It is an accelerator on top of native capabilities.</p>
+<h2 id="how-to-use-it">How to Use It</h2>
+<p>Let me show you the exact flow.</p>
+<h3 id="1-install-and-create-a-short-alias">1) Install and create a short alias</h3>
+<p>Installation can change over time, so always check the repository README first.<br>
+At the time of writing, this works:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/coderabbitai/git-worktree-runner.git
+</span></span><span style="display:flex;"><span>cd git-worktree-runner
+</span></span><span style="display:flex;"><span>./install.sh</span></span></code></pre></div><p>Then add an alias so commands are quick to type:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>alias gw<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;git gtr&#34;</span></span></span></code></pre></div><p>Now <code>gw</code> runs the same command as <code>git gtr</code>.</p>
+<h3 id="2-configure-once-then-reuse-everywhere">2) Configure once, then reuse everywhere</h3>
+<p>Configuration is very similar to <code>git config</code>. You can define values globally, locally per repository, and keep project-specific defaults in a <code>.gtrconfig</code> file.</p>
+<p>Run:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gw config</span></span></code></pre></div><p>A simple example in <code>.gtrconfig</code>:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[copy]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">include</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">**/.env.local
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    exclude = **/.env</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[copy]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">includeDirs</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">node_modules
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    excludeDirs = node_modules/.cache</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[hooks]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">postCreate</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">bun install</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[defaults]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">cursor
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ai = codex</span></span></span></code></pre></div><p>This lets each new worktree copy your local env file and dependencies, run <code>bun install</code> after creation, and default to Cursor plus Codex.</p>
+<h3 id="3-create-isolated-worktrees-for-each-feature">3) Create isolated worktrees for each feature</h3>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gw new landing-page
+</span></span><span style="display:flex;"><span>gw new auth</span></span></code></pre></div><p>By default, this creates a <code>&lt;repo&gt;-worktrees</code> folder and one directory per branch. Each worktree has isolated files while sharing Git object storage efficiently.</p>
+<h3 id="4-jump-directly-into-editor-or-ai-session">4) Jump directly into editor or AI session</h3>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gw editor landing-page
+</span></span><span style="display:flex;"><span>gw ai landing-page</span></span></code></pre></div><p>You can open another terminal and do the same for <code>auth</code>. That is where worktrees shine, true parallel development without context loss.</p>
+<h3 id="5-run-commands-in-a-target-worktree-and-clean-up">5) Run commands in a target worktree and clean up</h3>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gw run landing-page <span style="color:#e6db74">&#34;bun run dev&#34;</span>
+</span></span><span style="display:flex;"><span>gw rm auth</span></span></code></pre></div><p>Use <code>run</code> for commands scoped to one worktree and <code>rm</code> when you are done.</p>
+<h2 id="tradeoffs">Tradeoffs</h2>
+<p>No tool is free. Here are the tradeoffs.</p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Faster context switching</li>
+<li>Cleaner parallel feature development</li>
+<li>Less repository duplication compared with cloning one repo per task</li>
+<li>Better fit for editor and AI-assisted workflows</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>More folders on disk</li>
+<li>Requires initial config discipline</li>
+<li>Can accumulate stale worktrees if you do not clean up</li>
+<li>Teams still need baseline understanding of native <code>git worktree</code></li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<p>If you want this to stay smooth, follow a few rules:</p>
+<ol>
+<li><strong>Use explicit branch names</strong> <code>feature/landing-page</code>, <code>fix/auth-timeout</code>, and similar names reduce confusion.</li>
+<li><strong>Keep hooks idempotent</strong> Re-running setup should not break anything.</li>
+<li><strong>Copy only what is needed</strong> Bring env files and selected folders, avoid copying unnecessary large artifacts.</li>
+<li><strong>Clean worktrees aggressively</strong> Remove finished branches to keep your workspace healthy.</li>
+<li><strong>Know the native fallback</strong> If automation fails, you should still be comfortable with <code>git worktree</code> basics.</li>
+</ol>
+<blockquote>
+<p><strong>Important:</strong> This is not a replacement for Git fundamentals. It is a practical layer that helps you execute the same workflow with less friction.</p>
+</blockquote>
+<h2 id="watch-the-demo">Watch the Demo</h2>
+<p>Here is the full video walkthrough:</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/r9uGLZ3AkWo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p><code>git-gtr</code> makes a strong case for using worktrees as a default workflow, not as an occasional workaround.</p>
+<p>If you are juggling multiple branches, reviews, and AI sessions, this setup can save real time every week. Try it on one project first, then decide if it should become your team standard.</p>
+<p>Would you use <code>git-gtr</code>, or do you prefer the native <code>git worktree</code> commands? Let me know.</p>
+]]></content></item><item><title>Stacked Pull Requests: Deliver Bigger Features Without Large PRs</title><link>https://blog.nemesiscodex.org/stacked-pull-requests-graphite/</link><pubDate>Thu, 05 Feb 2026 12:00:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/stacked-pull-requests-graphite/</guid><description>&lt;p&gt;What slows large features is often not the code. It is review flow. One big PR, one long wait.&lt;/p&gt;
+&lt;p&gt;In this post, I will teach you how to use &lt;strong&gt;stacked pull requests&lt;/strong&gt; so you can keep delivering while reviews are still in progress.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;raquo;&amp;raquo; &lt;a href="https://www.youtube.com/watch?v=DXUhnqYhU4I"&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+&lt;path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"&gt;&lt;/path&gt;
+&lt;polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"&gt;&lt;/polygon&gt;
+&lt;/svg&gt;
+Watch Video&lt;/a&gt; &amp;laquo;&amp;laquo;&lt;/strong&gt;&lt;/p&gt;</description><content type="html"><![CDATA[<p>What slows large features is often not the code. It is review flow. One big PR, one long wait.</p>
+<p>In this post, I will teach you how to use <strong>stacked pull requests</strong> so you can keep delivering while reviews are still in progress.</p>
+<p><strong>&raquo;&raquo; <a href="https://www.youtube.com/watch?v=DXUhnqYhU4I">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+</svg>
+
+ Watch Video</a> &laquo;&laquo;</strong></p>
+<hr>
+<h2 id="tldr">TL;DR</h2>
+<p><strong>If you remember one thing: break one large PR into a sequence of small dependent PRs, then manage the stack with Graphite.</strong></p>
+<ol>
+<li><strong>Split logically</strong> For example by layer (data, services, APIs, frontend) or by vertical slice; this post uses a layer split as the example.</li>
+<li><strong>Keep each PR independently reviewable</strong> Each PR should be small enough to understand quickly.</li>
+<li><strong>Use Graphite to restack automatically</strong> Avoid manual rebasing across many branches.</li>
+</ol>
+<p><strong>The practical flow:</strong></p>
+<ol>
+<li>Create first PR from <code>develop</code> (or your main branch)</li>
+<li>Create next PR on top of the previous PR</li>
+<li>Repeat until the feature is complete</li>
+<li>Update lower PRs as feedback arrives, then restack the branches</li>
+</ol>
+<h2 id="the-problem">The Problem</h2>
+<p>Most teams still do this:</p>
+<ol>
+<li>Create one big feature branch</li>
+<li>Push dozens of commits</li>
+<li>Open one large PR</li>
+<li>Wait</li>
+</ol>
+<p>Then you are blocked. You cannot safely move to the next piece because the foundation is waiting for review.</p>
+<p>Can this work? Yes. Is it fast for a team? Usually no.</p>
+<p>Stacked PRs help when <strong>review</strong> is the real bottleneck. If the real issues are unclear scope, slow product decisions, or only merging when the whole feature is done, this workflow adds process but may not fix the root cause.</p>
+<p>The review quality also drops. Large PRs are harder to reason about, and reviewers miss important details when too much changes at once.</p>
+<h2 id="the-solution">The Solution</h2>
+<p>A stacked PR workflow turns one large review into a chain of small reviews.</p>
+<p>Each branch depends on the previous one:</p>
+<pre class="mermaid">
+    graph BT
+  A[&#34;develop&#34;] --&gt; B[&#34;PR 1: Data model&#34;]
+  B --&gt; C[&#34;PR 2: Services&#34;]
+  C --&gt; D[&#34;PR 3: APIs&#34;]
+  D --&gt; E[&#34;PR 4: Frontend&#34;]
+</pre>
+<p>Now each PR is focused and testable. Your team can review faster, and you can continue building the next layer while lower layers are in review. There is coordination overhead: reviewers must know which PR to review first, and upper PRs stay blocked until lower ones merge.</p>
+<h2 id="how-to-use-it">How to Use It</h2>
+<p>Let me show you the workflow in a practical way.</p>
+<h3 id="1-split-the-feature-into-logical-layers">1) Split the feature into logical layers</h3>
+<p>Example feature: share bookmarks with other users.</p>
+<p>A <strong>layer</strong> split is one option; another is a <strong>vertical slice</strong> per PR (each PR a thin end-to-end slice). This example uses layers.</p>
+<p>Possible split:</p>
+<ol>
+<li>Data model changes</li>
+<li>Service layer changes</li>
+<li>API layer changes</li>
+<li>Frontend integration</li>
+</ol>
+<h3 id="2-build-the-stack-manually-with-git">2) Build the stack manually with Git</h3>
+<p>Start from <code>develop</code> and create the first branch:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git checkout develop
+</span></span><span style="display:flex;"><span>git checkout -b feature/share-datamodel</span></span></code></pre></div><p>Commit and push:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;feat(share): add data model&#34;</span>
+</span></span><span style="display:flex;"><span>git push -u origin feature/share-datamodel</span></span></code></pre></div><p>Open PR 1 to <code>develop</code>.</p>
+<p>Then create branch 2 from branch 1, not from <code>develop</code>:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git checkout -b feature/share-services
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;feat(share): add services&#34;</span>
+</span></span><span style="display:flex;"><span>git push -u origin feature/share-services</span></span></code></pre></div><p>Open PR 2 with base branch set to <code>feature/share-datamodel</code>.</p>
+<p>Repeat for APIs and frontend.</p>
+<h3 id="3-understand-the-manual-cost">3) Understand the manual cost</h3>
+<p>If PR 1 gets review feedback, you update PR 1 first. After that, you need to rebase PR 2, PR 3, and PR 4 in order and force-push each one.</p>
+<p>That is where manual stacks become time-consuming.</p>
+<p>Here is what that usually looks like:</p>
+<ol>
+<li>Update PR 1, then push it</li>
+<li>Rebase PR 2 onto the updated PR 1, resolve conflicts, then force-push</li>
+<li>Rebase PR 3 onto the updated PR 2, resolve conflicts, then force-push</li>
+<li>Repeat until the top of the stack is updated</li>
+</ol>
+<p>Example rebases (conceptually):</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># after updating feature/share-datamodel</span>
+</span></span><span style="display:flex;"><span>git checkout feature/share-services
+</span></span><span style="display:flex;"><span>git rebase feature/share-datamodel
+</span></span><span style="display:flex;"><span>git push --force-with-lease origin feature/share-services
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git checkout feature/share-apis
+</span></span><span style="display:flex;"><span>git rebase feature/share-services
+</span></span><span style="display:flex;"><span>git push --force-with-lease origin feature/share-apis
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git checkout feature/share-frontend
+</span></span><span style="display:flex;"><span>git rebase feature/share-apis
+</span></span><span style="display:flex;"><span>git push --force-with-lease origin feature/share-frontend</span></span></code></pre></div><p>It works, but the overhead adds up. This is why many teams try stacked PRs once, then give up.</p>
+<h2 id="using-graphite-cli">Using Graphite CLI</h2>
+<p>Graphite helps automate stacked branch management.</p>
+<p>Install and configure once:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install -g @withgraphite/graphite-cli
+</span></span><span style="display:flex;"><span>gt auth</span></span></code></pre></div><p>Create each layer as a new stacked commit and branch:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gt create -am <span style="color:#e6db74">&#34;feat(share): add data model&#34;</span>
+</span></span><span style="display:flex;"><span>gt create -am <span style="color:#e6db74">&#34;feat(share): add services&#34;</span>
+</span></span><span style="display:flex;"><span>gt create -am <span style="color:#e6db74">&#34;feat(share): add APIs&#34;</span></span></span></code></pre></div><p>When you need to update an existing branch in the stack:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gt checkout &lt;branch-name&gt;
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># make changes</span>
+</span></span><span style="display:flex;"><span>gt modify</span></span></code></pre></div><p>Graphite restacks the dependent branches for you.</p>
+<p>Submit stack PRs and sync updates:</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gt submit
+</span></span><span style="display:flex;"><span>gt sync</span></span></code></pre></div><blockquote>
+<p><strong>Important:</strong> If you do not use Graphite&rsquo;s PR integration, you may need to force-push updated branches after restacking.</p>
+</blockquote>
+<p>One note: CLIs evolve. If a command differs in your version, use <code>gt --help</code> and follow Graphite&rsquo;s docs for the current workflow.</p>
+<h2 id="manual-vs-graphite">Manual vs Graphite</h2>
+<p>This is the same situation as above: you got feedback on the bottom PR, and you need to propagate that change through the stack.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Task</th>
+          <th>Manual stack</th>
+          <th>With Graphite</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Update one layer</td>
+          <td>Edit, commit, push</td>
+          <td><code>gt checkout</code> then <code>gt modify</code></td>
+      </tr>
+      <tr>
+          <td>Propagate changes upward</td>
+          <td>Rebase each branch in order, push each one</td>
+          <td><code>gt sync</code> restacks dependent branches</td>
+      </tr>
+      <tr>
+          <td>Keep PR bases correct</td>
+          <td>Update base branches in the UI as needed</td>
+          <td>Graphite PR integration can manage bases for you</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>My practical takeaway:</strong> stacked PRs are a great idea. The manual workflow is real work. A tool like Graphite reduces that work enough that the workflow stays usable.</p>
+<h2 id="how-to-land-the-stack">How to Land the Stack</h2>
+<p>Stacked PRs save time, but only if you merge them in a predictable order.</p>
+<p>Here is the rule: <strong>merge from the bottom up.</strong></p>
+<ol>
+<li>Get PR 1 approved and merged into <code>develop</code></li>
+<li>Restack or rebase the remaining branches onto the updated <code>develop</code></li>
+<li>Update the base of PR 2 (it should now target <code>develop</code>)</li>
+<li>Repeat for PR 2, then PR 3, then PR 4</li>
+</ol>
+<p>If you merge a middle PR first, you usually create extra conflict work and you make the review harder to follow. One wrong merge and you are in rebase/retargeting hell; following the rule (and using tooling) matters.</p>
+<h2 id="tradeoffs">Tradeoffs</h2>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Smaller, faster reviews</li>
+<li>Better reviewer focus and feedback quality</li>
+<li>Less blocked time while waiting for review</li>
+<li>Cleaner history of how a feature was built (though some prefer one squash per feature; see Caveats)</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>More branches and PRs to manage</li>
+<li>Mental overhead and coordination: which PR first, merge order, and blocked PRs</li>
+<li>Requires discipline in splitting changes logically</li>
+<li>Can confuse teams that are new to stacked workflows</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Keep each PR independently reviewable</strong> A reviewer should understand one PR without reading the whole stack first.</li>
+<li><strong>Name branches clearly</strong> Use names that show order and purpose.</li>
+<li><strong>Start review from the bottom PR</strong> Always review base layers first.</li>
+<li><strong>Keep each PR small</strong> Aim for one concern per PR.</li>
+<li><strong>Keep each PR runnable</strong> Use feature flags, scaffolding, or temporary adapters so CI stays meaningful at every layer.</li>
+<li><strong>Treat stack updates as routine</strong> Feedback on lower PRs is normal, plan for restacks.</li>
+</ol>
+<h2 id="caveats">Caveats</h2>
+<p>Nothing here is set in stone. This workflow is one option; adapt or skip it if your context differs.</p>
+<p><strong>Is review really the bottleneck?</strong> If the real issues are unclear scope, slow product decisions, or &ldquo;we only merge when the whole feature is done,&rdquo; stacked PRs add process but do not fix the root cause. Check the constraint before adopting.</p>
+<p><strong>Layer split is one way to split.</strong> A vertical slice per PR (thin end-to-end slice per PR) can also make sense. Choose what keeps each PR independently reviewable and runnable.</p>
+<p><strong>Coordination and mental overhead.</strong> Stacks introduce costs: reviewers context-switching across several PRs, &ldquo;which PR do I review first?,&rdquo; &ldquo;PR 2 is blocked until PR 1 merges,&rdquo; and the need for everyone to understand base branches and merge order.</p>
+<p><strong>Merge from the bottom up.</strong> One wrong merge and you are in rebase/retargeting hell. Discipline (and tooling like Graphite) matters.</p>
+<p><strong>Other alternatives.</strong> Smaller PRs and faster merges to main with feature flags can achieve similar benefits without stacks. Stacked PRs are one approach, not the only one.</p>
+<p><strong>How stacks look in history.</strong> Some prefer a single squash per feature (one merge = one feature). To them, a long chain of stacked merges is noisier history. &ldquo;Cleaner&rdquo; depends on whether you value many small merges or one feature per merge.</p>
+<h2 id="watch-the-demo">Watch the Demo</h2>
+<p>Here is the full video walkthrough:</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/DXUhnqYhU4I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p>Stacked PRs reduce review bottlenecks and keep delivery flow moving. Tooling like Graphite helps; the leverage is in the workflow. Other approaches (e.g. smaller PRs and faster merges to main with feature flags) can also reduce bottlenecks; stacked PRs are one option.</p>
+<p>If your team struggles with large PRs and long review cycles, try this on one feature first. You will quickly see whether it improves your feedback speed and code quality.</p>
+<p>If you made it this far, thank you for reading.<br>
+Would you use stacked PRs on your team, or is this too much process for your current workflow?</p>
+]]></content></item><item><title>Turn Your AI IDE Into a Relentless Code Reviewer</title><link>https://blog.nemesiscodex.org/my-review-prompt/</link><pubDate>Sun, 07 Dec 2025 23:35:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/my-review-prompt/</guid><description>&lt;p&gt;Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; This prompt does not replace human code review. Think of it as having someone else do the first pass; it gives you an overview, catches obvious issues, and surfaces potential problems. You should still do proper code review yourself. Use it to make reviews more efficient, not as a substitute for your judgment.&lt;/p&gt;</description><content type="html"><![CDATA[<p>Nine months ago, I was a bottleneck; every code review went through me, and I was slowing my team down. When AI tools started becoming genuinely useful, I built a prompt to relieve that bottleneck: a 10-step process that turns any agentic IDE into a relentless code reviewer.</p>
 <blockquote>

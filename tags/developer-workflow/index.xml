@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Developer-Workflow on Nemesiscodex's Blog</title><link>https://blog.nemesiscodex.org/tags/developer-workflow/</link><description>Recent content in Developer-Workflow on Nemesiscodex's Blog</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 05 Feb 2026 12:00:00 -0300</lastBuildDate><atom:link href="https://blog.nemesiscodex.org/tags/developer-workflow/index.xml" rel="self" type="application/rss+xml"/><item><title>Stacked Pull Requests: Deliver Bigger Features Without Large PRs</title><link>https://blog.nemesiscodex.org/stacked-pull-requests-graphite/</link><pubDate>Thu, 05 Feb 2026 12:00:00 -0300</pubDate><guid>https://blog.nemesiscodex.org/stacked-pull-requests-graphite/</guid><description>&lt;p&gt;What slows large features is often not the code. It is review flow. One big PR, one long wait.&lt;/p&gt;
+&lt;p&gt;In this post, I will teach you how to use &lt;strong&gt;stacked pull requests&lt;/strong&gt; so you can keep delivering while reviews are still in progress.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;raquo;&amp;raquo; &lt;a href="https://www.youtube.com/watch?v=DXUhnqYhU4I"&gt;
+
+&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"&gt;
+ &lt;path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"&gt;&lt;/path&gt;
+ &lt;polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"&gt;&lt;/polygon&gt;
+&lt;/svg&gt;
+
+ Watch Video&lt;/a&gt; &amp;laquo;&amp;laquo;&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
